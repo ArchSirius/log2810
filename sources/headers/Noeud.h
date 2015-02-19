@@ -1,3 +1,5 @@
+#ifndef NOEUD_H_
+#define NOEUD_H_
 #include <vector>
 using namespace std;
 
@@ -24,3 +26,5 @@ protected:
 	char nom[MAXSIZE]; //Nom du noeud
 	vector<Noeud*> connexions;
 };
+
+#endif 

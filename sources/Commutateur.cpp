@@ -10,7 +10,7 @@ Commutateur::Commutateur(){
 Commutateur::Commutateur(int pId, char* pNom){
 	numType = Noeud::COMMUTATEUR;
 	id = pId;
-	strncpy(nom, pNom, MAXSIZE);
+	strncpy_s(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
 }
 

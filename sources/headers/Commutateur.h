@@ -1,3 +1,6 @@
+#ifndef COMMUTAEUR_H_
+#define COMMUTATEUR_H_
+
 #include "Noeud.h"
 
 class Commutateur : public Noeud {
@@ -9,4 +12,6 @@ public:
 
 private:
 	unsigned int capacite; //Nombre maximal de ports
-	};
+};
+
+#endif;

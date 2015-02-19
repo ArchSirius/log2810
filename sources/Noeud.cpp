@@ -13,7 +13,7 @@ Noeud::Noeud(){
 Noeud::Noeud(int pId, char* pNom){
 	numType = NOEUD;
 	id = pId;
-	strncpy(nom, pNom, MAXSIZE);
+	strncpy_s(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
 }
 

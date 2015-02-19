@@ -1,3 +1,6 @@
+#ifndef ROUTEUR_H_
+#define ROUTEUR_H_
+
 #include "Noeud.h"
 
 class Routeur : public Noeud {
@@ -13,3 +16,5 @@ private:
 	bool lienfilaire; //True indique que des liens filaires pourraient �tre �tablis. False signifie que des liens filaires ne pourraient pas �tre �tablis;
 	bool lienWifi; //True indique que des liens sans fil pourraient \^{e}tre \'{e}tablis. 0 signifie que des liens sans fil ne pourraient pas \^{e}tre \'{e}tablis.
 };
+
+#endif
