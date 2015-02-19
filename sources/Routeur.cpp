@@ -3,12 +3,12 @@
 
 Routeur::Routeur(){
 	id = 0;
-	numType = 0;
+	numType = Noeud::ROUTEUR;
 	nom[0] = '\0';
 }
 
-Routeur::Routeur(int numT, int pId, char* pNom){
-	numType = numT;
+Routeur::Routeur(int pId, char* pNom){
+	numType = Noeud::ROUTEUR;
 	id = pId;
 	strncpy(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';

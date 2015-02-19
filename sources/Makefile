@@ -18,4 +18,3 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	$(RM) *.o
-	

@@ -4,7 +4,7 @@ class Ordinateur : public Noeud {
 
 public:
 	Ordinateur();
-	Ordinateur(int numT, int pId, char* pNom);
+	Ordinateur(int pId, char* pNom);
 	~Ordinateur();
 
 private:
