@@ -1,3 +1,6 @@
+#include <vector>
+using namespace std;
+
 class Noeud{
 
 public:
@@ -7,8 +10,11 @@ public:
 	Noeud(int pId, char* pNom);
 	~Noeud();
 
-	void connecter(const Noeud* noeud);
-	void deconnecter(const Noeud* noeud);
+	void connecter(Noeud* noeud);
+	void deconnecter(Noeud* noeud);
+
+	void ajouterConnexion(Noeud* noeud);
+	void retirerConnexion(Noeud* noeud);
 
 protected:
 	static const unsigned int MAXSIZE = 255;
@@ -16,5 +22,5 @@ protected:
 	unsigned int id; //Identifiant du noeud
 	Type numType; //Identifiant du type
 	char nom[MAXSIZE]; //Nom du noeud
-	Noeud* connexions[];
+	vector<Noeud*> connexions;
 };
