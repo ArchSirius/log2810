@@ -1,0 +1,7 @@
+1;Routeur
+2;Commutateur
+3;Serveur
+4;Ordinateur de bureau
+5;Ordinateur portatif
+6;Tablette
+7;Imprimante

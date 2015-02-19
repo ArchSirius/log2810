@@ -1,0 +1,40 @@
+511;Boston;1
+512;New York;0
+513;Paris;0
+514;Marseille;1
+515;Hambourg;0
+516;Bayern;1
+517;Milan;0
+518;Roma;1
+519;Barcelona;1
+520;Madrid;1
+521;London;0
+522;Liverpool;0
+523;Aalborg;0
+524;Viborg;1
+525;Lausanne;1
+526;Cotonou;0
+527;Cape town;0
+528;Douala;1
+529;Rabat;1
+530;Ouagadougou;0
+531;Ibadan;1
+532;Lomé;1
+533;Abidjan;1
+534;Shanghai;0
+535;Taiwan;0
+536;Dubaï;0
+537;Djakarta;1
+538;Bogota;1
+539;Lima;1
+540;Hong-Kong;1
+541;Bichkek;1
+542;Achgabat;0
+543;Edmonton;1
+544;Bora Bora;1
+545;Ndjamena;1
+546;Nancy;1
+547;Séville;0
+548;Sétubal;0
+549;Nikki;1
+550;Vancouver;1

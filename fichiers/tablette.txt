@@ -1,0 +1,15 @@
+611;Aphrodite
+612;Apollon
+613;Asclépios
+614;Athéna
+615;Atlas
+616;Cronos
+617;Dionysos
+618;Eros
+619;Poséidon
+620;Thémis
+621;Océan
+622;Maïa
+623;Métis
+624;Hygie
+625;Zeus

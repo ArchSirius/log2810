@@ -1,0 +1,99 @@
+// 
+// Type de noeud
+class TNoeud
+{
+public:
+	TNoeud(){
+		numType=0;
+		libelleType[0] = '\0';
+	}
+	TNoeud(int num,char* lib){
+		numType=num;
+		strncpy(libelleType, lib, MAXSIZE);
+		libelleType[MAXNAMESIZE - 1] = '\0';
+	}
+	~TNoeud(){
+	}
+private:
+	unsigned int numType;
+	char libelleType [MAXSIZE];
+};
+
+// Noeud
+class Noeud
+{
+public:
+	Noeud(){
+		id=0;
+		numType=0;
+		nom[0] = '\0';
+	}
+	Noeud(int numT, int pId, char* pNom){
+		numType=num;
+		id=pId;
+		strncpy(nom, pNom, MAXSIZE);
+		nom[MAXNAMESIZE - 1] = '\0';
+	}
+	~Noeud(){
+	}
+protected:
+	unsigned int id; //Identifiant du noeud
+	unsigned int numType; //Identifiant du type
+	char nom [MAXSIZE]; //Nom du noeud
+};
+
+// Routeur
+class Routeur:private Noeud
+{
+public:
+	Routeur(){
+	//A compléter
+	}
+	Routeur(//A compléter){
+	//A compléter
+	}
+	~Routeur(){
+	}
+private:
+	unsigned int capacite;//Nombre maximal de ports
+	unsigned int numType;
+	bool carteWifi;//Indique si le routeur dispose d'une carte réseau sans fil
+	bool lienfilaire;//True indique que des liens filaires pourraient être établis. False signifie que des liens filaires ne pourraient pas être établis;
+	bool lienWifi;//True indique que des liens sans fil pourraient \^{e}tre \'{e}tablis. 0 signifie que des liens sans fil ne pourraient pas \^{e}tre \'{e}tablis.
+	//Compléter d'autres membres au besoin
+};
+
+// Commutateur
+class Commutateur:private Noeud
+{
+public:
+	Commutateur(){
+	//A compléter
+	}
+	Commutateur(//A compléter){
+	//A compléter
+	}
+	~Commutateur(){
+	}
+private:
+	unsigned int capacite;//Nombre maximal de ports
+	//Compléter d'autres membres au besoin
+};
+
+
+// Ordinateur. Peut être un PC ou un laptop.
+class Ordinateur:private Noeud
+{
+public:
+	Ordinateur(){
+	//A compléter
+	}
+	Ordinateur(//A compléter){
+	//A compléter
+	}
+	~Ordinateur(){
+	}
+private:
+	bool lienfilaire;//True indique qu'un lien filaire pourrait être établi avec l'ordinateur. False signifie que le lien sans fil pourrait être établi avec l'ordinateur.
+	//Compléter d'autres membres au besoin
+};

@@ -1,0 +1,17 @@
+111;Bas-Saint-Laurent;8;0;1;0
+112;Saguenay-Lac-Saint-Jean;16;0;1;0
+113;Quebec City;32;0;1;0
+114;Mauricie;16;1;1;1
+115;Estrie;16;0;1;0
+116;Montréal;24;0;1;0
+117;Outaouais;24;1;1;1
+118;Abitibi-Témiscamingue;8;1;1;1
+119;Côte-Nord;16;0;1;0
+120;Nord-du-Québec;32;1;1;1
+121;Gaspésie-Îles-de-la-Madelaine;8;1;1;1
+122;Chaudières-Appalache;32;0;1;0
+123;Laval;8;0;1;0
+124;Lanaudière;24;1;1;1
+125;Laurentide;8;0;1;0
+126;Montérégie;16;0;1;0
+127;Centre-du-Québec;32;1;1;1

@@ -1,0 +1,10 @@
+211;Mississauga;8
+212;Longueuil;16
+213;Niagara;16
+214;Shawinigan;16
+215;Rimouski;16
+216;Granby;8
+217;Kingston;24
+218;Toronto;8
+219;Ottawa;16
+220;Sherbrooke;24
