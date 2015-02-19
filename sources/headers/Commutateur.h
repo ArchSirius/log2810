@@ -7,7 +7,7 @@ class Commutateur : public Noeud {
 
 public:
 	Commutateur();
-	Commutateur(int pId, char* pNom);
+	Commutateur(unsigned int pId, char* pNom, unsigned int capacite);
 	~Commutateur();
 
 private:

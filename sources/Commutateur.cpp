@@ -7,11 +7,12 @@ Commutateur::Commutateur(){
 	nom[0] = '\0';
 }
 
-Commutateur::Commutateur(int pId, char* pNom){
+Commutateur::Commutateur(unsigned int pId, char* pNom, unsigned int pCapacite){
 	numType = Noeud::COMMUTATEUR;
 	id = pId;
 	strncpy_s(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
+	capacite = pCapacite;
 }
 
 Commutateur::~Commutateur(){}
