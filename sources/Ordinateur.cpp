@@ -5,13 +5,15 @@ Ordinateur::Ordinateur(){
 	id = 0;
 	numType = Noeud::ORDINATEUR;
 	nom[0] = '\0';
+	lienFilaire = false;
 }
 
-Ordinateur::Ordinateur(int pId, char* pNom){
+Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire){
 	numType = Noeud::ORDINATEUR;
 	id = pId;
 	strncpy_s(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
+	lienFilaire = pLienFilaire;
 }
 
 Ordinateur::~Ordinateur(){

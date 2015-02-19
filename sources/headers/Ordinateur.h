@@ -7,11 +7,11 @@ class Ordinateur : public Noeud {
 
 public:
 	Ordinateur();
-	Ordinateur(int pId, char* pNom);
+	Ordinateur(int pId, char* pNom, bool pLienfilaire);
 	~Ordinateur();
 
-protected:
-	bool lienfilaire; //True indique qu'un lien filaire pourrait �tre �tabli avec l'ordinateur. False signifie que le lien sans fil pourrait �tre �tabli avec l'ordinateur.
+private:
+	bool lienFilaire; //True indique qu'un lien filaire pourrait �tre �tabli avec l'ordinateur. False signifie que le lien sans fil pourrait �tre �tabli avec l'ordinateur.
 };
 
 #endif 
