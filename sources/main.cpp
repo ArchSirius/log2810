@@ -11,7 +11,14 @@
 #include <fstream> 
 #include <vector>
 #include <sstream>
-//#include "Commutateur.cpp"
+
+#include "headers/Routeur.h"
+#include "headers/Commutateur.h"
+//#include "headers/Serveur.h"
+#include "headers/Ordinateur.h"
+#include "headers/Tablette.h"
+#include "headers/Imprimante.h"
+
 
 using namespace std;
 

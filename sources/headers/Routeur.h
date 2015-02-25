@@ -1,3 +1,10 @@
+/****************************************************************************
+* Fichier       : Routeur.h
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 19 février 2015
+* Mise à jour   : 19 février 2015
+* Description   : Definition de la classe Routeur
+****************************************************************************/
 #ifndef ROUTEUR_H_
 #define ROUTEUR_H_
 
@@ -7,7 +14,7 @@ class Routeur : public Noeud {
 
 public:
 	Routeur();
-	Routeur(int pId, char* pNom);
+	Routeur(int pId, char* pNom/*...*/);
 	~Routeur();
 
 private:

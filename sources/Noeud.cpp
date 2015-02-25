@@ -1,3 +1,10 @@
+/****************************************************************************
+* Fichier       : Noeud.cpp
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 19 février 2015
+* Mise à jour   : 19 février 2015
+* Description   : Implementation de la classe Noeud
+****************************************************************************/
 #include <string.h>
 #include <algorithm>
 #include <exception>
@@ -8,6 +15,8 @@ Noeud::Noeud(){
 	id = 0;
 	numType = NOEUD;
 	nom[0] = '\0';
+	capaciteEthernet = 0;
+	reseauSansFil = false;
 }
 
 Noeud::Noeud(int pId, char* pNom){
@@ -15,9 +24,15 @@ Noeud::Noeud(int pId, char* pNom){
 	id = pId;
 	strncpy_s(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
+	capaciteEthernet = 0;
+	reseauSansFil = false;
 }
 
 Noeud::~Noeud(){}
+
+Noeud::Type Noeud::getNumType() const {
+	return numType;
+}
 
 void Noeud::connecter(Noeud* noeud){
 	ajouterConnexion(noeud);

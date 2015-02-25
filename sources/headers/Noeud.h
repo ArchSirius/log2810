@@ -1,3 +1,11 @@
+/****************************************************************************
+* Fichier       : Noeud.h
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 19 février 2015
+* Mise à jour   : 19 février 2015
+* Description   : Definition de la classe Noeud
+****************************************************************************/
+
 #ifndef NOEUD_H_
 #define NOEUD_H_
 #include <vector>
@@ -12,6 +20,8 @@ public:
 	Noeud(int pId, char* pNom);
 	~Noeud();
 
+	virtual Type getNumType() const;
+
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
 
@@ -24,6 +34,8 @@ protected:
 	unsigned int id; //Identifiant du noeud
 	Type numType; //Identifiant du type
 	char nom[MAXSIZE]; //Nom du noeud
+	int capaciteEthernet;
+	bool reseauSansFil;
 	vector<Noeud*> connexions;
 };
 

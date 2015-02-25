@@ -1,19 +1,42 @@
+/****************************************************************************
+* Fichier       : Ordinateur.cpp
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 19 février 2015
+* Mise à jour   : 19 février 2015
+* Description   : Implementation de la classe Ordinateur
+****************************************************************************/
+
 #include <string.h>
 #include "headers/Ordinateur.h"
 
-Ordinateur::Ordinateur(){
-	id = 0;
+Ordinateur::Ordinateur() : Noeud(){
 	numType = Noeud::ORDINATEUR;
-	nom[0] = '\0';
-	lienFilaire = false;
+	//lienFilaire = false;
 }
 
-Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire){
-	numType = Noeud::ORDINATEUR;
-	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
-	nom[MAXSIZE - 1] = '\0';
-	lienFilaire = pLienFilaire;
+/****************************************************************************
+* Fonction		: Ordinateur::Ordinateur
+* Description	: Constructeur par paramètre
+* Paramètres	: (int) pId : le id du noeud
+				  (char*) pNom : le nom du noeud
+				  (bool) pLienFilaire : true = lien Filiaire, false = lien sans fil
+				  (bool) pTypeOrdi : true = ordinateur de bureau, false = laptop
+* Retour		: aucun
+****************************************************************************/
+Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi) 
+	: Noeud(pId, pNom){
+	//lienFilaire = pLienFilaire;	
+	
+	if (pTypeOrdi)
+	{
+		numType = Noeud::PC;
+		capaciteEthernet = 1;
+	}
+	else 
+	{
+		numType = Noeud::LAPTOP;
+		reseauSansFil = true;
+	}
 }
 
 Ordinateur::~Ordinateur(){

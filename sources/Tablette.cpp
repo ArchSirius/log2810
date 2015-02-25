@@ -5,20 +5,17 @@
 * Mise à jour   : 19 février 2015
 * Description   : Implementation de la classe Routeur
 ****************************************************************************/
-#include <string.h>
-#include "headers/Routeur.h"
 
-Routeur::Routeur(){
-	id = 0;
-	numType = Noeud::ROUTEUR;
-	nom[0] = '\0';
+#include "headers/Tablette.h"
+
+Tablette::Tablette() : Noeud(){
+	numType = Noeud::TABLETTE;
+	reseauSansFil = true;
 }
 
-Routeur::Routeur(int pId, char* pNom){
-	numType = Noeud::ROUTEUR;
-	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
-	nom[MAXSIZE - 1] = '\0';
+Tablette::Tablette(int pId, char* pNom) : Noeud(pId, pNom){
+	numType = Noeud::TABLETTE;
+	reseauSansFil = true;
 }
 
-Routeur::~Routeur(){}
+Tablette::~Tablette(){}
