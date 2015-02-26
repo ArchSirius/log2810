@@ -23,9 +23,12 @@
 using namespace std;
 
 void lectureFichierCommutateur();
+void lectureFichierCouts(int i);
 
-int main(){
-	lectureFichierCommutateur();
+int main()
+{
+	//lectureFichierCommutateur();
+	//lectureFichierCouts(4);
 	system("PAUSE");
 }
 
@@ -38,7 +41,7 @@ void lectureFichierCommutateur()
 		string token;
 		vector<string> commutateur;
 		unsigned int id, capacite;
-		string ville;
+		string str_ville;
 
 		while (!fichier.eof())
 		{
@@ -49,18 +52,44 @@ void lectureFichierCommutateur()
 			while (getline(ss, token, ';')) {
 				commutateur.push_back(token);
 			}
-
+			//Conversion des string en bons types pour le constructeur
 			id = atoi(commutateur[0].c_str());
-			ville = commutateur[1];
 			capacite = atoi(commutateur[2].c_str());
+			str_ville = commutateur[1];
+			char* ville = _strdup(str_ville.c_str());
 
+			//Construction de l'objet commutateur
+			Commutateur commutateur(id, ville, capacite);
 
-			cout << id << endl;
-			cout << ville << endl;
-			cout << capacite << endl;
+		}
+	}
+	else
+		cout << "Impossible d'ouvrir le fichier" << endl;
+}
 
-			//Commutateur commutateur(id, ville, capacite);
+void lectureFichierCouts(int i)
+{
+	string input;
+	string token;
+	string nomFichier = "couts-" + to_string(i) + ".txt";
+	vector<string> couts;
 
+	ifstream fichier(nomFichier);
+	if (fichier)
+	{
+		int filaires;
+		int sansFil;
+
+		while (!fichier.eof())
+		{
+			couts.clear();
+			getline(fichier, input);
+			istringstream ss(input);
+			while (getline(ss, token, ';'))
+				couts.push_back(token);
+
+			filaires = atoi(couts[0].c_str());
+			sansFil = atoi(couts[1].c_str());
 		}
 	}
 	else
