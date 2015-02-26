@@ -35,7 +35,7 @@ protected:
 	unsigned int id; //Identifiant du noeud
 	Type numType; //Identifiant du type
 	char nom[MAXSIZE]; //Nom du noeud
-	int capaciteEthernet;
+	unsigned int capaciteEthernet;
 	bool reseauSansFil;
 	vector<Noeud*> connexions;
 };
