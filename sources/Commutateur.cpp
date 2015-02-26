@@ -9,18 +9,19 @@
 #include <string.h>
 #include "headers/Commutateur.h"
 
-Commutateur::Commutateur(){
-	id = 0;
+Commutateur::Commutateur() : Noeud(){
 	numType = Noeud::COMMUTATEUR;
-	nom[0] = '\0';
+	capaciteEthernet = 2;
+
 }
 
-Commutateur::Commutateur(unsigned int pId, char* pNom, unsigned int pCapacite){
+Commutateur::Commutateur(unsigned int pId, char* pNom, unsigned int pCapacite) : Noeud(pId, pNom){
 	numType = Noeud::COMMUTATEUR;
-	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
-	nom[MAXSIZE - 1] = '\0';
-	capacite = pCapacite;
+	if (pCapacite > 1)
+		capaciteEthernet = pCapacite;
+	else
+		capaciteEthernet = 2; // valeur par defaut
+
 }
 
 Commutateur::~Commutateur(){}

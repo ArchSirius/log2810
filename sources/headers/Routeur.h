@@ -14,14 +14,14 @@ class Routeur : public Noeud {
 
 public:
 	Routeur();
-	Routeur(int pId, char* pNom/*...*/);
+	Routeur(int pId, char* pNom, unsigned int pCapacite, bool pReseauSansFil);
 	~Routeur();
 
 private:
-	unsigned int capacite; //Nombre maximal de ports
-	bool carteWifi; //Indique si le routeur dispose d'une carte r�seau sans fil
-	bool lienfilaire; //True indique que des liens filaires pourraient �tre �tablis. False signifie que des liens filaires ne pourraient pas �tre �tablis;
-	bool lienWifi; //True indique que des liens sans fil pourraient \^{e}tre \'{e}tablis. 0 signifie que des liens sans fil ne pourraient pas \^{e}tre \'{e}tablis.
+	//unsigned int capacite; //Nombre maximal de ports
+	//bool carteWifi; //Indique si le routeur dispose d'une carte r�seau sans fil
+	//bool lienfilaire; //True indique que des liens filaires pourraient �tre �tablis. False signifie que des liens filaires ne pourraient pas �tre �tablis;
+	//bool lienWifi; //True indique que des liens sans fil pourraient \^{e}tre \'{e}tablis. 0 signifie que des liens sans fil ne pourraient pas \^{e}tre \'{e}tablis.
 };
 
 #endif
