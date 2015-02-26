@@ -12,7 +12,7 @@ class Imprimante : public Noeud {
 
 public:
 	Imprimante();
-	Imprimante(int pId, char* pNom /*...*/);
+	Imprimante(int pId, char* pNom);
 	~Imprimante();
 
 private:

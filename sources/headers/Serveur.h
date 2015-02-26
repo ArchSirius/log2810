@@ -15,7 +15,7 @@ class Serveur : public Noeud {
 
 public:
 	Serveur();
-	Serveur(int pId, char* pNom/*...*/);
+	Serveur(int pId, char* pNom);
 	~Serveur();
 
 private:
