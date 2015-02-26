@@ -18,7 +18,7 @@ Commutateur::Commutateur(){
 Commutateur::Commutateur(unsigned int pId, char* pNom, unsigned int pCapacite){
 	numType = Noeud::COMMUTATEUR;
 	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
+	strncpy(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
 	capacite = pCapacite;
 }

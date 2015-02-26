@@ -17,7 +17,7 @@ Routeur::Routeur(){
 Routeur::Routeur(int pId, char* pNom){
 	numType = Noeud::ROUTEUR;
 	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
+	strncpy(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
 }
 

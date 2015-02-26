@@ -22,16 +22,24 @@ Noeud::Noeud(){
 Noeud::Noeud(int pId, char* pNom){
 	numType = NOEUD;
 	id = pId;
-	strncpy_s(nom, pNom, MAXSIZE);
+	strncpy(nom, pNom, MAXSIZE);
 	nom[MAXSIZE - 1] = '\0';
 	capaciteEthernet = 0;
 	reseauSansFil = false;
 }
 
-Noeud::~Noeud(){}
+Noeud::~Noeud(){
+	for(Noeud* noeud : connexions){
+		deconnecter(noeud);
+	}
+}
 
 Noeud::Type Noeud::getNumType() const {
 	return numType;
+}
+
+unsigned int Noeud::getId(){
+	return id;
 }
 
 void Noeud::connecter(Noeud* noeud){

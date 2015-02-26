@@ -21,6 +21,7 @@ public:
 	~Noeud();
 
 	virtual Type getNumType() const;
+	unsigned int getId();
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
