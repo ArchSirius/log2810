@@ -8,7 +8,9 @@
 
 #ifndef NOEUD_H_
 #define NOEUD_H_
+
 #include <vector>
+#include "ostream"
 using namespace std;
 
 class Noeud{
@@ -20,16 +22,22 @@ public:
 	Noeud(int pId, char* pNom);
 	~Noeud();
 
-	virtual Type getNumType() const;
-	unsigned int getId();
+	unsigned int getId() const;
+	string getNom() const;
+	Type getNumType() const;
+	const char* getNomType() const;
+
+	unsigned int getNbPortDispo() const;
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
 
-	void ajouterConnexion(Noeud* noeud);
-	void retirerConnexion(Noeud* noeud);
+	friend ostream& operator<<(ostream& os, const Noeud& noeud);
 
 protected:
+	void ajouterConnexion(Noeud* noeud, bool lienFilaire);
+	void retirerConnexion(Noeud* noeud, bool lienFilaire);
+
 	static const unsigned int MAXSIZE = 255;
 
 	unsigned int id; //Identifiant du noeud
@@ -37,7 +45,8 @@ protected:
 	char nom[MAXSIZE]; //Nom du noeud
 	unsigned int capaciteEthernet;
 	bool reseauSansFil;
-	vector<Noeud*> connexions;
+	vector<Noeud*> connexionsFil;
+	vector<Noeud*> connexionsSansFil;
 };
 
 #endif 
