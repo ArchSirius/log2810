@@ -14,10 +14,11 @@
 
 #include "headers/Routeur.h"
 #include "headers/Commutateur.h"
-//#include "headers/Serveur.h"
 #include "headers/Ordinateur.h"
 #include "headers/Tablette.h"
 #include "headers/Imprimante.h"
+#include "headers/Reseau.h"
+#include "headers/Serveur.h"
 
 
 using namespace std;
@@ -34,7 +35,7 @@ void lectureFichierType();
 
 int main()
 {
-	lectureFichierCommutateur();
+	//lectureFichierCommutateur();
 	//lectureFichierCouts(4);
 	//lectureFichierImprimante();
 	//lectureFichierOrdinateur("laptop");
@@ -130,8 +131,8 @@ void lectureFichierImprimante()
 			str_nom = imprimante[1];
 			char* nom = _strdup(str_nom.c_str());
 
-			//Construction de l'objet commutateur
-			//Imprimante imprimante(idImprimante, nom);
+			//Construction de l'objet imprimante
+			Imprimante imprimante(idImprimante, nom);
 		}
 	}
 	else
@@ -167,8 +168,8 @@ void lectureFichierOrdinateur(string typeOrdi)
 			str_nom = ordi[1];
 			char* nom = _strdup(str_nom.c_str());
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
-			//Construction de l'objet commutateur
-			//Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
+			//Construction de l'objet ordinateur
+			Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
 		}
 	}
 	else
@@ -195,9 +196,8 @@ void lectureFichierReseau()
 			//Conversion des string en bons types pour le constructeur
 			id1 = atoi(reseau[0].c_str());
 			id2 = atoi(reseau[1].c_str());
-
-			cout << id1 << endl;
-			cout << id2 << endl;
+			//Construction de l'objet reseau
+			Reseau reseau(id1, id2);
 		}
 	}
 	else
@@ -233,7 +233,7 @@ void lectureFichierRouteur()
 			routeur[5] == "0" ? possibiliteLienFilaire = false : possibiliteLienFilaire = true;
 
 			//Constructeur de routeur
-			//...//
+			Routeur routeur(idRouteur, nom, capacite, reseauSansFil);
 		}
 	}
 	else
@@ -263,8 +263,8 @@ void lectureFichierServeur()
 			str_nom = serveur[1];
 			char* nom = _strdup(str_nom.c_str());
 
-			//Construction de l'objet commutateur
-			//Serveur serveur(idServeur, nom);
+			//Construction de l'objet serveur
+			Serveur serveur(idServeur, nom);
 		}
 	}
 	else
@@ -294,8 +294,8 @@ void lectureFichierTablette()
 			str_nom = tablette[1];
 			char* nom = _strdup(str_nom.c_str());
 
-			//Construction de l'objet commutateur
-			//Tablette tablette(idTablette, nom);
+			//Construction de l'objet tablette
+			Tablette tablette(idTablette, nom);
 		}
 	}
 	else
@@ -325,8 +325,6 @@ void lectureFichierType()
 			str_nom = type[1];
 			char* nom = _strdup(str_nom.c_str());
 
-			//Construction de l'objet commutateur
-			//Type type(idType, nom);
 		}
 	}
 	else
