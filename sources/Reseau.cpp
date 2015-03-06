@@ -77,5 +77,14 @@ void Reseau::distance(unsigned int n1, unsigned int n2) const {
 }
 
 unsigned int Reseau::floyd(const map<unsigned int, Noeud>* noeuds, const Noeud* n1, const Noeud* n2) const {
+	/*
+	for(int i = 1; i < instances; i++)
+	{
+		for(int j = 1; j < instances; j++)
+		{
+			
+		}
+	}
+	*/
 	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
 }

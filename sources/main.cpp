@@ -122,7 +122,7 @@ void lectureFichierCommutateur(Reseau& reseau)
 			char* ville = _strdup(str_ville.c_str());
 
 			//Construction de l'objet commutateur
-			Commutateur commutateur(idCommutateur, ville, capacite);
+			Commutateur* commutateur = new Commutateur(idCommutateur, ville, capacite);
 			//Ajout de chaque commutateur dans le map de noeuds
 			reseau.ajouter(commutateur);
 		}
@@ -184,7 +184,7 @@ void lectureFichierImprimante(Reseau& reseau)
 			char* nom = _strdup(str_nom.c_str());
 
 			//Construction de l'objet imprimante
-			Imprimante imprimante(idImprimante, nom);
+			Imprimante* imprimante = new Imprimante(idImprimante, nom);
 			//Ajout de chaque imprimante dans le map de noeuds
 			reseau.ajouter(imprimante);
 		}
@@ -223,7 +223,7 @@ void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi)
 			char* nom = _strdup(str_nom.c_str());
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
-			Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
+			Ordinateur* ordi = new Ordinateur(idOrdi, nom, lienFilaire, pTypeOrdi);
 			//Ajout de chaque ordi dans le map de noeuds
 			reseau.ajouter(ordi);
 		}
@@ -261,7 +261,7 @@ void lectureFichierRouteur(Reseau& reseau)
 			routeur[5] == "0" ? possibiliteLienFilaire = false : possibiliteLienFilaire = true;
 
 			//Constructeur de routeur
-			Routeur routeur(idRouteur, nom, capacite, reseauSansFil);
+			Routeur* routeur = new Routeur(idRouteur, nom, capacite, reseauSansFil);
 			//Ajout de chaque routeur dans le map de noeuds
 			reseau.ajouter(routeur);
 		}
@@ -294,7 +294,7 @@ void lectureFichierServeur(Reseau& reseau)
 			char* nom = _strdup(str_nom.c_str());
 
 			//Construction de l'objet serveur
-			Serveur serveur(idServeur, nom);
+			Serveur* serveur = new Serveur(idServeur, nom);
 			//Ajout de chaque serveur dans le map de noeuds
 			reseau.ajouter(serveur);
 		}
@@ -327,7 +327,7 @@ void lectureFichierTablette(Reseau& reseau)
 			char* nom = _strdup(str_nom.c_str());
 
 			//Construction de l'objet tablette
-			Tablette tablette(idTablette, nom);
+			Tablette* tablette = new Tablette(idTablette, nom);
 			//Ajout de chaque tablette dans le map de noeuds
 			reseau.ajouter(tablette);
 		}
