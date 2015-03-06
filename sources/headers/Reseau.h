@@ -47,7 +47,7 @@ public:
 	void distance(unsigned int n1, unsigned int n2) const;
 
 private:
-	unsigned int floyd(const map<unsigned int, Noeud>* noeuds, const Noeud* n1, const Noeud* n2) const;
+	unsigned int floyd(const map<unsigned int, Noeud*>& noeuds, const Noeud* n1, const Noeud* n2) const;
 
 	map<unsigned int, Noeud*> noeuds;
 	unsigned int coutFil, coutSansFil;
