@@ -29,7 +29,7 @@ public:
 
 	unsigned int getNbPortDispo() const;
 
-	void connecter(Noeud* noeud);
+	void connecter(Noeud& noeud);
 	void deconnecter(Noeud* noeud);
 
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);

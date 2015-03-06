@@ -28,23 +28,27 @@ void Reseau::implanter(){
 	if (fichier)
 	{
 		string input, token;
-		vector<string> reseau;
+		vector<string> relation;
 		unsigned int id1, id2;
 
 		while (!fichier.eof())
 		{
-			reseau.clear();
+			relation.clear();
 			getline(fichier, input);
 			istringstream ss(input);
 			while (getline(ss, token, '-'))
-				reseau.push_back(token);
+				relation.push_back(token);
 
 			//Conversion des string en bons types
-			id1 = atoi(reseau[0].c_str());
-			id2 = atoi(reseau[1].c_str());
-
-			//Connexion de chaque noeud du réseau
-			id1->connecter(id2);
+			id1 = atoi(relation[0].c_str());
+			id2 = atoi(relation[1].c_str());
+			
+			// Connecter
+			map<unsigned int, Noeud>::iterator it1 = noeuds.find(id1);
+			map<unsigned int, Noeud>::iterator it2 = noeuds.find(id2);
+			if(it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
+				(it1->second).connecter(it2->second);
+			}
 		}
 	}
 	else

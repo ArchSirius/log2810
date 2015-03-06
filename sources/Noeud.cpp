@@ -85,7 +85,7 @@ unsigned int Noeud::getNbPortDispo() const {
 * Paramètres	: (Noeud*) noeud : noeud qu'on veut connecter au noeud courant
 * Retour		: aucun
 ****************************************************************************/
-void Noeud::connecter(Noeud* noeud){
+void Noeud::connecter(Noeud& noeud){
 	if (getNbPortDispo() > 0)
 	{
 		ajouterConnexion(noeud, true); 
