@@ -24,7 +24,7 @@
 using namespace std;
 
 void lectureFichierCommutateur();
-void lectureFichierCouts(int i);
+//void lectureFichierCouts(int i);
 void lectureFichierImprimante();
 void lectureFichierOrdinateur(string typeOrdi);
 //void lectureFichierReseau();
@@ -36,6 +36,34 @@ void lectureFichierType();
 int main()
 {
 	//Création du réseau
+
+	//Création du réseau avec la configuration 1 des couts
+	unsigned int filaires, sansFil;
+	string nomFichier = "couts-" + to_string(1) + ".txt";
+	ifstream fichier(nomFichier);
+	if (fichier)
+	{
+		string input, token;
+		vector<string> couts;
+
+		while (!fichier.eof())
+		{
+			couts.clear();
+			getline(fichier, input);
+			istringstream ss(input);
+			while (getline(ss, token, ';'))
+				couts.push_back(token);
+
+			filaires = atoi(couts[0].c_str());
+			sansFil = atoi(couts[1].c_str());
+
+		}
+	}
+	else
+		cout << "Impossible d'ouvrir le fichier" << endl;
+
+	//Construction du reseau selon la configuration des couts
+	Reseau reseau(filaires,sansFil);
 
 	//Création tout d'abord des noeuds en parcourant les fichiers nécessaires
 	//Les noeuds routeur
@@ -52,10 +80,9 @@ int main()
 	lectureFichierTablette();
 	//Les noeuds imprimante
 	lectureFichierImprimante();
+	//Mise en place du réseau
+	reseau.implanter();
 
-
-
-	//lectureFichierCouts(4);
 	//lectureFichierType();
 	//system("PAUSE");
 }
@@ -93,7 +120,7 @@ void lectureFichierCommutateur()
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
-
+/*
 void lectureFichierCouts(int i)
 {
 	string nomFichier = "couts-" + to_string(i) + ".txt";
@@ -114,11 +141,14 @@ void lectureFichierCouts(int i)
 
 			filaires = atoi(couts[0].c_str());
 			sansFil = atoi(couts[1].c_str());
+
+			//Construction du reseau selon la configuration des couts
+			Reseau reseau(filaires,sansFil);
 		}
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
-}
+}*/
 
 void lectureFichierImprimante()
 {
