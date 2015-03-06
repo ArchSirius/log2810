@@ -6,6 +6,9 @@
 * Description   : Definition de la classe Imprimante
 ****************************************************************************/
 
+#ifndef IMPRIMANTE_H_
+#define IMPRIMANTE_H_
+
 #include "Noeud.h"
 
 class Imprimante : public Noeud {
@@ -22,3 +25,4 @@ private:
 	//carte reseau pour tous
 
 };
+#endif
