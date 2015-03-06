@@ -37,7 +37,6 @@ void lectureFichierType();
 int main()
 {
 	//Création du réseau
-
 	//Création du réseau avec la configuration 1 des couts
 	unsigned int filaires, sansFil;
 	string nomFichier = "couts-" + to_string(1) + ".txt";
@@ -84,6 +83,7 @@ int main()
 	//Mise en place du réseau
 	reseau.implanter();
 
+	reseau.afficher();
 	//lectureFichierType();
 	system("PAUSE");
 
@@ -217,6 +217,9 @@ void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi)
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
 			Ordinateur* ordi = new Ordinateur(idOrdi, nom, lienFilaire, pTypeOrdi);
+
+			//cout << idOrdi << endl << nom << endl << lienFilaire << endl;
+
 			//Ajout de chaque ordi dans le map de noeuds
 			reseau.ajouter(ordi);
 		}
