@@ -23,14 +23,14 @@
 
 using namespace std;
 
-void lectureFichierCommutateur();
+void lectureFichierCommutateur(Reseau& reseau);
 //void lectureFichierCouts(int i);
-void lectureFichierImprimante();
-void lectureFichierOrdinateur(string typeOrdi);
+void lectureFichierImprimante(Reseau& reseau);
+void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi);
 //void lectureFichierReseau();
-void lectureFichierRouteur();
-void lectureFichierServeur();
-void lectureFichierTablette();
+void lectureFichierRouteur(Reseau& reseau);
+void lectureFichierServeur(Reseau& reseau);
+void lectureFichierTablette(Reseau& reseau);
 void lectureFichierType();
 
 int main()
@@ -67,19 +67,19 @@ int main()
 
 	//Création tout d'abord des noeuds en parcourant les fichiers nécessaires
 	//Les noeuds routeur
-	lectureFichierRouteur();
+	lectureFichierRouteur(reseau);
 	//Les noeuds commutateur
-	lectureFichierCommutateur();
+	lectureFichierCommutateur(reseau);
 	//Les noeuds serveur
-	lectureFichierServeur();
+	lectureFichierServeur(reseau);
 	//Les noeuds PC
-	lectureFichierOrdinateur("PC");
+	lectureFichierOrdinateur(reseau, "PC");
 	//Les noeuds laptop
-	lectureFichierOrdinateur("laptop");
+	lectureFichierOrdinateur(reseau, "laptop");
 	//Les noeuds tablette
-	lectureFichierTablette();
+	lectureFichierTablette(reseau);
 	//Les noeuds imprimante
-	lectureFichierImprimante();
+	lectureFichierImprimante(reseau);
 	//Mise en place du réseau
 	reseau.implanter();
 
@@ -87,7 +87,7 @@ int main()
 	//system("PAUSE");
 }
 
-void lectureFichierCommutateur()
+void lectureFichierCommutateur(Reseau& reseau)
 {
 	ifstream fichier("commutateur.txt");
 	if (fichier)
@@ -114,7 +114,8 @@ void lectureFichierCommutateur()
 
 			//Construction de l'objet commutateur
 			Commutateur commutateur(idCommutateur, ville, capacite);
-
+			//Ajout de chaque commutateur dans le map de noeuds
+			reseau.ajouter(commutateur);
 		}
 	}
 	else
@@ -150,7 +151,7 @@ void lectureFichierCouts(int i)
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }*/
 
-void lectureFichierImprimante()
+void lectureFichierImprimante(Reseau& reseau)
 {
 	ifstream fichier("imprimante.txt");
 	if (fichier)
@@ -175,13 +176,15 @@ void lectureFichierImprimante()
 
 			//Construction de l'objet imprimante
 			Imprimante imprimante(idImprimante, nom);
+			//Ajout de chaque imprimante dans le map de noeuds
+			reseau.ajouter(imprimante);
 		}
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
-void lectureFichierOrdinateur(string typeOrdi)
+void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi)
 {
 	ifstream fichier(typeOrdi + ".txt");
 	if (fichier)
@@ -212,13 +215,15 @@ void lectureFichierOrdinateur(string typeOrdi)
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
 			Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
+			//Ajout de chaque ordi dans le map de noeuds
+			reseau.ajouter(ordi);
 		}
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
-void lectureFichierRouteur()
+void lectureFichierRouteur(Reseau& reseau)
 {
 	ifstream fichier("routeur.txt");
 	if (fichier)
@@ -248,13 +253,15 @@ void lectureFichierRouteur()
 
 			//Constructeur de routeur
 			Routeur routeur(idRouteur, nom, capacite, reseauSansFil);
+			//Ajout de chaque routeur dans le map de noeuds
+			reseau.ajouter(routeur);
 		}
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
-void lectureFichierServeur()
+void lectureFichierServeur(Reseau& reseau)
 {
 	ifstream fichier("serveur.txt");
 	if (fichier)
@@ -279,13 +286,15 @@ void lectureFichierServeur()
 
 			//Construction de l'objet serveur
 			Serveur serveur(idServeur, nom);
+			//Ajout de chaque serveur dans le map de noeuds
+			reseau.ajouter(serveur);
 		}
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
-void lectureFichierTablette()
+void lectureFichierTablette(Reseau& reseau)
 {
 	ifstream fichier("tablette.txt");
 	if (fichier)
@@ -310,6 +319,8 @@ void lectureFichierTablette()
 
 			//Construction de l'objet tablette
 			Tablette tablette(idTablette, nom);
+			//Ajout de chaque tablette dans le map de noeuds
+			reseau.ajouter(tablette);
 		}
 	}
 	else

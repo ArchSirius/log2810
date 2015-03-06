@@ -42,6 +42,9 @@ void Reseau::implanter(){
 			//Conversion des string en bons types
 			id1 = atoi(reseau[0].c_str());
 			id2 = atoi(reseau[1].c_str());
+
+			//Connexion de chaque noeud du réseau
+			id1->connecter(id2);
 		}
 	}
 	else
