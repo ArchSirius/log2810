@@ -26,18 +26,21 @@ public:
 	string getNom() const;
 	Type getNumType() const;
 	const char* getNomType() const;
+	vector<Noeud*> getConnexionsFil() const;
+	vector<Noeud*> getConnexionsSansFil() const;
+
 	//RF3
 	unsigned int getNbPortDispo() const;
-	unsigned int nbInstances() const;
+	//static unsigned int nbInstances();
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
 
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);
+	static unsigned int instances;
 
 protected:
 	virtual bool connexionCompatible(Noeud* noeud) = 0;
-	static unsigned int instances;
 
 	void ajouterConnexion(Noeud* noeud, bool lienFilaire);
 	void retirerConnexion(Noeud* noeud, bool lienFilaire);
@@ -52,7 +55,5 @@ protected:
 	vector<Noeud*> connexionsFil;
 	vector<Noeud*> connexionsSansFil;
 };
-
-unsigned int Noeud::instances = 1;
 
 #endif 

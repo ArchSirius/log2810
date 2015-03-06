@@ -53,6 +53,8 @@ Noeud::~Noeud(){
 	}
 	instances--;
 }
+//Nombre de sommets
+unsigned int Noeud::instances = 0;
 
 //Accesseur
 unsigned int Noeud::getId() const{
@@ -81,10 +83,21 @@ unsigned int Noeud::getNbPortDispo() const {
 	return capaciteEthernet - connexionsFil.size();
 }
 
-unsigned int Noeud::nbInstances() const{
-	return instances;
+//Accesseur
+vector<Noeud*> Noeud::getConnexionsFil() const {
+	return connexionsFil;
 }
 
+//Accesseur
+vector<Noeud*> Noeud::getConnexionsSansFil() const {
+	return connexionsSansFil;
+}
+
+/*
+static unsigned int Noeud::nbInstances() {
+	return instances;
+}
+*/
 /****************************************************************************
 * Fonction		: Noeud::connecter
 * Description	: methode pour connecter deux noeud entre eux

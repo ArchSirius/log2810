@@ -85,13 +85,6 @@ int main()
 	reseau.implanter();
 
 	//lectureFichierType();
-
-	/*Tablette* tab = new Tablette();
-	Ordinateur* or = new Ordinateur(1, "or", true, true);
-	Routeur* rout = new Routeur(3, "rout", 4, true);
-	tab->connecter(rout);
-	tab->connecter(rout);
-	cout << *tab;*/
 	system("PAUSE");
 
 }
