@@ -31,6 +31,8 @@ Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi)
 	{
 		numType = Noeud::PC;
 		capaciteEthernet = 1;
+		//Puisqu'un PC possède les deux typres de carte
+		reseauSansFil = true;
 	}
 	else 
 	{

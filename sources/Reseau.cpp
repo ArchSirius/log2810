@@ -30,6 +30,30 @@ Reseau::~Reseau(){
 
 void Reseau::implanter(){
 	// Lire reseau.txt et établir connexions
+	ifstream fichier("reseau.txt");
+	if (fichier)
+	{
+		string input, token;
+		vector<string> reseau;
+		unsigned int id1, id2;
+
+		while (!fichier.eof())
+		{
+			reseau.clear();
+			getline(fichier, input);
+			istringstream ss(input);
+			while (getline(ss, token, '-'))
+				reseau.push_back(token);
+
+			//Conversion des string en bons types
+			id1 = atoi(reseau[0].c_str());
+			id2 = atoi(reseau[1].c_str());
+			//Construction de l'objet reseau??
+			//Reseau reseau(id1, id2);
+		}
+	}
+	else
+		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
 void Reseau::afficher(){

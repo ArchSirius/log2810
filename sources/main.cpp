@@ -27,7 +27,7 @@ void lectureFichierCommutateur();
 void lectureFichierCouts(int i);
 void lectureFichierImprimante();
 void lectureFichierOrdinateur(string typeOrdi);
-void lectureFichierReseau();
+//void lectureFichierReseau();
 void lectureFichierRouteur();
 void lectureFichierServeur();
 void lectureFichierTablette();
@@ -35,17 +35,29 @@ void lectureFichierType();
 
 int main()
 {
-	//lectureFichierCommutateur();
+	//Création du réseau
+
+	//Création tout d'abord des noeuds en parcourant les fichiers nécessaires
+	//Les noeuds routeur
+	lectureFichierRouteur();
+	//Les noeuds commutateur
+	lectureFichierCommutateur();
+	//Les noeuds serveur
+	lectureFichierServeur();
+	//Les noeuds PC
+	lectureFichierOrdinateur("PC");
+	//Les noeuds laptop
+	lectureFichierOrdinateur("laptop");
+	//Les noeuds tablette
+	lectureFichierTablette();
+	//Les noeuds imprimante
+	lectureFichierImprimante();
+
+
+
 	//lectureFichierCouts(4);
-	//lectureFichierImprimante();
-	//lectureFichierOrdinateur("laptop");
-	//lectureFichierOrdinateur("PC");
-	//lectureFichierReseau();
-	//lectureFichierRouteur();
-	//lectureFichierServeur();
-	//lectureFichierTablette();
 	//lectureFichierType();
-	system("PAUSE");
+	//system("PAUSE");
 }
 
 void lectureFichierCommutateur()
@@ -170,34 +182,6 @@ void lectureFichierOrdinateur(string typeOrdi)
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
 			Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
-		}
-	}
-	else
-		cout << "Impossible d'ouvrir le fichier" << endl;
-}
-
-void lectureFichierReseau()
-{
-	ifstream fichier("reseau.txt");
-	if (fichier)
-	{
-		string input, token;
-		vector<string> reseau;
-		unsigned int id1, id2;
-
-		while (!fichier.eof())
-		{
-			reseau.clear();
-			getline(fichier, input);
-			istringstream ss(input);
-			while (getline(ss, token, '-'))
-				reseau.push_back(token);
-
-			//Conversion des string en bons types pour le constructeur
-			id1 = atoi(reseau[0].c_str());
-			id2 = atoi(reseau[1].c_str());
-			//Construction de l'objet reseau
-			Reseau reseau(id1, id2);
 		}
 	}
 	else

@@ -10,6 +10,11 @@
 
 #include "Noeud.h"
 #include <map>
+#include <string> 
+#include <iostream> 
+#include <fstream> 
+#include <vector>
+#include <sstream>
 using namespace std;
 
 class Reseau {
