@@ -55,5 +55,5 @@ void Reseau::distance(Noeud* n1, Noeud* n2){
 }
 
 unsigned int Reseau::floyd(map<unsigned int, Noeud*> noeuds, Noeud* n1, Noeud* n2){
-
+	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
 }

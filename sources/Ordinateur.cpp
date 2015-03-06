@@ -38,10 +38,10 @@ Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi)
 		reseauSansFil = true;
 	}
 }
-
+/*
 Ordinateur::~Ordinateur(){
 	for (unsigned int i = 0; i < connexions.size(); i++)
 	{
 		delete connexions[i];
 	}
-}
+}*/

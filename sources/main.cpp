@@ -168,7 +168,7 @@ void lectureFichierOrdinateur(string typeOrdi)
 			char* nom = _strdup(str_nom.c_str());
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet commutateur
-			Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
+			//Ordinateur ordi(idOrdi, nom, lienFilaire, pTypeOrdi);
 		}
 	}
 	else
