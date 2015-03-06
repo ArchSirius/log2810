@@ -34,7 +34,7 @@ void lectureFichierType();
 
 int main()
 {
-	//lectureFichierCommutateur();
+	lectureFichierCommutateur();
 	//lectureFichierCouts(4);
 	//lectureFichierImprimante();
 	//lectureFichierOrdinateur("laptop");
