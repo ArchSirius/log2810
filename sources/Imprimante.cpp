@@ -19,3 +19,23 @@ Imprimante::Imprimante(int pId, char* pNom) : Noeud(pId, pNom){
 }
 
 Imprimante::~Imprimante(){}
+
+bool Imprimante::connexionCompatible(Noeud* noeud) {
+	if (noeud->getNumType() == COMMUTATEUR)
+	{
+		for (Noeud* n : connexionsFil)
+		{
+			if (n->getNumType() == COMMUTATEUR)
+			{
+				cout << "Cette imprimante est deja connectee a un commutateur ";
+				return false;
+			}
+		}
+		return true;
+	}
+	else
+	{
+		cout << "Une imprimante peut seulement se conecter avec un commutateur ";
+		return false;
+	}
+}

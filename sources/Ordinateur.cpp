@@ -41,6 +41,16 @@ Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi)
 	}
 }
 
-Ordinateur::~Ordinateur(){
+Ordinateur::~Ordinateur(){}
 
+bool Ordinateur::connexionCompatible(Noeud* noeud){
+	if (noeud->getNumType() == COMMUTATEUR || noeud->getNumType() == ROUTEUR)
+		return true;
+	else
+	{
+		cout << "Un ordinateur peut seulement se conecter avec un commutateur ou un routeur ";
+		return false;
+	}
+		
 }
+

@@ -17,6 +17,7 @@ public:
 	Commutateur(unsigned int pId, char* pNom, unsigned int capacite);
 	~Commutateur();
 
+	virtual bool connexionCompatible(Noeud* noeud);
 private:
 	//unsigned int capacite; //Nombre maximal de ports
 };

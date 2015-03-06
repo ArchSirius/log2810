@@ -17,6 +17,7 @@ public:
 	Tablette(int pId, char* pNom);
 	~Tablette();
 
+	virtual bool connexionCompatible(Noeud* noeud);
 private:
 	//carte reseau pour tous
 	

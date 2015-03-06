@@ -17,6 +17,7 @@ public:
 	Routeur(int pId, char* pNom, unsigned int pCapacite, bool pReseauSansFil);
 	~Routeur();
 
+	virtual bool connexionCompatible(Noeud* noeud);
 private:
 	//unsigned int capacite; //Nombre maximal de ports
 	//bool carteWifi; //Indique si le routeur dispose d'une carte r�seau sans fil

@@ -18,6 +18,8 @@ public:
 	Ordinateur(int pId, char* pNom, bool pLienfilaire, bool pTypeOrdi);
 	~Ordinateur();
 
+	virtual bool connexionCompatible(Noeud* noeud);
+
 private:
 	//bool lienFilaire; //True indique qu'un lien filaire pourrait �tre �tabli avec l'ordinateur. False signifie que le lien sans fil pourrait �tre �tabli avec l'ordinateur.
 };

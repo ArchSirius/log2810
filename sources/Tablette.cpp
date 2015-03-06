@@ -19,3 +19,23 @@ Tablette::Tablette(int pId, char* pNom) : Noeud(pId, pNom){
 }
 
 Tablette::~Tablette(){}
+
+bool Tablette::connexionCompatible(Noeud* noeud) {
+	if (noeud->getNumType() == ROUTEUR)
+	{
+		for (Noeud* n : connexionsFil)
+		{
+			if (n->getNumType() == ROUTEUR)
+			{
+				cout << "Cette tablette est deja connectee a un routeur ";
+				return false;
+			}
+		}
+		return true;
+	}
+	else
+	{
+		cout << "Une tablette peut seulement se conecter avec un routeur ";
+		return false;
+	}
+}

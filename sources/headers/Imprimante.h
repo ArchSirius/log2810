@@ -15,6 +15,9 @@ public:
 	Imprimante(int pId, char* pNom);
 	~Imprimante();
 
+	virtual bool connexionCompatible(Noeud* noeud);
+	//virtual void connecter(Noeud* noeud);
+
 private:
 	//carte reseau pour tous
 

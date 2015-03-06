@@ -10,7 +10,7 @@
 #define NOEUD_H_
 
 #include <vector>
-#include "ostream"
+#include "iostream"
 using namespace std;
 
 class Noeud{
@@ -26,7 +26,7 @@ public:
 	string getNom() const;
 	Type getNumType() const;
 	const char* getNomType() const;
-
+	//RF3
 	unsigned int getNbPortDispo() const;
 
 	void connecter(Noeud& noeud);
@@ -35,6 +35,7 @@ public:
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);
 
 protected:
+	virtual bool connexionCompatible(Noeud* noeud) = 0;
 	void ajouterConnexion(Noeud* noeud, bool lienFilaire);
 	void retirerConnexion(Noeud* noeud, bool lienFilaire);
 

@@ -2,7 +2,7 @@
 * Fichier       : Reseau.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 février 2015
-* Mise à jour   : 26 février 2015
+* Mise à jour   : 06 mars 2015
 * Description   : Implementation de la classe Reseau
 ****************************************************************************/
 
@@ -56,7 +56,8 @@ void Reseau::implanter(){
 }
 
 void Reseau::afficher(){
-	// nécessitera d'implémenter operator<< pour Noeud
+	for (pair<const unsigned int, Noeud*> n : noeuds)
+		cout << *(n.second) << endl;
 }
 
 void Reseau::ajouter(Noeud noeud){

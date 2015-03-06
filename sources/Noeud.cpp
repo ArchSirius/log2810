@@ -2,7 +2,7 @@
 * Fichier       : Noeud.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 19 février 2015
-* Mise à jour   : 5 mars 2015
+* Mise à jour   : 06 mars 2015
 * Description   : Implementation de la classe Noeud
 ****************************************************************************/
 #include <string.h>
@@ -85,18 +85,26 @@ unsigned int Noeud::getNbPortDispo() const {
 * Paramètres	: (Noeud*) noeud : noeud qu'on veut connecter au noeud courant
 * Retour		: aucun
 ****************************************************************************/
-void Noeud::connecter(Noeud& noeud){
-	if (getNbPortDispo() > 0)
-	{
-		ajouterConnexion(noeud, true); 
-		noeud->ajouterConnexion(this, true);
-	}
 
-	else if (reseauSansFil && noeud->reseauSansFil)
+void Noeud::connecter(Noeud& noeud){
+	if (connexionCompatible(noeud) && noeud->connexionCompatible(this))
 	{
-		ajouterConnexion(noeud, false);
-		noeud->ajouterConnexion(this, false);
+		if (getNbPortDispo() > 0)
+		{
+			ajouterConnexion(noeud, true);
+			noeud->ajouterConnexion(this, true);
+		}
+
+		else if (reseauSansFil && noeud->reseauSansFil)
+		{
+			ajouterConnexion(noeud, false);
+			noeud->ajouterConnexion(this, false);
+		}
+		else
+			cout << "aucun port disponible ou reseau sans fil non-disponible" << endl;
 	}
+	else
+		cout << " : connexions incompatibles entre les deux appareils" << endl;
 	
 }
 
@@ -121,12 +129,14 @@ void Noeud::ajouterConnexion(Noeud* noeud, bool lienFilaire){
 * Retour		: aucun
 ****************************************************************************/
 void Noeud::deconnecter(Noeud* noeud){
+	bool trouve = false;
 	vector<Noeud*>::iterator it;
 	if (capaciteEthernet > 0 && noeud->capaciteEthernet > 0)
 	{ 
 		it = find(connexionsFil.begin(), connexionsFil.end(), noeud);
 		//si on trouve on retire la connexion filaire
 		if (it != connexionsFil.end()){
+			trouve = true;
 			retirerConnexion(noeud, true);
 			noeud->retirerConnexion(this, true);
 		}
@@ -137,10 +147,14 @@ void Noeud::deconnecter(Noeud* noeud){
 		it = find(connexionsSansFil.begin(), connexionsSansFil.end(), noeud);
 		//si on trouve on retire la connexion sans-fil
 		if (it != connexionsSansFil.end()){
+			trouve = true;
 			retirerConnexion(noeud, false);
 			noeud->retirerConnexion(this, false);
 		}
 	}
+
+	if (!trouve)
+		cout << "Desole, la connexion demandee n'existe pas!" << endl;
 
 }
 

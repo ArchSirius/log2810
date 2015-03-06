@@ -33,3 +33,7 @@ Routeur::Routeur(int pId, char* pNom, unsigned int pCapacite, bool pReseauSansFi
 }
 
 Routeur::~Routeur(){}
+
+bool Routeur::connexionCompatible(Noeud* noeud) {
+	return true;
+}

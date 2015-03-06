@@ -18,6 +18,8 @@ public:
 	Serveur(int pId, char* pNom);
 	~Serveur();
 
+	virtual bool connexionCompatible(Noeud* noeud);
+
 private:
 	//
 

@@ -24,3 +24,7 @@ Commutateur::Commutateur(unsigned int pId, char* pNom, unsigned int pCapacite) :
 }
 
 Commutateur::~Commutateur(){}
+
+bool Commutateur::connexionCompatible(Noeud* noeud) {
+	return true;
+}
