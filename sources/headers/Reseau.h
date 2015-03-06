@@ -41,7 +41,7 @@ public:
 	*	Ainsi la map noeuds contient chaque appareil du reseau,
 	*	et chaque appareil contient un vecteur listant ses connexions.
 	*/
-	void ajouter(Noeud noeud);
+	void ajouter(Noeud* noeud);
 	void retirer(unsigned int id);
 	void remplacer(unsigned int ancien, unsigned int nouveau);
 	void distance(unsigned int n1, unsigned int n2) const;
@@ -49,7 +49,7 @@ public:
 private:
 	unsigned int floyd(const map<unsigned int, Noeud>* noeuds, const Noeud* n1, const Noeud* n2) const;
 
-	map<unsigned int, Noeud> noeuds;
+	map<unsigned int, Noeud*> noeuds;
 	unsigned int coutFil, coutSansFil;
 
 };

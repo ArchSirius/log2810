@@ -92,7 +92,7 @@ unsigned int Noeud::nbInstances() const{
 * Retour		: aucun
 ****************************************************************************/
 
-void Noeud::connecter(Noeud& noeud){
+void Noeud::connecter(Noeud* noeud){
 	if (connexionCompatible(noeud) && noeud->connexionCompatible(this))
 	{
 		if (getNbPortDispo() > 0)

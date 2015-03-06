@@ -44,10 +44,10 @@ void Reseau::implanter(){
 			id2 = atoi(relation[1].c_str());
 			
 			// Connecter
-			map<unsigned int, Noeud>::iterator it1 = noeuds.find(id1);
-			map<unsigned int, Noeud>::iterator it2 = noeuds.find(id2);
+			map<unsigned int, Noeud*>::iterator it1 = noeuds.find(id1);
+			map<unsigned int, Noeud*>::iterator it2 = noeuds.find(id2);
 			if(it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
-				(it1->second).connecter(it2->second);
+				(it1->second)->connecter(it2->second);
 			}
 		}
 	}
@@ -60,8 +60,8 @@ void Reseau::afficher(){
 		cout << *(n.second) << endl;
 }
 
-void Reseau::ajouter(Noeud noeud){
-	noeuds.insert(pair<unsigned int, Noeud>(noeud.getId(), noeud));
+void Reseau::ajouter(Noeud* noeud){
+	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
 }
 
 void Reseau::retirer(unsigned int id){
