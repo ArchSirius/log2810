@@ -17,15 +17,9 @@ Reseau::Reseau(unsigned int pCoutFil, unsigned int pCoutSansFil)
 }
 
 Reseau::~Reseau(){
-	for(map<unsigned int, Noeud*>::reverse_iterator rit = noeuds.rbegin();
-		rit != noeuds.rend();
-		++rit)
-	{
-		// Destructeur de Noeud
-		delete rit->second;
-		// Retirer l'élément de la map (par clé, car reverse_iterator ne marche pas)
-    	noeuds.erase(rit->first);
-	}
+	// Reseau ne contient aucun pointeur
+	// Ses noeuds sont détruits lorsqu'il est détruit
+	// main détruit Reseau
 }
 
 void Reseau::implanter(){
@@ -60,24 +54,22 @@ void Reseau::afficher(){
 	// nécessitera d'implémenter operator<< pour Noeud
 }
 
-void Reseau::ajouter(Noeud* noeud){
-	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
+void Reseau::ajouter(Noeud noeud){
+	noeuds.insert(pair<unsigned int, Noeud>(noeud.getId(), noeud));
 }
 
-void Reseau::retirer(Noeud* noeud){
-	noeuds.erase(noeud->getId());
-	// Le destructeur de Noeud retire toutes les connexions;
-	delete noeud;
+void Reseau::retirer(unsigned int id){
+	noeuds.erase(id);
 }
 
-void Reseau::remplacer(Noeud* ancien, Noeud* nouveau){
+void Reseau::remplacer(unsigned int ancien, unsigned int nouveau){
 
 }
 
-void Reseau::distance(Noeud* n1, Noeud* n2){
+void Reseau::distance(unsigned int n1, unsigned int n2) const {
 	// Si n1 et n2 existent dans map, floyd, puis afficher
 }
 
-unsigned int Reseau::floyd(map<unsigned int, Noeud*> noeuds, Noeud* n1, Noeud* n2){
+unsigned int Reseau::floyd(const map<unsigned int, Noeud>* noeuds, const Noeud* n1, const Noeud* n2) const {
 	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
 }
