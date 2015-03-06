@@ -28,6 +28,7 @@ public:
 	const char* getNomType() const;
 	//RF3
 	unsigned int getNbPortDispo() const;
+	unsigned int nbInstances() const;
 
 	void connecter(Noeud& noeud);
 	void deconnecter(Noeud* noeud);
@@ -36,6 +37,8 @@ public:
 
 protected:
 	virtual bool connexionCompatible(Noeud* noeud) = 0;
+	static unsigned int instances;
+
 	void ajouterConnexion(Noeud* noeud, bool lienFilaire);
 	void retirerConnexion(Noeud* noeud, bool lienFilaire);
 
@@ -49,5 +52,7 @@ protected:
 	vector<Noeud*> connexionsFil;
 	vector<Noeud*> connexionsSansFil;
 };
+
+unsigned int Noeud::instances = 1;
 
 #endif 

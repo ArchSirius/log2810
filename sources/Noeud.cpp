@@ -39,6 +39,7 @@ Noeud::Noeud(int pId, char* pNom){
 	nom[MAXSIZE - 1] = '\0';
 	capaciteEthernet = 0;
 	reseauSansFil = false;
+	instances++;
 }
 
 //Destructeur
@@ -50,6 +51,7 @@ Noeud::~Noeud(){
 	for (Noeud* noeud : connexionsSansFil){
 		deconnecter(noeud);
 	}
+	instances--;
 }
 
 //Accesseur
@@ -77,6 +79,10 @@ const char* Noeud::getNomType() const
 //Accesseur
 unsigned int Noeud::getNbPortDispo() const {
 	return capaciteEthernet - connexionsFil.size();
+}
+
+unsigned int Noeud::nbInstances() const{
+	return instances;
 }
 
 /****************************************************************************
