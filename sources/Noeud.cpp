@@ -11,7 +11,8 @@
 #include "headers/Noeud.h"
 using namespace std;
 
-unsigned int Noeud::instances = 1;
+//Nombre de sommets
+unsigned int Noeud::instances = 0;
 /****************************************************************************
 * Fonction		: Noeud::Noeud
 * Description	: Constructeur par defaut
@@ -54,8 +55,6 @@ Noeud::~Noeud(){
 	}
 	instances--;
 }
-//Nombre de sommets
-unsigned int Noeud::instances = 0;
 
 //Accesseur
 unsigned int Noeud::getId() const{
@@ -99,6 +98,22 @@ static unsigned int Noeud::nbInstances() {
 	return instances;
 }
 */
+
+/****************************************************************************
+* Requis fonctionnels #3
+* Fonction		: Noeud::afficherNbPortDispo
+* Description	: methode pour afficher le nombre de port disponible seulement 
+				  pour les commutateurs ou les routeurs
+* Paramètres	: aucun
+* Retour		: aucun
+****************************************************************************/
+void Noeud::afficherNbPortDispo() const {
+	if (numType == COMMUTATEUR || numType == ROUTEUR)
+		cout << "Ce " << getNomType() << " lui reste " << getNbPortDispo() << " port(s) de disponible" << endl;
+	else
+		cout << "Desole, ce noeud n'est pas un commutateur ou un routeur" << endl;
+}
+
 /****************************************************************************
 * Fonction		: Noeud::connecter
 * Description	: methode pour connecter deux noeud entre eux
