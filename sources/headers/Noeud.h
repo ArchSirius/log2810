@@ -20,7 +20,7 @@ public:
 
 	Noeud();
 	Noeud(int pId, char* pNom);
-	~Noeud();
+	virtual ~Noeud();
 
 	unsigned int getId() const;
 	string getNom() const;
@@ -29,9 +29,7 @@ public:
 	vector<Noeud*> getConnexionsFil() const;
 	vector<Noeud*> getConnexionsSansFil() const;
 
-	//RF3
 	unsigned int getNbPortDispo() const;
-	//static unsigned int nbInstances();
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
