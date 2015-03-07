@@ -30,12 +30,14 @@ public:
 	vector<Noeud*> getConnexionsSansFil() const;
 
 	unsigned int getNbPortDispo() const;
+	void afficherNbPortDispo() const;
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
 
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);
 	static unsigned int instances;
+
 
 protected:
 	virtual bool connexionCompatible(Noeud* noeud) = 0;

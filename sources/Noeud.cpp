@@ -44,7 +44,7 @@ Noeud::Noeud(int pId, char* pNom){
 }
 
 //Destructeur
-virtual Noeud::~Noeud(){
+Noeud::~Noeud(){
 	for(Noeud* noeud : connexionsFil){
 		deconnecter(noeud);
 	}
@@ -223,17 +223,22 @@ void Noeud::retirerConnexion(Noeud* noeud, bool lienFilaire){
 ****************************************************************************/
 ostream& operator<<(ostream& os, const Noeud& noeud)
 {
-	os << "Id : " << noeud.id << " Type : " << noeud.getNomType() << " Nom : " << noeud.nom << endl;
+	os << "Id : " << noeud.id << endl << "Type : " << noeud.getNomType() << endl << "Nom : " << noeud.nom << endl << endl;
 	
-	os << "connexions filaire: " << endl;
+	os << "connexions filaire de " << noeud.nom << ": " << endl;
+	if (noeud.connexionsFil.size() == 0)
+		cout << "  Aucune connexion filaire" << endl;
 	for (unsigned int i = 0; i < noeud.connexionsFil.size(); i++)
 		os << "  " << i + 1 << "- " << "Id : " << noeud.connexionsFil[i]->id << " Type : " << noeud.connexionsFil[i]->getNomType() << " Nom : " << noeud.connexionsFil[i]->nom << endl;
 	os << endl;
 
-	os << "connexions sans fil: " << endl;
+	os << "connexions sans fil " << noeud.nom << ": " << endl;
+	if (noeud.connexionsSansFil.size() == 0)
+		cout << "  Aucune connexion sans fil" << endl;
 	for (unsigned int i = 0; i < noeud.connexionsSansFil.size(); i++)
 		os << "  " << i + 1 << "- " << "Id : " << noeud.connexionsSansFil[i]->id << " Type : " << noeud.connexionsSansFil[i]->getNomType() << " Nom : " << noeud.connexionsSansFil[i]->nom << endl;
 	os << endl;
+	cout << "======================================================";
 
 	return os;
 }
