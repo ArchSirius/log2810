@@ -122,10 +122,13 @@ void Reseau::floyd() {
 
 void Reseau::matriceGen(){
 	// Construire la matrice et initialiser à l'infini
-	header.resize(noeuds.size());
-	matrice.resize(header.size());
-	for(unsigned int i = 0; i < matrice.size(); i++){
-		matrice[i].resize(matrice.size(), numeric_limits<unsigned int>::max());
+	for(unsigned int i = 0; i < noeuds.size(); i++){
+		vector<unsigned int> temp;
+		for(unsigned int j = 0; j < noeuds.size(); j++){
+			temp.push_back(numeric_limits<unsigned int>::max());
+		}
+		matrice.push_back(temp);
+		header.push_back(0);
 	}
 
 	// Initialiser le header
@@ -136,7 +139,7 @@ void Reseau::matriceGen(){
 	}
 
 	// Réinitialiser la diagonale
-	for(i = 0; i < noeuds.size(); i++){
+	for(i = 0; i < matrice.size(); i++){
 		matrice[i][i] = 0;
 	}
 
