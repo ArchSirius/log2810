@@ -91,13 +91,13 @@ unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 			matriceGen();
 		if(!coutsUpdated)
 			floyd();
-		unsigned int i = 1;
-		unsigned int j = 1;
+		unsigned int i = 0;
+		unsigned int j = 0;
 		// obtenir la position dans la matrice
-		while(couts[0][i] != n1){
+		while(header[i] != n1){
 			i++;
 		}
-		while(couts[j][0] != n2){
+		while(header[j] != n2){
 			j++;
 		}
 		return couts[i][j];
