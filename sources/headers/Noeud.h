@@ -31,7 +31,8 @@ public:
 
 	//RF3
 	unsigned int getNbPortDispo() const;
-	//static unsigned int nbInstances();
+	
+	static unsigned int nbInstances();
 
 	void connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
