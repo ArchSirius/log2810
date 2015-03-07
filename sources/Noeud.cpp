@@ -117,6 +117,7 @@ void Noeud::afficherNbPortDispo() const {
 /****************************************************************************
 * Fonction		: Noeud::connecter
 * Description	: methode pour connecter deux noeud entre eux
+				  on verifie si la connexion est compatible puis on regarde s'il reste des ports disponibles
 * Paramètres	: (Noeud*) noeud : noeud qu'on veut connecter au noeud courant
 * Retour		: aucun
 ****************************************************************************/
@@ -124,7 +125,7 @@ void Noeud::afficherNbPortDispo() const {
 void Noeud::connecter(Noeud* noeud){
 	if (connexionCompatible(noeud) && noeud->connexionCompatible(this))
 	{
-		if (getNbPortDispo() > 0)
+		if (getNbPortDispo() > 0 && noeud->getNbPortDispo() > 0)
 		{
 			ajouterConnexion(noeud, true);
 			noeud->ajouterConnexion(this, true);
