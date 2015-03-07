@@ -20,7 +20,7 @@ public:
 
 	Noeud();
 	Noeud(int pId, char* pNom);
-	~Noeud();
+	virtual ~Noeud();
 
 	unsigned int getId() const;
 	string getNom() const;
@@ -30,9 +30,6 @@ public:
 	vector<Noeud*> getConnexionsSansFil() const;
 
 	unsigned int getNbPortDispo() const;
-	
-	static unsigned int nbInstances();
-	//RF3
 	void afficherNbPortDispo() const;
 
 	void connecter(Noeud* noeud);
@@ -40,6 +37,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);
 	static unsigned int instances;
+
 
 protected:
 	virtual bool connexionCompatible(Noeud* noeud) = 0;

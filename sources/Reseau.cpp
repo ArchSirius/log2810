@@ -7,13 +7,14 @@
 ****************************************************************************/
 
 #include "headers/Reseau.h"
+#include <limits>
 
 Reseau::Reseau()
-	: coutFil(0), coutSansFil(0) {
+	: coutFil(0), coutSansFil(0) , matriceUpdated(false), coutsUpdated(false) {
 }
 
 Reseau::Reseau(unsigned int pCoutFil, unsigned int pCoutSansFil)
-	: coutFil(pCoutFil), coutSansFil(pCoutSansFil) {
+	: coutFil(pCoutFil), coutSansFil(pCoutSansFil), matriceUpdated(false), coutsUpdated(false) {
 }
 
 Reseau::~Reseau(){
@@ -56,6 +57,7 @@ void Reseau::implanter(){
 				(it1->second)->connecter(it2->second);
 			}
 		}
+		matriceGen();
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
@@ -68,21 +70,137 @@ void Reseau::afficher(){
 
 void Reseau::ajouter(Noeud* noeud){
 	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
+	matriceUpdated = false;
 }
 
 void Reseau::retirer(unsigned int id){
 	noeuds.erase(id);
+	matriceUpdated = false;
 }
 
 void Reseau::remplacer(unsigned int ancien, unsigned int nouveau){
-
+	// a faire
+	matriceUpdated = false;
 }
 
-void Reseau::distance(unsigned int n1, unsigned int n2) const {
-	// Si n1 et n2 existent dans map, floyd, puis afficher
+unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
+	map<unsigned int, Noeud*>::iterator it1 = noeuds.find(n1);
+	map<unsigned int, Noeud*>::iterator it2 = noeuds.find(n2);
+	if(it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
+		if(!matriceUpdated)
+			matriceGen();
+		if(!coutsUpdated)
+			floyd();
+		unsigned int i = 1;
+		unsigned int j = 1;
+		// obtenir la position dans la matrice
+		while(couts[0][i] != n1){
+			i++;
+		}
+		while(couts[j][0] != n2){
+			j++;
+		}
+		return couts[i][j];
+	}
+	return 0;
 }
 
-unsigned int Reseau::floyd(const map<unsigned int, Noeud*>& noeuds, const Noeud* n1, const Noeud* n2) const {
+void Reseau::floyd() {
+	couts = matrice;
+	for(unsigned int i = 0; i < couts.size(); i++){
+		for(unsigned int j = 0; j < couts.size(); j++){
+			for(unsigned int k = 0; k < couts.size(); k++){
+				if(couts[j][k] > couts[i][j] + couts[i][k]){
+					couts[j][k] = couts[i][j] + couts[i][k];
+					couts[k][j] = couts[i][j] + couts[i][k];
+				}
+			}
+		}
+	}
+	coutsUpdated = true;
+}
 
-	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
+void Reseau::matriceGen(){
+	// Construire la matrice et initialiser à l'infini
+	for(unsigned int i = 0; i < noeuds.size(); i++){
+		vector<unsigned int> temp;
+		for(unsigned int j = 0; j < noeuds.size(); j++){
+			temp.push_back(numeric_limits<unsigned int>::max());
+		}
+		matrice.push_back(temp);
+		header.push_back(0);
+	}
+
+	// Initialiser le header
+	unsigned int i = 0;
+	for(pair<unsigned int, Noeud*> paire : noeuds){
+		header[i] = paire.first;
+		i++;
+	}
+
+	// Réinitialiser la diagonale
+	for(i = 0; i < matrice.size(); i++){
+		matrice[i][i] = 0;
+	}
+
+	// Coûts
+
+	// Pour chaque noeud A du réseau
+	for(pair<unsigned int, Noeud*> paire : noeuds){
+		// FIL
+		unsigned int indexA = 0;
+		// obtenir la position dans la matrice
+			while(header[indexA] != i){
+				indexA++;
+			}
+		vector<Noeud*> connections = paire.second->getConnexionsFil();
+		// trouver ses noeuds B connectés
+		for(Noeud* noeud : connections){
+			// obtenir le ID de son noeud B
+			i = noeud->getId();
+			unsigned int indexB = 0;
+			// obtenir la position dans la matrice
+			while(header[indexB] != i){
+				indexB++;
+			}
+			// poser le coût [A][B]
+			matrice[indexA][indexB] = coutFil;
+			matrice[indexB][indexA] = coutFil;
+		}
+
+		// SANS-FIL
+		indexA = 0;
+		// obtenir la position dans la matrice
+			while(header[indexA] != i){
+				indexA++;
+			}
+		connections = paire.second->getConnexionsSansFil();
+		// trouver ses noeuds B connectés
+		for(Noeud* noeud : connections){
+			// obtenir le ID de son noeud B
+			i = noeud->getId();
+			unsigned int indexB = 0;
+			// obtenir la position dans la matrice
+			while(header[indexB] != i){
+				indexB++;
+			}
+			// poser le coût [A][B]
+			matrice[indexA][indexB] = coutSansFil;
+			matrice[indexB][indexA] = coutSansFil;
+		}
+	}
+
+	/* La matrice prend alors la forme
+
+	  - 111 112 113 211 311 312
+	111   0   1   -   2   -   -
+	112   1   0   -   -   -   1
+	113   -   -   0   2   -   -
+	211   2   -   2   0   -   1
+	311   -   -   -   -   0   -
+	312   -   1   -   1   -   0
+
+	*/
+
+	matriceUpdated = true;
 }

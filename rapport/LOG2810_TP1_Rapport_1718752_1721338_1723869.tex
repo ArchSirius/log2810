@@ -59,38 +59,87 @@
 \end{center}
 \end{titlepage}
 
+
+
 \section{Introduction}
 \hrule
 \vspace{1em}
-\lipsum[1]
+Dans le cadre de notre future carrière en informatique, il peut parfois être difficile de modéliser 
+certaines applications réelles en applications informatiques si on ne connaît pas les outils nécessaires. 
+Parmi ces outils, nous avons vu des notions sur la théorie des graphes qui permettent de simuler plusieurs situations du monde réel.\\
+\\
+Ainsi, durant ce premier travail pratique, nous aurons l’occasion de modéliser un réseau informatique local. 
+Un réseau informatique est un regroupement d’appareils informatiques connectés entres eux, 
+par fils ou par connexion sans fil, dans le but d’échanger de l’information. 
+En fait, on peut représenter chacun des appareils par des sommets d’un graphe (ou des nœuds) dont chacun possède des caractéristiques et des contraintes de connexion. 
+Nous pouvons ainsi les relier par des arrêtes pour représenter une connexion entre certains appareils selon leur compatibilité. 
+Nous pouvons même allez jusqu’à mettre des chiffres sur chacune des connexions pour représenter le coût d’une connexion 
+et ainsi calculer le coût total de l’échange de l’information d’un point à un autre en additionnant chacun des coûts associés aux connexions nécessaires. 
+Suivant ce principe, nous pouvons déterminer quel réseau de connexions entre deux appareils est le plus économique, 
+dans la cas où plus d’une façon de communiquer est possible.\\
+\\
+Nous pouvons donc représenter ce système par un graphe dont les sommets sont les appareils et les arcs sont les connexions entre ces appareils, 
+et y appliquer l’algorithme de Floyd-Warshall pour calculer le plus faible coût entre deux sommets. 
+On réussit donc à modéliser ce réseau informatique complexe en quelque chose de simple et de concret.\\
+\\
+Dans ce rapport, nous présenterons une explication de la solution adoptée pour réaliser ce travail et nous aborderons les différentes difficultés rencontrées.
 
-\vspace{1em}
 
 
+\newpage
 \section{Présentation du travail}
 \hrule
 \vspace{1em}
-\lipsum[2]
+\lipsum[1]~\\
+\lipsum[2]~\\
+\lipsum[3]
 
-\vspace{1em}
 
 
+\newpage
 \section{Difficultés rencontrées}
 \hrule
 \vspace{1em}
-\lipsum[3]
+Durant la réalisation de ce projet, nous avons rencontré quelques difficultés. 
+L’une d’entre elles était le problème de compatibilité du code source entre chacun de nous. 
+Étant donné que l’un travaille sous Linux et les deux autres sur Windows avec Microsoft Visual Studio 2013, 
+nous avons eu quelques incompatibilités lors de la compilation. 
+Certaines méthodes étaient acceptées sous Linux, mais elles étaient refusées sur Visual Studio, et vice-versa. 
+Par exemple, << strncpy >> qui devait être remplacé par << strncpy$\_$s >> sous Windows à chaque fois que l’on transmettait notre code.\\
+\\
+Une des plus grandes difficultés rencontrées était que nous avons dû faire la majeure partie du travail pendant la semaine de relâche, 
+en plus d'un autre important projet pour un autre cours. 
+Ainsi, certains d’entre nous ont voyagé chez de la famille éloignée, ce qui rendait impossible les rencontres en personne. 
+Par conséquent, cela rendait la coordination plus difficile. 
+Pour pallier à cela, nous nous sommes entendus pour utiliser une messagerie instantanée comme moyen de communication 
+et nous avons utilisé le logiciel de gestion de versions Git pour partager notre code source. 
+Cette façon de fonctionner est une bonne idée, mais n’est pas sans difficultés. 
+L’utilisation de Git était idéale pour la tâche à faire, seul un membre de notre équipe connaissait bien Git; les deux autres devant être initiés pour ce travail. 
+Nous avons ainsi vécu quelques problèmes au début, mais nous nous sommes adaptés rapidement. 
+Néanmoins, Git nous a posé d’autres complications. 
+Étant donné que nous travaillions chacun de notre côté sans se voir en personne, il est arrivé que nous travaillions tous les trois sur le même fichier. 
+De la sorte que, lors de notre envoi du code vers le serveur distant Git, beaucoup de conflits de code sont survenus, 
+puisque nous modifions des parties de code entrant en conflit avec les modifications des autres. 
+Une des solutions adoptées pour réduire ce désagrément a été de planifier des rencontres avec une 
+messagerie instantanée vocale pour communiquer agréablement et en temps réel. 
+Skype était idéal dans notre cas, car il nous a permis d’avoir une conversation à trois personnes et même de 
+saisir du texte lorsque nous voulions partager des ressources ou morceaux de code rapidement.\\
+\\
+De plus, une difficulté non négligeable de ce TP était de revenir au C++. 
+En effet, nous étions un peu << rouillés >> avec ce langage, puisque les autres travaux de cette session sont programmés en Java. 
+Heureusement, nous avons su nous réadapter rapidement.
 
-\vspace{1em}
 
 
+\newpage
 \section{Conclusion}
 \hrule
 \vspace{1em}
 \lipsum[4]
 
-\vspace{1em}
 
 
+\vspace{2em}
 \section{Critiques et améliorations}
 \hrule
 \vspace{1em}
