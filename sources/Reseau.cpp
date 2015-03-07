@@ -7,6 +7,7 @@
 ****************************************************************************/
 
 #include "headers/Reseau.h"
+#include <limits>
 
 Reseau::Reseau()
 	: coutFil(0), coutSansFil(0) {
@@ -85,4 +86,74 @@ void Reseau::distance(unsigned int n1, unsigned int n2) const {
 unsigned int Reseau::floyd(const map<unsigned int, Noeud*>& noeuds, const Noeud* n1, const Noeud* n2) const {
 
 	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
+}
+
+void Reseau::matriceGen(){
+	// Construire la matrice et initialiser à l'infini
+	matrice.resize(noeuds.size() + 1);
+	for(unsigned int i = 0; i < noeuds.size() + 1; i++){
+		matrice[i].resize(noeuds.size() + 1, numeric_limits<unsigned int>::max());
+	}
+
+	// Initialiser les bordures
+	unsigned int i = 0;
+	for(pair<unsigned int, Noeud*> paire : noeuds){
+		matrice[0][i + 1] = paire.first;
+		matrice[i + 1][0] = paire.first;
+		i++;
+	}
+
+	// Réinitialiser la diagonale
+	for(i = 0; i < noeuds.size(); i++){
+		matrice[i + 1][i + 1] = 0;
+	}
+
+	// Coûts
+
+	// Pour chaque noeud A du réseau
+	for(pair<unsigned int, Noeud*> paire : noeuds){
+		// FIL
+		vector<Noeud*> connections = paire.second->getConnexionsFil();
+		// trouver ses noeuds B connectés
+		for(Noeud* noeud : connections){
+			// obtenir le ID de son noeud B
+			i = noeud->getId();
+			unsigned int index = 1;
+			// obtenir la position dans la matrice
+			while(matrice[0][index] != i){
+				index++;
+			}
+			// poser le coût [A][B]
+			matrice[0][index] = coutFil;
+			matrice[index][0] = coutFil;
+		}
+
+		// SANS-FIL
+		connections = paire.second->getConnexionsSansFil();
+		// trouver ses noeuds B connectés
+		for(Noeud* noeud : connections){
+			// obtenir le ID de son noeud B
+			i = noeud->getId();
+			unsigned int index = 1;
+			// obtenir la position dans la matrice
+			while(matrice[0][index] != i){
+				index++;
+			}
+			// poser le coût [A][B]
+			matrice[0][index] = coutSansFil;
+			matrice[index][0] = coutSansFil;
+		}
+	}
+
+	/* La matrice prend alors la forme
+
+	  - 111 112 113 211 311 312
+	111   0   1   -   2   -   -
+	112   1   0   -   -   -   1
+	113   -   -   0   2   -   -
+	211   2   -   2   0   -   1
+	311   -   -   -   -   0   -
+	312   -   1   -   1   -   0
+
+	*/
 }

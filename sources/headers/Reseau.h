@@ -47,6 +47,8 @@ public:
 	void distance(unsigned int n1, unsigned int n2) const;
 
 private:
+	void matriceGen();
+	vector< vector<unsigned int> > matrice;
 	unsigned int floyd(const map<unsigned int, Noeud*>& noeuds, const Noeud* n1, const Noeud* n2) const;
 
 	map<unsigned int, Noeud*> noeuds;

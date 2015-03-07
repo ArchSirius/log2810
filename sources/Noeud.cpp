@@ -11,7 +11,7 @@
 #include "headers/Noeud.h"
 using namespace std;
 
-unsigned int Noeud::instances = 1;
+unsigned int Noeud::instances = 0;
 /****************************************************************************
 * Fonction		: Noeud::Noeud
 * Description	: Constructeur par defaut
