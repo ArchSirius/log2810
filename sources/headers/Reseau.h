@@ -51,6 +51,7 @@ private:
 
 	map<unsigned int, Noeud*> noeuds;
 
+	vector<unsigned int> header;
 	vector< vector<unsigned int> > matrice;
 	vector< vector<unsigned int> > couts;
 	bool matriceUpdated, coutsUpdated;

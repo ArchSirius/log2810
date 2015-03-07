@@ -107,9 +107,9 @@ unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 
 void Reseau::floyd() {
 	couts = matrice;
-	for(unsigned int i = 1; i < couts.size(); i++){
-		for(unsigned int j = 1; j < couts.size(); j++){
-			for(unsigned int k = 1; k < couts.size(); k++){
+	for(unsigned int i = 0; i < couts.size(); i++){
+		for(unsigned int j = 0; j < couts.size(); j++){
+			for(unsigned int k = 0; k < couts.size(); k++){
 				if(couts[j][k] > couts[i][j] + couts[i][k]){
 					couts[j][k] = couts[i][j] + couts[i][k];
 					couts[k][j] = couts[i][j] + couts[i][k];
@@ -122,22 +122,22 @@ void Reseau::floyd() {
 
 void Reseau::matriceGen(){
 	// Construire la matrice et initialiser à l'infini
-	matrice.resize(noeuds.size() + 1);
-	for(unsigned int i = 0; i < noeuds.size() + 1; i++){
-		matrice[i].resize(noeuds.size() + 1, numeric_limits<unsigned int>::max());
+	header.resize(noeuds.size());
+	matrice.resize(header.size());
+	for(unsigned int i = 0; i < matrice.size(); i++){
+		matrice[i].resize(matrice.size(), numeric_limits<unsigned int>::max());
 	}
 
-	// Initialiser les bordures
+	// Initialiser le header
 	unsigned int i = 0;
 	for(pair<unsigned int, Noeud*> paire : noeuds){
-		matrice[0][i + 1] = paire.first;
-		matrice[i + 1][0] = paire.first;
+		header[i] = paire.first;
 		i++;
 	}
 
 	// Réinitialiser la diagonale
 	for(i = 0; i < noeuds.size(); i++){
-		matrice[i + 1][i + 1] = 0;
+		matrice[i][i] = 0;
 	}
 
 	// Coûts
@@ -145,35 +145,45 @@ void Reseau::matriceGen(){
 	// Pour chaque noeud A du réseau
 	for(pair<unsigned int, Noeud*> paire : noeuds){
 		// FIL
+		unsigned int indexA = 0;
+		// obtenir la position dans la matrice
+			while(header[indexA] != i){
+				indexA++;
+			}
 		vector<Noeud*> connections = paire.second->getConnexionsFil();
 		// trouver ses noeuds B connectés
 		for(Noeud* noeud : connections){
 			// obtenir le ID de son noeud B
 			i = noeud->getId();
-			unsigned int index = 1;
+			unsigned int indexB = 0;
 			// obtenir la position dans la matrice
-			while(matrice[0][index] != i){
-				index++;
+			while(header[indexB] != i){
+				indexB++;
 			}
 			// poser le coût [A][B]
-			matrice[0][index] = coutFil;
-			matrice[index][0] = coutFil;
+			matrice[indexA][indexB] = coutFil;
+			matrice[indexB][indexA] = coutFil;
 		}
 
 		// SANS-FIL
+		indexA = 0;
+		// obtenir la position dans la matrice
+			while(header[indexA] != i){
+				indexA++;
+			}
 		connections = paire.second->getConnexionsSansFil();
 		// trouver ses noeuds B connectés
 		for(Noeud* noeud : connections){
 			// obtenir le ID de son noeud B
 			i = noeud->getId();
-			unsigned int index = 1;
+			unsigned int indexB = 0;
 			// obtenir la position dans la matrice
-			while(matrice[0][index] != i){
-				index++;
+			while(header[indexB] != i){
+				indexB++;
 			}
 			// poser le coût [A][B]
-			matrice[0][index] = coutSansFil;
-			matrice[index][0] = coutSansFil;
+			matrice[indexA][indexB] = coutSansFil;
+			matrice[indexB][indexA] = coutSansFil;
 		}
 	}
 
