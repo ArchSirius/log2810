@@ -29,7 +29,6 @@ public:
 	vector<Noeud*> getConnexionsFil() const;
 	vector<Noeud*> getConnexionsSansFil() const;
 
-	//RF3
 	unsigned int getNbPortDispo() const;
 
 	void connecter(Noeud* noeud);
