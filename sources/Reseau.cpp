@@ -149,10 +149,11 @@ void Reseau::matriceGen(){
 	for(pair<unsigned int, Noeud*> paire : noeuds){
 		// FIL
 		unsigned int indexA = 0;
+		unsigned int i = matrice.size();
 		// obtenir la position dans la matrice
-			while(header[indexA] != i){
+		while(header[indexA] != i){
 				indexA++;
-			}
+		}
 		vector<Noeud*> connections = paire.second->getConnexionsFil();
 		// trouver ses noeuds B connectés
 		for(Noeud* noeud : connections){
