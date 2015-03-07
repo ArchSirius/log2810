@@ -10,11 +10,11 @@
 #include <limits>
 
 Reseau::Reseau()
-	: coutFil(0), coutSansFil(0) {
+	: coutFil(0), coutSansFil(0) , matriceUpdated(false), coutsUpdated(false) {
 }
 
 Reseau::Reseau(unsigned int pCoutFil, unsigned int pCoutSansFil)
-	: coutFil(pCoutFil), coutSansFil(pCoutSansFil) {
+	: coutFil(pCoutFil), coutSansFil(pCoutSansFil), matriceUpdated(false), coutsUpdated(false) {
 }
 
 Reseau::~Reseau(){
@@ -57,6 +57,7 @@ void Reseau::implanter(){
 				(it1->second)->connecter(it2->second);
 			}
 		}
+		matriceGen();
 	}
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
@@ -69,23 +70,54 @@ void Reseau::afficher(){
 
 void Reseau::ajouter(Noeud* noeud){
 	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
+	matriceUpdated = false;
 }
 
 void Reseau::retirer(unsigned int id){
 	noeuds.erase(id);
+	matriceUpdated = false;
 }
 
 void Reseau::remplacer(unsigned int ancien, unsigned int nouveau){
-
+	// a faire
+	matriceUpdated = false;
 }
 
-void Reseau::distance(unsigned int n1, unsigned int n2) const {
-	// Si n1 et n2 existent dans map, floyd, puis afficher
+unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
+	map<unsigned int, Noeud*>::iterator it1 = noeuds.find(n1);
+	map<unsigned int, Noeud*>::iterator it2 = noeuds.find(n2);
+	if(it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
+		if(!matriceUpdated)
+			matriceGen();
+		if(!coutsUpdated)
+			floyd();
+		unsigned int i = 1;
+		unsigned int j = 1;
+		// obtenir la position dans la matrice
+		while(couts[0][i] != n1){
+			i++;
+		}
+		while(couts[j][0] != n2){
+			j++;
+		}
+		return couts[i][j];
+	}
+	return 0;
 }
 
-unsigned int Reseau::floyd(const map<unsigned int, Noeud*>& noeuds, const Noeud* n1, const Noeud* n2) const {
-
-	return 0; // POUR LA COMPILATION SEULEMENT, a modifier
+void Reseau::floyd() {
+	couts = matrice;
+	for(unsigned int i = 1; i < couts.size(); i++){
+		for(unsigned int j = 1; j < couts.size(); j++){
+			for(unsigned int k = 1; k < couts.size(); k++){
+				if(couts[j][k] > couts[i][j] + couts[i][k]){
+					couts[j][k] = couts[i][j] + couts[i][k];
+					couts[k][j] = couts[i][j] + couts[i][k];
+				}
+			}
+		}
+	}
+	coutsUpdated = true;
 }
 
 void Reseau::matriceGen(){
@@ -156,4 +188,6 @@ void Reseau::matriceGen(){
 	312   -   1   -   1   -   0
 
 	*/
+
+	matriceUpdated = true;
 }

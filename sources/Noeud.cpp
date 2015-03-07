@@ -44,7 +44,7 @@ Noeud::Noeud(int pId, char* pNom){
 }
 
 //Destructeur
-Noeud::~Noeud(){
+virtual Noeud::~Noeud(){
 	for(Noeud* noeud : connexionsFil){
 		deconnecter(noeud);
 	}

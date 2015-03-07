@@ -20,7 +20,7 @@ public:
 
 	Noeud();
 	Noeud(int pId, char* pNom);
-	~Noeud();
+	virtual ~Noeud();
 
 	unsigned int getId() const;
 	string getNom() const;
