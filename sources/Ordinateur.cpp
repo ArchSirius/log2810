@@ -25,20 +25,11 @@ Ordinateur::Ordinateur() : Noeud(){
 ****************************************************************************/
 Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi) 
 	: Noeud(pId, pNom){
-	//lienFilaire = pLienFilaire;	
 	
-	if (pTypeOrdi)
-	{
-		numType = Noeud::PC;
-		capaciteEthernet = 1;
-		//Puisqu'un PC possède les deux typres de carte
-		reseauSansFil = true;
-	}
-	else 
-	{
-		numType = Noeud::LAPTOP;
-		reseauSansFil = true;
-	}
+	(pLienFilaire) ? capaciteEthernet = 1 : reseauSansFil = true;
+
+	(pTypeOrdi) ? numType = Noeud::PC : numType = Noeud::LAPTOP;
+
 }
 
 Ordinateur::~Ordinateur(){}
