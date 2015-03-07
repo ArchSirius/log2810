@@ -39,7 +39,7 @@ int main()
 	//Création du réseau
 	//Création du réseau avec la configuration 1 des couts
 	unsigned int filaires, sansFil;
-	string nomFichier = "couts-" + to_string(1) + ".txt";
+	string nomFichier = "couts-" + to_string(4) + ".txt";
 	ifstream fichier(nomFichier);
 	if (fichier)
 	{
@@ -84,6 +84,8 @@ int main()
 	reseau.implanter();
 
 	reseau.afficher();
+
+	cout << reseau.distance(217,417);
 	//lectureFichierType();
 	system("PAUSE");
 
