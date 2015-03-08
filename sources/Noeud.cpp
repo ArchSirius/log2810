@@ -123,7 +123,7 @@ void Noeud::afficherNbPortDispo() const {
 * Description	: methode pour connecter deux noeud entre eux
 				  on verifie si la connexion est compatible puis on regarde s'il reste des ports disponibles
 * Paramètres	: (Noeud*) noeud : noeud qu'on veut connecter au noeud courant
-* Retour		: aucun
+* Retour		: (bool): true = reussit / false = echec
 ****************************************************************************/
 bool Noeud::connecter(Noeud* noeud){
 	if (connexionCompatible(noeud) && noeud->connexionCompatible(this))

@@ -2,21 +2,40 @@
 * Fichier       : Reseau.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 février 2015
-* Mise à jour   : 06 mars 2015
+* Mise à jour   : 09 mars 2015
 * Description   : Implementation de la classe Reseau
 ****************************************************************************/
 
 #include "headers/Reseau.h"
 #include <limits>
 
+/****************************************************************************
+* Fonction		: Reseau::Reseau
+* Description	: Constructeur par defaut
+* Paramètres	: aucun
+* Retour		: aucun
+****************************************************************************/
 Reseau::Reseau()
 	: coutFil(0), coutSansFil(0) , matriceUpdated(false), coutsUpdated(false) {
 }
 
+/****************************************************************************
+* Fonction		: Reseau::Reseau
+* Description	: Constructeur par paramètre
+* Paramètres	: (unsigned int) pCoutFil : le cout des connexions filaire
+				  (unsigned int) pCoutSansFil : le cout des connexions sans fil
+* Retour		: aucun
+****************************************************************************/
 Reseau::Reseau(unsigned int pCoutFil, unsigned int pCoutSansFil)
 	: coutFil(pCoutFil), coutSansFil(pCoutSansFil), matriceUpdated(false), coutsUpdated(false) {
 }
 
+/****************************************************************************
+* Fonction		: Reseau::~Reseau
+* Description	: Destructeur du reseau qui detruit les noeuds
+* Paramètres	: auncun
+* Retour		: aucun
+****************************************************************************/
 Reseau::~Reseau(){
 	for (map<unsigned int, Noeud*>::iterator it = noeuds.begin();
 		it != noeuds.end();)
@@ -36,6 +55,13 @@ Reseau::~Reseau(){
 	}*/
 }
 
+/****************************************************************************
+* Requis fonctionnel 1
+* Fonction		: Reseau::implanter
+* Description   : permet d'implanter le reseau à l'aide de fichiers texte
+* Paramètres    : aucun
+* Retour        : aucun
+****************************************************************************/
 void Reseau::implanter(){
 	// Lire reseau.txt et établir connexions
 	ifstream fichier("reseau.txt");
@@ -72,13 +98,20 @@ void Reseau::implanter(){
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
 
+/****************************************************************************
+* Requis fonctionnel 2
+* Fonction		: Reseau::afficher
+* Description   : permet d'afficher la topologie du reseau
+* Paramètres    : aucun
+* Retour        : aucun
+****************************************************************************/
 void Reseau::afficher(){
 	for (pair<const unsigned int, Noeud*> n : noeuds)
 		cout << *(n.second) << endl;
 }
 
 /****************************************************************************
-* Fonction		: Noeud::ajouter
+* Fonction		: Reseau::ajouter
 * Description   : permet d'ajouter un noeud au réseau sans faire de connexions
 * Paramètres    : (Noeud*) noeud : le noeud a ajouter au map
 * Retour        : aucun
@@ -90,7 +123,7 @@ void Reseau::ajouter(Noeud* noeud){
 
 /****************************************************************************
 * Requis fonctionnel 4
-* Fonction		: Noeud::ajouterConnecter
+* Fonction		: Reseau::ajouterConnecter
 * Description   : permet d'ajouter un noeud au réseau et de le connecter avec un autre noeud
 * Paramètres    : (Noeud*) noeudAjoute : le noeud a ajouter au map
 				: (unsigned int) idConnecteur : le id du noeud  sur lequel on veut connecter
@@ -112,7 +145,7 @@ void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
 
 /****************************************************************************
 * Requis fonctionnel 5
-* Fonction		: Noeud::Noeud
+* Fonction		: Reseau::retirer
 * Description   : permet de retirer un noeud du réseau ainsi que toute ces connexions
                   Seulement valide sur un PC, Laptop, tablette ou imprimante
 * Paramètres    : (unsigned int) id : le id du noeud a retirer
@@ -132,11 +165,28 @@ void Reseau::retirer(unsigned int id){
 		cout << "Desoler vous ne pouvez pas retirer un commutateur, un routeur ou un serveur" << endl;
 }
 
-void Reseau::remplacer(unsigned int ancien, unsigned int nouveau){
+/****************************************************************************
+* Requis fonctionnel 6
+* Fonction		: Reseau::remplacer
+* Description   : permet de remplacer un noeud du réseau par un autre noeud
+* Paramètres    : (unsigned int) ancienId : l'ancien id du noeud a remplacer
+				  (Noeud*) nouveauNoeud : le nouveau noeud
+* Retour        : aucun
+****************************************************************************/
+void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 	// a faire
 	matriceUpdated = false;
 }
 
+/****************************************************************************
+* Requis fonctionnel 7
+* Fonction		: Reseau::distance
+* Description   : permet d'obtenir la distance la plus courte entre deux noeuds du reseau
+				  en utilisant l'algorithme de Floyd-Warshall
+* Paramètres    : (unsigned int) n1 : le id du premier noeud
+				  (unsigned int) n2 : le id du deuxieme noeud
+* Retour        : (unsigned int) la distance minimal
+****************************************************************************/
 unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 	map<unsigned int, Noeud*>::iterator it1 = noeuds.find(n1);
 	map<unsigned int, Noeud*>::iterator it2 = noeuds.find(n2);
@@ -159,6 +209,13 @@ unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 	return 0;
 }
 
+/****************************************************************************
+* Requis fonctionnel 7
+* Fonction		: Reseau::floyd
+* Description   : l'algorithme de Floyd-Warshall
+* Paramètres    : aucun
+* Retour        : aucun
+****************************************************************************/
 void Reseau::floyd() {
 	couts = matrice;
 	for(unsigned int i = 0; i < couts.size(); i++){
@@ -174,6 +231,13 @@ void Reseau::floyd() {
 	coutsUpdated = true;
 }
 
+/****************************************************************************
+* Requis fonctionnel 7
+* Fonction		: Reseau::matriceGen
+* Description   : Permet de construire nos matrices pour faciliter les calculs
+* Paramètres    : aucun
+* Retour        : aucun
+****************************************************************************/
 void Reseau::matriceGen(){
 	// Construire la matrice et initialiser à l'infini
 	matrice.reserve(noeuds.size());

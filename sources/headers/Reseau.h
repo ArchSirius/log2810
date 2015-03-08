@@ -32,8 +32,8 @@ public:
 	*	la connexion n2 avec n1. Ainsi on aura ensuite une map de noeuds
 	*	et ces noeuds contiennent leurs connexions.
 	*/
-	void implanter();
-	void afficher();
+	void implanter();														//RF1
+	void afficher();														//RF2
 
 	/*
 	*	Une fois un noeud lu et créé, on l'ajoute au réseau.
@@ -44,10 +44,10 @@ public:
 	*	et chaque appareil contient un vecteur listant ses connexions.
 	*/
 	void ajouter(Noeud* noeud);
-	void ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur);
-	void retirer(unsigned int id);
-	void remplacer(unsigned int ancien, unsigned int nouveau);
-	unsigned int distance(unsigned int n1, unsigned int n2);
+	void ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur);	//RF4
+	void retirer(unsigned int id);											//RF5
+	void remplacer(unsigned int ancienId, Noeud* nouveauNoeud);				//RF6
+	unsigned int distance(unsigned int n1, unsigned int n2);				//RF7
 
 private:
 	unsigned int coutFil, coutSansFil;

@@ -30,7 +30,7 @@ public:
 	vector<Noeud*> getConnexionsSansFil() const;
 
 	unsigned int getNbPortDispo() const;
-	void afficherNbPortDispo() const;
+	void afficherNbPortDispo() const;	//RF3
 
 	bool connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
