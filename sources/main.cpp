@@ -24,10 +24,10 @@
 using namespace std;
 
 void lectureFichierCommutateur(Reseau& reseau);
-//void lectureFichierCouts(int i);
+void lectureFichierCouts(int i);
 void lectureFichierImprimante(Reseau& reseau);
 void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi);
-//void lectureFichierReseau();
+void lectureFichierReseau();
 void lectureFichierRouteur(Reseau& reseau);
 void lectureFichierServeur(Reseau& reseau);
 void lectureFichierTablette(Reseau& reseau);
@@ -85,6 +85,8 @@ int main()
 
 	reseau.afficher();
 	//lectureFichierType();
+
+	cout << reseau.distance(123, 314);
 	system("PAUSE");
 
 }
