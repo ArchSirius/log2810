@@ -43,7 +43,12 @@ Noeud::Noeud(int pId, char* pNom){
 	instances++;
 }
 
-//Destructeur
+/****************************************************************************
+* Fonction		: Noeud::~Noeud
+* Description	: Destructeur du noeud et on enleve toutes les connexion avec ce noeud
+* Paramètres	: auncun
+* Retour		: aucun
+****************************************************************************/
 Noeud::~Noeud(){
 	for(Noeud* noeud : connexionsFil){
 		deconnecter(noeud);
@@ -120,26 +125,28 @@ void Noeud::afficherNbPortDispo() const {
 * Paramètres	: (Noeud*) noeud : noeud qu'on veut connecter au noeud courant
 * Retour		: aucun
 ****************************************************************************/
-
-void Noeud::connecter(Noeud* noeud){
+bool Noeud::connecter(Noeud* noeud){
 	if (connexionCompatible(noeud) && noeud->connexionCompatible(this))
 	{
 		if (getNbPortDispo() > 0 && noeud->getNbPortDispo() > 0)
 		{
 			ajouterConnexion(noeud, true);
 			noeud->ajouterConnexion(this, true);
+			return true;
 		}
 
 		else if (reseauSansFil && noeud->reseauSansFil)
 		{
 			ajouterConnexion(noeud, false);
 			noeud->ajouterConnexion(this, false);
+			return true;
 		}
 		else
 			cout << "aucun port disponible ou reseau sans fil non-disponible" << endl;
 	}
 	else
 		cout << " : connexions incompatibles entre les deux appareils" << endl;
+	return false;
 	
 }
 

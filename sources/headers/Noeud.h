@@ -17,7 +17,7 @@ class Noeud{
 
 public:
 	enum Type {NOEUD, ROUTEUR, COMMUTATEUR, SERVEUR, PC, LAPTOP, TABLETTE, IMPRIMANTE, ORDINATEUR};
-
+	
 	Noeud();
 	Noeud(int pId, char* pNom);
 	virtual ~Noeud();
@@ -32,7 +32,7 @@ public:
 	unsigned int getNbPortDispo() const;
 	void afficherNbPortDispo() const;
 
-	void connecter(Noeud* noeud);
+	bool connecter(Noeud* noeud);
 	void deconnecter(Noeud* noeud);
 
 	friend ostream& operator<<(ostream& os, const Noeud& noeud);

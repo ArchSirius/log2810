@@ -18,6 +18,13 @@ Reseau::Reseau(unsigned int pCoutFil, unsigned int pCoutSansFil)
 }
 
 Reseau::~Reseau(){
+	for (map<unsigned int, Noeud*>::iterator it = noeuds.begin();
+		it != noeuds.end();)
+	{
+		delete it->second;
+		it = noeuds.erase(it);
+	}
+	/*
 	for(map<unsigned int, Noeud*>::reverse_iterator rit = noeuds.rbegin();
 		rit != noeuds.rend();
 		++rit)
@@ -26,7 +33,7 @@ Reseau::~Reseau(){
 		delete rit->second;
 		// Retirer l'élément de la map (par clé, car reverse_iterator ne marche pas)
     	noeuds.erase(rit->first);
-	}
+	}*/
 }
 
 void Reseau::implanter(){
@@ -53,9 +60,11 @@ void Reseau::implanter(){
 			// Connecter
 			map<unsigned int, Noeud*>::iterator it1 = noeuds.find(id1);
 			map<unsigned int, Noeud*>::iterator it2 = noeuds.find(id2);
-			if(it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
+			if (it1 != noeuds.end() && it2 != noeuds.end() && it1 != it2){
 				(it1->second)->connecter(it2->second);
 			}
+			else
+				cout << "Id introuvable" << endl;
 		}
 		matriceGen();
 	}
@@ -68,14 +77,59 @@ void Reseau::afficher(){
 		cout << *(n.second) << endl;
 }
 
+/****************************************************************************
+* Fonction		: Noeud::ajouter
+* Description   : permet d'ajouter un noeud au réseau sans faire de connexions
+* Paramètres    : (Noeud*) noeud : le noeud a ajouter au map
+* Retour        : aucun
+****************************************************************************/
 void Reseau::ajouter(Noeud* noeud){
 	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
 	matriceUpdated = false;
 }
 
-void Reseau::retirer(unsigned int id){
-	noeuds.erase(id);
+/****************************************************************************
+* Requis fonctionnel 4
+* Fonction		: Noeud::ajouterConnecter
+* Description   : permet d'ajouter un noeud au réseau et de le connecter avec un autre noeud
+* Paramètres    : (Noeud*) noeudAjoute : le noeud a ajouter au map
+				: (unsigned int) idConnecteur : le id du noeud  sur lequel on veut connecter
+* Retour        : aucun
+****************************************************************************/
+void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
+	map<unsigned int, Noeud*>::iterator it = noeuds.find(idConnecteur);
+	if (it != noeuds.end())
+	{
+		if (noeudAjoute->connecter(it->second))
+			noeuds.insert(pair<unsigned int, Noeud*>(noeudAjoute->getId(), noeudAjoute));
+	}
+	else
+		cout << "Id introuvable" << endl;
+	
 	matriceUpdated = false;
+}
+
+
+/****************************************************************************
+* Requis fonctionnel 5
+* Fonction		: Noeud::Noeud
+* Description   : permet de retirer un noeud du réseau ainsi que toute ces connexions
+                  Seulement valide sur un PC, Laptop, tablette ou imprimante
+* Paramètres    : (unsigned int) id : le id du noeud a retirer
+* Retour        : aucun
+****************************************************************************/
+void Reseau::retirer(unsigned int id){
+	map<unsigned int, Noeud*>::iterator it = noeuds.find(id);
+
+	if (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7)
+	{
+		//erreur segmentation ici
+		delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
+		noeuds.erase(id);
+		matriceUpdated = false;
+	}
+	else
+		cout << "Desoler vous ne pouvez pas retirer un commutateur, un routeur ou un serveur" << endl;
 }
 
 void Reseau::remplacer(unsigned int ancien, unsigned int nouveau){

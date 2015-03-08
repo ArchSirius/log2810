@@ -44,6 +44,7 @@ public:
 	*	et chaque appareil contient un vecteur listant ses connexions.
 	*/
 	void ajouter(Noeud* noeud);
+	void ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur);
 	void retirer(unsigned int id);
 	void remplacer(unsigned int ancien, unsigned int nouveau);
 	unsigned int distance(unsigned int n1, unsigned int n2);
