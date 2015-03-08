@@ -76,10 +76,19 @@ Noeud::Type Noeud::getNumType() const {
 }
 
 //Accesseur
-const char* Noeud::getNomType() const
-{
+const char* Noeud::getNomType() const {
 	const char* typeStr[] = { "NOEUD", "ROUTEUR", "COMMUTATEUR", "SERVEUR", "PC", "LAPTOP", "TABLETTE", "IMPRIMANTE", "ORDINATEUR" };
 	return typeStr[numType];
+}
+
+//Accesseur
+unsigned int Noeud::getCapacite() const {
+	return capaciteEthernet;
+}
+
+//Accesseur
+bool Noeud::getReseauSansfil() const {
+	return reseauSansFil;
 }
 
 //Accesseur

@@ -28,6 +28,8 @@ public:
 	const char* getNomType() const;
 	vector<Noeud*> getConnexionsFil() const;
 	vector<Noeud*> getConnexionsSansFil() const;
+	unsigned int getCapacite() const;
+	bool getReseauSansfil() const;
 
 	unsigned int getNbPortDispo() const;
 	void afficherNbPortDispo() const;	//RF3

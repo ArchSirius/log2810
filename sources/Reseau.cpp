@@ -154,7 +154,7 @@ void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
 void Reseau::retirer(unsigned int id){
 	map<unsigned int, Noeud*>::iterator it = noeuds.find(id);
 
-	if (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7)
+	if ((it != noeuds.end()) && (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7))
 	{
 		//erreur segmentation ici
 		delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
@@ -174,8 +174,33 @@ void Reseau::retirer(unsigned int id){
 * Retour        : aucun
 ****************************************************************************/
 void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
-	// a faire
-	matriceUpdated = false;
+	map<unsigned int, Noeud*>::iterator it = noeuds.find(ancienId);
+
+	//si existe et si routeur ou commutateur
+	if ((it != noeuds.end()) && (it->second->getNumType() == 1 || it->second->getNumType() == 2) && (nouveauNoeud->getNumType() == 1 || nouveauNoeud->getNumType() == 2))
+	{
+		if (nouveauNoeud->getCapacite() > it->second->getCapacite()) // capacite superieur
+		{
+			if (it->second->getReseauSansfil() && !nouveauNoeud->getReseauSansfil()) //carte sans fil = nouveau noeud avec carte sans fil
+				cout << "Impossible, le nouvel appareil n'a pas de carte reseau" << endl;
+			else
+			{
+				vector<Noeud*> tempFil = it->second->getConnexionsFil();
+				vector<Noeud*> tempSansFil = it->second->getConnexionsSansFil();
+				retirer(ancienId);
+				for (unsigned int i = 0; i < tempFil.size(); i++)
+					nouveauNoeud->connecter(tempFil[i]);
+
+				for (unsigned int i = 0; i < tempSansFil.size(); i++)
+					nouveauNoeud->connecter(tempSansFil[i]);
+	
+			}
+		}
+		else
+			cout << "Remplacement impossible : la capacite doit etre superieur" << endl;
+	}
+	else
+		cout << "Desoler, vous pouvez seulement remplacer un commutateur ou un routeur" << endl;
 }
 
 /****************************************************************************

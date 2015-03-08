@@ -87,13 +87,14 @@ int main()
 
 	cout << reseau.distance(217,417);
 	//lectureFichierType();
-	Ordinateur* or = new Ordinateur(54, "Ordi test", 1, 1);
-	reseau.ajouterConnecter(or, 112);
-		cout << *or << endl;
+	Ordinateur* ordi = new Ordinateur(54, "Ordi test", 1, 1);
+	reseau.ajouterConnecter(ordi, 112);
+		cout << *ordi << endl;
 
 
 	//ca plante
 	//reseau.retirer(611);
+		reseau.remplacer(111, ordi);
 	system("PAUSE");
 
 }
