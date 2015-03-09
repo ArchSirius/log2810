@@ -90,9 +90,42 @@ Dans ce rapport, nous présenterons une explication de la solution adoptée pour
 \section{Présentation du travail}
 \hrule
 \vspace{1em}
-\lipsum[1]~\\
-\lipsum[2]~\\
-\lipsum[3]
+Notre première action a été de bien lire et relire l’énoncé puis de s’assurer que nous partagions tous la même vision du projet. 
+Nous avons opté pour une conception orientée objet où chaque appareil est une classe dérivée d’une classe abstraite Noeud.\\
+\\
+Le réseau aussi est une classe, qui contient un conteneur de type Map de noeud, avec leurs identifiants comme clés. 
+Ce procédé nous assure qu’il n’y a aucun doublon dans la réseau. 
+Ce conteneur ne contient pas les informations de connexion. 
+Il ne contient que les appareils lus. 
+Ce sont les noeuds eux-mêmes qui possèdent un vecteur vers d’autres noeuds, symbolisant les connexions. 
+Cependant, le conteneur Map n’était pas propice à une bonne implémentation de l’algorithme de Floyd-Warshall. 
+Nous avons donc également créé une matrice d’adjacence, constituée d’un vecteur de vecteurs d’entiers symbolisant les coûts de connexion. 
+L’utilisation de vecteurs est nécessaire car un simple tableau de taille inconnue non constante à la compilation n’est pas valide. 
+Une première matrice détermine le coût de chaque connexion entre deux appareils, 
+et une seconde matrice résultante suite à l’algorithme de Floyd-Marshall détermine le coût total le plus faible entre toute paire possiblement reliée.\\
+\\
+Par l’entremise de booléens, on s’assure que l’algorithme n’est exécuté que lorsque nécessaire. 
+Par exemple, si on demande de vérifier deux coûts, la matrice de coûts totaux n’est générée qu’une fois, jusqu’à la prochaine modification nécessaire.\\
+\\
+Par l’entremise du conteneur de noeuds de la classe réseau, on peut facilement afficher la topologie du réseau entier, 
+puisque chaque noeud possède sa propre fonction d’affichage. 
+On peut également effectuer les opérations demandées, telles qu’afficher le nombre de ports disponibles d’un commutateur ou d’un routeur.\\
+\\
+L’ajout d’un noeud au réseau se fait de deux façons. 
+On peut simplement ajouter un nouvel appareil au réseau, sans préciser de connexion. 
+On peut également ajouter l’appareil en spécifiant qu’il se connecte à un appareil déjà présent dans le réseau. 
+Dans ce dernier cas, les règles de connexion s’appliquent : vérification du type de connexion, nombre de ports disponibles, etc.\\
+\\
+Remplacer un noeud est un peu plus problématique. 
+Le remplacement se produit en deux étapes : d’abord on retire le noeud cible en le déconnectant et en le détruisant, 
+ensuite on ajoute le nouveau noeud en le connectant aux appareils qui étaient connectés à l’ancien. 
+La suppression d’un noeud nous aura longtemps posé problème, généralement par des erreurs de segmentation. 
+La gestion de la mémoire fut plus difficile qu’anticipé. 
+Cependant, toutes les vérifications nécessaires sont effectuées avec succès.\\
+\\
+Somme toutes, notre implémentation du réseau est logique et l’algorithme de Floyd-Marshall fonctionne à merveille. 
+Bien qu’elle ait apporté quelques soucis de gestion de la mémoire et de questionnements quant à l’utilisation de pointeurs, 
+nous croyons que notre conception est logique et fiable.
 
 
 
@@ -127,7 +160,23 @@ saisir du texte lorsque nous voulions partager des ressources ou morceaux de cod
 \\
 De plus, une difficulté non négligeable de ce TP était de revenir au C++. 
 En effet, nous étions un peu << rouillés >> avec ce langage, puisque les autres travaux de cette session sont programmés en Java. 
-Heureusement, nous avons su nous réadapter rapidement.
+Heureusement, nous avons su nous réadapter rapidement.\\
+\\
+Nous avons également eu des difficultés à bien comprendre l’algorithme de Floyd-Warshall. 
+Nous nous sommes posé comme question s’il était mieux d’implémenter une matrice de nœuds 
+ou si nous pouvions utiliser directement notre conteneur de type << Map >> déjà présent dans la classe réseau. 
+Nous avons finalement choisit d’opter pour les deux. Un simple matrice donnant les coûts, 
+et toutes les connexions entre appareils avec et sans fil aurait était complexe à implémenter. 
+Un Map efficace ne contient qu’une clé et un noeud, et nous voulions garder ce format. 
+L’utilisation des deux solutions permet d’avoir une solution complète en deux parties simples, plutôt qu’une seule complexe.\\
+\\
+Finalement, nous avons hésité à savoir si l’on devait utiliser des pointeurs pour remplir notre conteneur de nœuds, 
+des références ou des pointeurs intelligents. 
+Nous avons fait le choix de conserver notre première implémentation, soit de créer les objets dans la boucle d’exécution principale, 
+mais de n’utiliser que des pointeurs dans tout le reste du programme. 
+Les copies par valeurs et les références causaient plus de problèmes que l’utilisation de pointeurs. 
+Nous avons rejeté les pointeurs intelligents puisqu’ils sont complexes à gérer. 
+Un simple pointeur sans gestion automatique de la mémoire est facile d’utilisation, mais nous avons vécu des problèmes de gestion de la mémoire plus tard.
 
 
 
