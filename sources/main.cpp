@@ -37,9 +37,9 @@ void lectureFichierType();
 int main()
 {
 	//Création du réseau
-	//Création du réseau avec la configuration 1 des couts
+	//Création du réseau avec la configuration 2 des couts
 	unsigned int filaires, sansFil;
-	string nomFichier = "couts-" + to_string(4) + ".txt";
+	string nomFichier = "couts-" + to_string(2) + ".txt";
 	ifstream fichier(nomFichier);
 	if (fichier)
 	{
@@ -80,20 +80,37 @@ int main()
 	lectureFichierTablette(reseau);
 	//Les noeuds imprimante
 	lectureFichierImprimante(reseau);
-	//Mise en place du réseau
+	//Mise en place du réseau	RF1
 	reseau.implanter();
-
+	//Afficher topologie du reseau	RF2
 	reseau.afficher();
+	
+	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
+	Routeur* rout = new Routeur(10, "rout test", 24, true);
 
-	cout << reseau.distance(217,417);
+	//ajouter Noeud au reseau a partir d'un noeud existant	RF4
+	reseau.ajouterConnecter(ordi, 111);
+	
+	//Afficher nb Ports disponible commutateur ou routeur RF3
+	
+
+
+
+	//TEST
+
+	//cout << reseau.distance(217,417);
 	//lectureFichierType();
-	Ordinateur* ordi = new Ordinateur(54, "Ordi test", 1, 1);
-	Routeur* rout = new Routeur(54, "rout test", 24, true);
+	//Ordinateur* ordi = new Ordinateur(50, "Ordi test", 1, 1);
+	
 	//reseau.ajouterConnecter(ordi, 112);
 	//	cout << *ordi << endl;
 
-	reseau.retirer(719);
-	//reseau.remplacer(214, rout);
+	//reseau.retirer(719);
+	reseau.remplacer(214, rout);
+	reseau.afficher(54);
+	reseau.afficher(443);
+
+
 	//reseau.afficher(54);
 
 	//map<unsigned int, Noeud*>::iterator it1 = reseau.noeuds.find(214);
@@ -137,35 +154,7 @@ void lectureFichierCommutateur(Reseau& reseau)
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
-/*
-void lectureFichierCouts(int i)
-{
-	string nomFichier = "couts-" + to_string(i) + ".txt";
-	ifstream fichier(nomFichier);
-	if (fichier)
-	{
-		string input, token;
-		vector<string> couts;
-		unsigned int filaires, sansFil;
 
-		while (!fichier.eof())
-		{
-			couts.clear();
-			getline(fichier, input);
-			istringstream ss(input);
-			while (getline(ss, token, ';'))
-				couts.push_back(token);
-
-			filaires = atoi(couts[0].c_str());
-			sansFil = atoi(couts[1].c_str());
-
-			//Construction du reseau selon la configuration des couts
-			Reseau reseau(filaires,sansFil);
-		}
-	}
-	else
-		cout << "Impossible d'ouvrir le fichier" << endl;
-}*/
 
 void lectureFichierImprimante(Reseau& reseau)
 {

@@ -119,7 +119,10 @@ void Reseau::afficher() const{
 ****************************************************************************/
 void Reseau::afficher(unsigned int id) const{
 	map<unsigned int, Noeud*>::const_iterator it = noeuds.find(id);
-	cout << *(it->second) << endl;
+	if (it != noeuds.end())
+		cout << *(it->second) << endl;
+	else
+		cout << "Noeud introuvable" << endl;
 }
 
 /****************************************************************************
@@ -187,7 +190,51 @@ void Reseau::retirer(unsigned int id){
 void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 	map<unsigned int, Noeud*>::iterator it = noeuds.find(ancienId);
 
-	//si existe et si routeur ou commutateur
+	//trouvez le noeud
+	if (it == noeuds.end())
+	{
+		cout << "Noeud introuvable" << endl;
+		return;
+	}
+
+	//On peut remplacer un routeur ou commutateur seulement
+	if ((it->second->getNumType() != 1 && it->second->getNumType() != 2) || (nouveauNoeud->getNumType() != 1 && nouveauNoeud->getNumType() != 2))
+	{
+		cout << "Desoler, vous pouvez seulement remplacer un commutateur ou un routeur" << endl;
+		return;
+	}
+
+	//la capacite du nouveau doit etre strictement superieur
+	if (nouveauNoeud->getCapacite() <= it->second->getCapacite())
+	{
+		cout << "Remplacement impossible : la capacite doit etre superieur" << endl;
+		return;
+	}
+
+
+	//carte sans fil = nouveau noeud avec carte sans fil
+	if (it->second->getReseauSansfil() && !nouveauNoeud->getReseauSansfil()) 
+	{
+		cout << "Impossible, le nouvel appareil n'a pas de carte reseau" << endl;
+		return;
+	}
+
+	vector<Noeud*> tempFil = it->second->getConnexionsFil();
+	vector<Noeud*> tempSansFil = it->second->getConnexionsSansFil();
+	//retirer(ancienId); peut pas a cause que c'est un routeur
+	delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
+	noeuds.erase(ancienId);
+	matriceUpdated = false;
+
+	for (unsigned int i = 0; i < tempFil.size(); i++)
+		nouveauNoeud->connecter(tempFil[i]);
+
+	for (unsigned int i = 0; i < tempSansFil.size(); i++)
+		nouveauNoeud->connecter(tempSansFil[i]);
+
+	noeuds.insert(pair<unsigned int, Noeud*>(nouveauNoeud->getId(), nouveauNoeud));
+
+/*	//si existe et si routeur ou commutateur
 	if ((it != noeuds.end()) && (it->second->getNumType() == 1 || it->second->getNumType() == 2) && (nouveauNoeud->getNumType() == 1 || nouveauNoeud->getNumType() == 2))
 	{
 		if (nouveauNoeud->getCapacite() > it->second->getCapacite()) // capacite superieur
@@ -216,6 +263,7 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 	}
 	else
 		cout << "Desoler, vous pouvez seulement remplacer un commutateur ou un routeur" << endl;
+	*/
 }
 
 /****************************************************************************
