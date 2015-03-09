@@ -1,11 +1,11 @@
-/**
+/****************************************************************************
 * INF2810 - TP1 - Hiver 2015
-* Remise: 9 mars 2015
-*
-* @description: Modélisation d'un réseau informatique à l'aide de graphes et matrices
-* @author: Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
-* @created: 2015-02-19
-*/
+* Fichier       : main.cpp
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 26 février 2015
+* Mise à jour   : 09 mars 2015
+* Description   : Modélisation d'un réseau informatique à l'aide de graphes et matrices
+****************************************************************************/
 #include <string> 
 #include <iostream> 
 #include <fstream> 
@@ -39,7 +39,7 @@ int main()
 	//Création du réseau
 	//Création du réseau avec la configuration 2 des couts
 	unsigned int filaires, sansFil;
-	string nomFichier = "couts-" + to_string(2) + ".txt";
+	string nomFichier = "couts-" + to_string(2) + ".txt"; // possibilite de change le 2 pour 1/2/3/4
 	ifstream fichier(nomFichier);
 	if (fichier)
 	{
@@ -80,20 +80,34 @@ int main()
 	lectureFichierTablette(reseau);
 	//Les noeuds imprimante
 	lectureFichierImprimante(reseau);
+	
 	//Mise en place du réseau	RF1
 	reseau.implanter();
 	//Afficher topologie du reseau	RF2
 	reseau.afficher();
 	
+	//cas de test
 	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
-	Routeur* rout = new Routeur(10, "rout test", 24, true);
+	Routeur* rout = new Routeur(10, "Rout test", 64, true);
 
-	//ajouter Noeud au reseau a partir d'un noeud existant	RF4
+	//Ajouter Noeud au reseau a partir d'un noeud existant	RF4
 	reseau.ajouterConnecter(ordi, 111);
-	
-	//Afficher nb Ports disponible commutateur ou routeur RF3
-	
+	reseau.afficher(ordi->getId());
+	reseau.afficher(111);
 
+	//Retirer un noeud du reseau	RF5
+	reseau.retirer(ordi->getId());
+	reseau.afficher(111);
+
+	//Remplacer un noeud	RF6
+	reseau.remplacer(113, rout);
+	reseau.afficher(rout->getId());
+
+	//Afficher nb Ports disponible commutateur ou routeur	RF3
+	rout->afficherNbPortDispo();
+
+	//Calculer le chemin entre deux noeud	RF7
+	reseau.distance(211, 312);
 
 
 	//TEST
@@ -106,9 +120,9 @@ int main()
 	//	cout << *ordi << endl;
 
 	//reseau.retirer(719);
-	reseau.remplacer(214, rout);
-	reseau.afficher(54);
-	reseau.afficher(443);
+	//reseau.remplacer(214, rout);
+	//reseau.afficher(54);
+	//reseau.afficher(443);
 
 
 	//reseau.afficher(54);

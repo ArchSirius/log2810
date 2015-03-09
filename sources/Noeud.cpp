@@ -2,7 +2,7 @@
 * Fichier       : Noeud.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 19 février 2015
-* Mise à jour   : 06 mars 2015
+* Mise à jour   : 09 mars 2015
 * Description   : Implementation de la classe Noeud
 ****************************************************************************/
 #include <string.h>
@@ -59,14 +59,6 @@ Noeud::~Noeud(){
 	{
 		deconnecter(connexionsSansFil[i]);
 	}
-
-	/*for(Noeud* noeud : connexionsFil){
-		deconnecter(noeud);
-	}
-
-	for (Noeud* noeud : connexionsSansFil){
-		deconnecter(noeud);
-	}*/
 	instances--;
 }
 
@@ -116,11 +108,6 @@ vector<Noeud*> Noeud::getConnexionsSansFil() const {
 	return connexionsSansFil;
 }
 
-/*
-static unsigned int Noeud::nbInstances() {
-	return instances;
-}
-*/
 
 /****************************************************************************
 * Requis fonctionnels #3

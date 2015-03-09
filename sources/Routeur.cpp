@@ -2,12 +2,18 @@
 * Fichier       : Routeur.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 19 février 2015
-* Mise à jour   : 19 février 2015
+* Mise à jour   : 09 mars 2015
 * Description   : Implementation de la classe Routeur
 ****************************************************************************/
 #include <string.h>
 #include "headers/Routeur.h"
 
+/****************************************************************************
+* Fonction		: Routeur::Routeur
+* Description	: Constructeur par defaut
+* Paramètres	: aucun
+* Retour		: aucun
+****************************************************************************/
 Routeur::Routeur() : Noeud(){
 	numType = Noeud::ROUTEUR;
 	capaciteEthernet = 2;
@@ -32,8 +38,15 @@ Routeur::Routeur(int pId, char* pNom, unsigned int pCapacite, bool pReseauSansFi
 	reseauSansFil = pReseauSansFil;
 }
 
+//Destructeur
 Routeur::~Routeur(){}
 
+/****************************************************************************
+* Fonction		: Routeur::connexionCompatible
+* Description	: methode qui verifie si la connexion entre deux appareils est compatible
+* Paramètres	: (Noeud*) noeud : le pointeur du noeud sur lequel on veut se connecter
+* Retour		: (bool) true = compatible / false = non-compatible
+****************************************************************************/
 bool Routeur::connexionCompatible(Noeud* noeud) {
-	return true;
+	return true; // tjs valide
 }

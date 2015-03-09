@@ -43,16 +43,6 @@ Reseau::~Reseau(){
 		delete it->second;
 		it = noeuds.erase(it);
 	}
-	/*
-	for(map<unsigned int, Noeud*>::reverse_iterator rit = noeuds.rbegin();
-		rit != noeuds.rend();
-		++rit)
-	{
-		// Destructeur de Noeud
-		delete rit->second;
-		// Retirer l'élément de la map (par clé, car reverse_iterator ne marche pas)
-    	noeuds.erase(rit->first);
-	}*/
 }
 
 /****************************************************************************
@@ -148,6 +138,7 @@ void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
 	map<unsigned int, Noeud*>::iterator it = noeuds.find(idConnecteur);
 	if (it != noeuds.end())
 	{
+		//si la connexion est reussit, on ajoute le noeud au map
 		if (noeudAjoute->connecter(it->second))
 			noeuds.insert(pair<unsigned int, Noeud*>(noeudAjoute->getId(), noeudAjoute));
 	}
@@ -168,8 +159,15 @@ void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
 ****************************************************************************/
 void Reseau::retirer(unsigned int id){
 	map<unsigned int, Noeud*>::iterator it = noeuds.find(id);
+	if (it == noeuds.end())
+	{
+		cout << "Noeud introuvable" << endl;
+		return;
+	}
+		
 
-	if ((it != noeuds.end()) && (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7))
+	//on peut seulement retirer un PC, laptop, tablette ou imprimante
+	if (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7)
 	{
 		delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
 		noeuds.erase(id);
@@ -204,7 +202,7 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 		return;
 	}
 
-	//la capacite du nouveau doit etre strictement superieur
+	//La capacite du nouveau doit etre strictement superieur
 	if (nouveauNoeud->getCapacite() <= it->second->getCapacite())
 	{
 		cout << "Remplacement impossible : la capacite doit etre superieur" << endl;
@@ -212,58 +210,30 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 	}
 
 
-	//carte sans fil = nouveau noeud avec carte sans fil
+	//carte sans fil sur ancient noeud -> nouveau noeud avec carte sans fil
 	if (it->second->getReseauSansfil() && !nouveauNoeud->getReseauSansfil()) 
 	{
 		cout << "Impossible, le nouvel appareil n'a pas de carte reseau" << endl;
 		return;
 	}
 
+	//on recupere les connexions
 	vector<Noeud*> tempFil = it->second->getConnexionsFil();
 	vector<Noeud*> tempSansFil = it->second->getConnexionsSansFil();
-	//retirer(ancienId); peut pas a cause que c'est un routeur
+
 	delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
-	noeuds.erase(ancienId);
+	noeuds.erase(ancienId); // on supprime le noeud du map
 	matriceUpdated = false;
 
+	//on reconnecte ce qui etait connecte a l'ancien noeud
 	for (unsigned int i = 0; i < tempFil.size(); i++)
 		nouveauNoeud->connecter(tempFil[i]);
 
 	for (unsigned int i = 0; i < tempSansFil.size(); i++)
 		nouveauNoeud->connecter(tempSansFil[i]);
 
+	//on ajoute le nouveau noeud au map
 	noeuds.insert(pair<unsigned int, Noeud*>(nouveauNoeud->getId(), nouveauNoeud));
-
-/*	//si existe et si routeur ou commutateur
-	if ((it != noeuds.end()) && (it->second->getNumType() == 1 || it->second->getNumType() == 2) && (nouveauNoeud->getNumType() == 1 || nouveauNoeud->getNumType() == 2))
-	{
-		if (nouveauNoeud->getCapacite() > it->second->getCapacite()) // capacite superieur
-		{
-			if (it->second->getReseauSansfil() && !nouveauNoeud->getReseauSansfil()) //carte sans fil = nouveau noeud avec carte sans fil
-				cout << "Impossible, le nouvel appareil n'a pas de carte reseau" << endl;
-			else
-			{
-				vector<Noeud*> tempFil = it->second->getConnexionsFil();
-				vector<Noeud*> tempSansFil = it->second->getConnexionsSansFil();
-				//retirer(ancienId); peut pas a cause que c'est un routeur
-				delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
-				noeuds.erase(ancienId);
-				matriceUpdated = false;
-
-				for (unsigned int i = 0; i < tempFil.size(); i++)
-					nouveauNoeud->connecter(tempFil[i]);
-
-				for (unsigned int i = 0; i < tempSansFil.size(); i++)
-					nouveauNoeud->connecter(tempSansFil[i]);
-	
-			}
-		}
-		else
-			cout << "Remplacement impossible : la capacite doit etre superieur" << endl;
-	}
-	else
-		cout << "Desoler, vous pouvez seulement remplacer un commutateur ou un routeur" << endl;
-	*/
 }
 
 /****************************************************************************
@@ -292,8 +262,10 @@ unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 		while(header[j] != n2){
 			j++;
 		}
+		//cout << "La distance est de " << couts[i][j]  << endl;
 		return couts[i][j];
 	}
+	//cout << "La distance est introuvable" << endl;
 	return 0;
 }
 
