@@ -88,13 +88,17 @@ int main()
 	cout << reseau.distance(217,417);
 	//lectureFichierType();
 	Ordinateur* ordi = new Ordinateur(54, "Ordi test", 1, 1);
-	reseau.ajouterConnecter(ordi, 112);
-		cout << *ordi << endl;
+	Routeur* rout = new Routeur(54, "rout test", 24, true);
+	//reseau.ajouterConnecter(ordi, 112);
+	//	cout << *ordi << endl;
 
+	reseau.retirer(719);
+	//reseau.remplacer(214, rout);
+	//reseau.afficher(54);
 
-	//ca plante
-	//reseau.retirer(611);
-		reseau.remplacer(111, ordi);
+	//map<unsigned int, Noeud*>::iterator it1 = reseau.noeuds.find(214);
+	//it1->second->afficherNbPortDispo();
+	//cout << *it1->second;
 	system("PAUSE");
 
 }

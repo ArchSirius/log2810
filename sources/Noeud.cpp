@@ -50,13 +50,23 @@ Noeud::Noeud(int pId, char* pNom){
 * Retour		: aucun
 ****************************************************************************/
 Noeud::~Noeud(){
-	for(Noeud* noeud : connexionsFil){
+	for (int i = connexionsFil.size() - 1; i >= 0; i--)
+	{
+		deconnecter(connexionsFil[i]);
+	}
+
+	for (int i = connexionsSansFil.size() - 1; i >= 0; i--)
+	{
+		deconnecter(connexionsSansFil[i]);
+	}
+
+	/*for(Noeud* noeud : connexionsFil){
 		deconnecter(noeud);
 	}
 
 	for (Noeud* noeud : connexionsSansFil){
 		deconnecter(noeud);
-	}
+	}*/
 	instances--;
 }
 

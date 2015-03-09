@@ -105,9 +105,21 @@ void Reseau::implanter(){
 * Paramètres    : aucun
 * Retour        : aucun
 ****************************************************************************/
-void Reseau::afficher(){
+void Reseau::afficher() const{
 	for (pair<const unsigned int, Noeud*> n : noeuds)
 		cout << *(n.second) << endl;
+}
+
+/****************************************************************************
+* Requis fonctionnel 2
+* Fonction		: Reseau::afficher
+* Description   : permet d'afficher un noeud par id
+* Paramètres    : (unsigned int) id : le id du noeud qu'on veut afficher
+* Retour        : aucun
+****************************************************************************/
+void Reseau::afficher(unsigned int id) const{
+	map<unsigned int, Noeud*>::const_iterator it = noeuds.find(id);
+	cout << *(it->second) << endl;
 }
 
 /****************************************************************************
@@ -156,7 +168,6 @@ void Reseau::retirer(unsigned int id){
 
 	if ((it != noeuds.end()) && (it->second->getNumType() == 4 || it->second->getNumType() == 5 || it->second->getNumType() == 6 || it->second->getNumType() == 7))
 	{
-		//erreur segmentation ici
 		delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
 		noeuds.erase(id);
 		matriceUpdated = false;
@@ -187,7 +198,11 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 			{
 				vector<Noeud*> tempFil = it->second->getConnexionsFil();
 				vector<Noeud*> tempSansFil = it->second->getConnexionsSansFil();
-				retirer(ancienId);
+				//retirer(ancienId); peut pas a cause que c'est un routeur
+				delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
+				noeuds.erase(ancienId);
+				matriceUpdated = false;
+
 				for (unsigned int i = 0; i < tempFil.size(); i++)
 					nouveauNoeud->connecter(tempFil[i]);
 

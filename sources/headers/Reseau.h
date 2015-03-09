@@ -33,7 +33,8 @@ public:
 	*	et ces noeuds contiennent leurs connexions.
 	*/
 	void implanter();														//RF1
-	void afficher();														//RF2
+	void afficher() const;													//RF2
+	void afficher(unsigned int id) const;
 
 	/*
 	*	Une fois un noeud lu et créé, on l'ajoute au réseau.
