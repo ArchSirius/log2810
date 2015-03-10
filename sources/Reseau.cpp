@@ -124,6 +124,7 @@ void Reseau::afficher(unsigned int id) const{
 void Reseau::ajouter(Noeud* noeud){
 	noeuds.insert(pair<unsigned int, Noeud*>(noeud->getId(), noeud));
 	matriceUpdated = false;
+	coutsUpdated = false;
 }
 
 /****************************************************************************
@@ -140,12 +141,16 @@ void Reseau::ajouterConnecter(Noeud* noeudAjoute, unsigned int idConnecteur) {
 	{
 		//si la connexion est reussit, on ajoute le noeud au map
 		if (noeudAjoute->connecter(it->second))
+		{
 			noeuds.insert(pair<unsigned int, Noeud*>(noeudAjoute->getId(), noeudAjoute));
+			matriceUpdated = false;
+			coutsUpdated = false;
+		}	
 	}
 	else
 		cout << "Id introuvable" << endl;
 	
-	matriceUpdated = false;
+	
 }
 
 
@@ -172,6 +177,7 @@ void Reseau::retirer(unsigned int id){
 		delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
 		noeuds.erase(id);
 		matriceUpdated = false;
+		coutsUpdated = false;
 	}
 	else
 		cout << "Desoler vous ne pouvez pas retirer un commutateur, un routeur ou un serveur" << endl;
@@ -209,7 +215,6 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 		return;
 	}
 
-
 	//carte sans fil sur ancient noeud -> nouveau noeud avec carte sans fil
 	if (it->second->getReseauSansfil() && !nouveauNoeud->getReseauSansfil()) 
 	{
@@ -224,6 +229,7 @@ void Reseau::remplacer(unsigned int ancienId, Noeud* nouveauNoeud){
 	delete it->second;	//appel du destructeur de noeud qui s'assure de supprimer toutes les connexions reliées au noeud
 	noeuds.erase(ancienId); // on supprime le noeud du map
 	matriceUpdated = false;
+	coutsUpdated = false;
 
 	//on reconnecte ce qui etait connecte a l'ancien noeud
 	for (unsigned int i = 0; i < tempFil.size(); i++)
@@ -262,10 +268,10 @@ unsigned int Reseau::distance(unsigned int n1, unsigned int n2) {
 		while(header[j] != n2){
 			j++;
 		}
-		//cout << "La distance est de " << couts[i][j]  << endl;
+		cout << "La distance est de " << couts[i][j]  << endl;
 		return couts[i][j];
 	}
-	//cout << "La distance est introuvable" << endl;
+	cout << "La distance est introuvable" << endl;
 	return 0;
 }
 
@@ -299,6 +305,7 @@ void Reseau::floyd() {
 * Retour        : aucun
 ****************************************************************************/
 void Reseau::matriceGen(){
+	matrice.clear();
 	// Construire la matrice et initialiser à l'infini
 	matrice.reserve(noeuds.size());
 	header.reserve(noeuds.size());
