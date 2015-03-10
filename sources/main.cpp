@@ -56,7 +56,6 @@ int main()
 
 			filaires = atoi(couts[0].c_str());
 			sansFil = atoi(couts[1].c_str());
-
 		}
 	}
 	else
@@ -85,6 +84,7 @@ int main()
 	reseau.implanter();
 	//Afficher topologie du reseau	RF2
 	reseau.afficher();
+
 	
 	//cas de test
 	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
@@ -105,31 +105,12 @@ int main()
 
 	//Afficher nb Ports disponible commutateur ou routeur	RF3
 	rout->afficherNbPortDispo();
-
+	
 	//Calculer le chemin entre deux noeud	RF7
 	reseau.distance(211, 312);
+	reseau.distance(123, 211);
+	reseau.distance(116, 219);
 
-
-	//TEST
-
-	//cout << reseau.distance(217,417);
-	//lectureFichierType();
-	//Ordinateur* ordi = new Ordinateur(50, "Ordi test", 1, 1);
-	
-	//reseau.ajouterConnecter(ordi, 112);
-	//	cout << *ordi << endl;
-
-	//reseau.retirer(719);
-	//reseau.remplacer(214, rout);
-	//reseau.afficher(54);
-	//reseau.afficher(443);
-
-
-	//reseau.afficher(54);
-
-	//map<unsigned int, Noeud*>::iterator it1 = reseau.noeuds.find(214);
-	//it1->second->afficherNbPortDispo();
-	//cout << *it1->second;
 	system("PAUSE");
 
 }
