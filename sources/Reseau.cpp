@@ -115,6 +115,7 @@ void Reseau::afficher(unsigned int id) const{
 		cout << "Noeud introuvable" << endl;
 }
 
+
 /****************************************************************************
 * Fonction		: Reseau::ajouter
 * Description   : permet d'ajouter un noeud au réseau sans faire de connexions
