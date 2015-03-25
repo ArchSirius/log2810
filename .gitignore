@@ -1,7 +1,7 @@
-Data_TP1.zip
-rapport/LOG2810_TP1_Rapport_1718752_1721338_1723869.aux
-rapport/LOG2810_TP1_Rapport_1718752_1721338_1723869.log
-rapport/LOG2810_TP1_Rapport_1718752_1721338_1723869.pdf
-rapport/LOG2810_TP1_Rapport_1718752_1721338_1723869.synctex.gz
-rapport/logo.png
+*.zip
+*.aux
+*.log
+*.pdf
+*.synctex.gz
+*.png
 *.o
