@@ -6,7 +6,7 @@
 * Description   : Implementation de la classe Automate
 ****************************************************************************/
 
-#include "Automate.h"
+#include "headers/Automate.h"
 #include <iostream>
 using namespace std;
 
@@ -48,7 +48,7 @@ Automate::~Automate() {
 * Parametre	    : aucun
 * Retour		: (Etat) etat initial
 ****************************************************************************/
-Etat etatInitial() {
+Etat Automate::etatInitial() {
 
 }
 
@@ -59,7 +59,7 @@ Etat etatInitial() {
 * Parametre	    : (Etat) e : etat a ajouter
 * Retour		: aucun
 ****************************************************************************/
-void ajouterEtat(Etat e) {
+void Automate::ajouterEtat(Etat e) {
 
 }
 
@@ -71,7 +71,7 @@ void ajouterEtat(Etat e) {
 * Parametre	    : (string) fichier : fichier de sortie a enregistrer
 * Retour		: aucun
 ****************************************************************************/
-void genererFichierAutomate(string fichier) {
+void Automate::genererFichierAutomate(string fichier) {
 
 }
 
@@ -83,7 +83,7 @@ void genererFichierAutomate(string fichier) {
 * Parametre	    : aucun
 * Retour		: (bool) true = deterministe / false = non deterministe
 ****************************************************************************/
-bool estDeterministe() {
+bool Automate::estDeterministe() {
 
 }
 
@@ -95,7 +95,7 @@ bool estDeterministe() {
 * Parametre	    : aucun
 * Retour		: (bool) true = reactif / false = non reactif
 ****************************************************************************/
-bool estReactif() {
+bool Automate::estReactif() {
 
 }
 
@@ -106,7 +106,7 @@ bool estReactif() {
 * Parametre	    : aucun
 * Retour		: (Automate) automate de Moore minimise equivalent
 ****************************************************************************/
-Automate minimiserMoore() {
+Automate Automate::minimiserMoore() {
 
 }
 
@@ -118,7 +118,7 @@ Automate minimiserMoore() {
 * Parametre	    : (string) mot : chaine d'entree
 * Retour		: (string) chaine de sortie
 ****************************************************************************/
-string calculerSortie(string mot) {
+string Automate::calculerSortie(string mot) {
 
 }
 
@@ -129,7 +129,7 @@ string calculerSortie(string mot) {
 * Parametre	    : aucun
 * Retour		: aucun
 ****************************************************************************/
-void convertisseurMoore2Mealy() {
+void Automate::convertisseurMoore2Mealy() {
 
 }
 
@@ -140,6 +140,6 @@ void convertisseurMoore2Mealy() {
 * Parametre	    : aucun
 * Retour		: aucun
 ****************************************************************************/
-void convertisseurMealy2Moore() {
+void Automate::convertisseurMealy2Moore() {
 
 }

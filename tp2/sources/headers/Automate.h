@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include "Etat.h"
 using namespace std;
 
@@ -33,9 +34,9 @@ public:
 	void convertisseurMealy2Moore();
 
 private:
-	vector<Etat> ListeEtat;
+	list<Etat> ListeEtat;
 	vector<char> ListeEntrees;
 	vector<char> ListeSorties;
 };
 
-#endif;
+#endif
