@@ -16,7 +16,7 @@
 ****************************************************************************/
 Transition::Transition()
 {
-	_type = MOORE;
+	_type = FINI;
 	_entre = "";
 	_sortie = "";
 	_etiquette = "";
@@ -32,7 +32,7 @@ Transition::Transition()
 				  (string) sortie : la sortie de la transition initilament vide si machine de moore
 * Retour		: aucun
 ****************************************************************************/
-Transition::Transition(Type type, string entre, Etat* etatDepart, Etat* etatPointe, string sortie = "")
+Transition::Transition(Type type, string entre, int etatDepart, int etatPointe, string sortie)
 {
 	_type = type;
 	_entre = entre;
@@ -55,19 +55,19 @@ Transition::~Transition()
 }
 
 //Accesseur
-string Transition::getEtiquette()
+string Transition::getEtiquette() const
 {
 	return _etiquette;
 }
 
 //Accesseur
-Etat* Transition::getEtatDepart()
+int Transition::getEtatDepart() const
 {
 	return _etatDepart;
 }
 
 //Accesseur
-Etat* Transition::getEtatDestination()
+int Transition::getEtatDestination() const
 {
 	return _etatDestination;
 }

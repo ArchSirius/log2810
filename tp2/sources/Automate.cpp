@@ -18,7 +18,8 @@ using namespace std;
 * Retour		: aucun
 ****************************************************************************/
 Automate::Automate() {
-
+	nbEtats = 0;
+	type = FINI;
 }
 
 /****************************************************************************
@@ -89,7 +90,7 @@ Automate::Automate(string fichier) {
 * Retour		: aucun
 ****************************************************************************/
 Automate::~Automate() {
-
+	//detruit toutes les transition puis les etats
 }
 
 /****************************************************************************
@@ -135,7 +136,7 @@ void Automate::genererFichierAutomate(string fichier) {
 * Retour		: (bool) true = deterministe / false = non deterministe
 ****************************************************************************/
 bool Automate::estDeterministe() {
-
+	return false; // compilation
 }
 
 /****************************************************************************
@@ -147,7 +148,7 @@ bool Automate::estDeterministe() {
 * Retour		: (bool) true = reactif / false = non reactif
 ****************************************************************************/
 bool Automate::estReactif() {
-
+	return false; // compilation
 }
 
 /****************************************************************************
@@ -158,7 +159,7 @@ bool Automate::estReactif() {
 * Retour		: (Automate) automate de Moore minimise equivalent
 ****************************************************************************/
 Automate Automate::minimiserMoore() {
-
+	return *this; // compilation
 }
 
 /****************************************************************************
@@ -170,7 +171,7 @@ Automate Automate::minimiserMoore() {
 * Retour		: (string) chaine de sortie
 ****************************************************************************/
 string Automate::calculerSortie(string mot) {
-
+	return ""; // compilation
 }
 
 /****************************************************************************

@@ -8,7 +8,6 @@
 #ifndef TRANSITION_H_
 #define TRANSITION_H_
 
-#include "Etat.h"
 #include <string>
 
 using namespace std;
@@ -19,12 +18,12 @@ public:
 	enum Type { FINI, MOORE, MEALY };
 
 	Transition();
-	Transition(Type type, string entre, Etat* etatDepart, Etat* etatPointe, string sortie = "");
+	Transition(Type type, string entre, int etatDepart, int etatPointe, string sortie = "");
 	~Transition();
 
-	string getEtiquette();
-	Etat* getEtatDepart();
-	Etat* getEtatDestination();
+	string getEtiquette() const;
+	int getEtatDepart() const;
+	int getEtatDestination() const;
 
 private:
 	Type _type;
@@ -32,8 +31,8 @@ private:
 	string _sortie;
 	string _etiquette;
 
-	Etat* _etatDepart;
-	Etat* _etatDestination;
+	int _etatDepart;
+	int _etatDestination;
 };
 
 #endif
