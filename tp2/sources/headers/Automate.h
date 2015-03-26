@@ -13,6 +13,7 @@
 #include <vector>
 #include <list>
 #include "Etat.h"
+
 using namespace std;
 
 class Automate {
