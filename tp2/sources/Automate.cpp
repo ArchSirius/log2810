@@ -101,7 +101,8 @@ Automate::~Automate() {
 * Retour		: (Etat) etat initial
 ****************************************************************************/
 Etat Automate::etatInitial() {
-
+	Etat etat; // compilation
+	return etat;// compilation
 }
 
 /****************************************************************************

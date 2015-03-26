@@ -29,6 +29,8 @@ Transition::Transition()
 * Description	: Constructeur par paramètre
 * Paramètres	: (int) type : le type de la machine
 				  (string) entre : le input de la transition
+				  (int) etatDepart : represente le id de l'etat de depart
+				  (int) etatPointe : represente le id de l'etat de d'arrive
 				  (string) sortie : la sortie de la transition initilament vide si machine de moore
 * Retour		: aucun
 ****************************************************************************/

@@ -20,7 +20,8 @@ int main()
 	//TEST personelle
 
 
-	
+
+
 	////TEST prof
 	//Automate autoDet(/*paremetre ici*/);
 	//Automate autoMoore(/*paremetre ici*/);
