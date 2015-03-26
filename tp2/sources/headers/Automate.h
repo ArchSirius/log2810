@@ -35,7 +35,9 @@ public:
 	void convertisseurMealy2Moore();
 
 private:
-	list<Etat> ListeEtat;
+	unsigned int nbEtats;
+	Type type;
+	list<Etat> ListeEtats;
 	vector<char> ListeEntrees;
 	vector<char> ListeSorties;
 };
