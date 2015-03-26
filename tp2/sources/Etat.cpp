@@ -16,22 +16,22 @@
 ****************************************************************************/
 Etat::Etat()
 {
-	etatInitial = false;
-	etatFinal = false;
+	estEtatInitial = false;
+	estEtatFinal = false;
 	numEtat = 0;
 }
 
 /****************************************************************************
 * Fonction		: Etat::Etat
 * Description	: Constructeur par paramètre
-* Paramètres	: 
+* Paramètres	: (int) etat : le numero de l'etat
 * Retour		: aucun
 ****************************************************************************/
-Etat::Etat(bool etatInitial, bool etatFinal, unsigned int numEtat)
+Etat::Etat(int etat)
 {
-	etatInitial = etatInitial;
-	etatFinal = etatFinal;
-	numEtat = numEtat;
+	estEtatInitial = false;
+	estEtatFinal = false;
+	numEtat = etat;
 }
 
 /****************************************************************************
@@ -46,29 +46,76 @@ Etat::~Etat()
 }
 
 /****************************************************************************
+* Fonction		: Etat::estInitiale
+* Description   : set etat initial
+* Paramètres    : (bool) : si l'etat est initial ou non
+* Retour        : aucun
+****************************************************************************/
+void Etat::setInitiale(bool i)
+{
+	estEtatInitial = i;
+}
+
+/****************************************************************************
+* Fonction		: Etat::estFinal
+* Description   : set etat final
+* Paramètres    : (bool) : si l'etat est final ou non
+* Retour        : aucun
+****************************************************************************/
+void Etat::setFinal(bool f)
+{
+	estEtatFinal = f;
+}
+
+/****************************************************************************
+* Fonction		: Etat::getNumEtat
+* Description   : numero de l'etat
+* Paramètres    : aucun
+* Retour        : (int) : le numero de l'etat
+****************************************************************************/
+int Etat::getNumEtat() const
+{
+	return numEtat;
+}
+
+/****************************************************************************
 * Fonction		: Etat::existeTransition
 * Description   : dit s’il existe ou non une transition portant l’etiquette 
 *				  et qui part de l’etat considere.
-* Paramètres    : (char) e : l'etiquette de la transition
+* Paramètres    : (string) e : l'etiquette de la transition
 * Retour        : (bool) true : la transition existe
 				  (bool) false : la transition n'existe pas
 ****************************************************************************/
-bool Etat::existeTransition(char e)
+bool Etat::existeTransition(string e)
 {
-	
+	list<Transition>::iterator it = listTransition.begin();
+	while (it != listTransition.end())
+	{
+		if (it->getEtiquette() == e)
+			return true;
+	}
+	return false;
 }
 
 /****************************************************************************
 * Fonction		: Etat::cible
 * Description   : retourne l’ensemble des etats de destination des transitions
 *                 portant l’etiquette e et partant de l’etat considere.
-* Paramètres    : (char) e : l'etiquette de la transition de la destination
-* Retour        : (vector<Etat*>) la liste des etats de destination pour les
+* Paramètres    : (string) e : l'etiquette de la transition de la destination
+* Retour        : (list<int>) la liste des etats de destination pour les
 *								  transitions avec l'etiquette e
 ****************************************************************************/
-list<Etat*> Etat::cible(char e)
+list<int> Etat::cible(string e)
 {
-
+	list<int> etatCible;
+	list<Transition>::iterator it = listTransition.begin();
+	while (it != listTransition.end())
+	{
+		//si etat de depart est this et que l'etiquette == e et que transition existe alors ajoute etat destination dans la liste
+		if (existeTransition(e) && it->getEtiquette() == e && numEtat == it->getEtatDepart())
+			etatCible.push_back(it->getEtatDestination());
+	}
+	return etatCible;
 }
 
 /****************************************************************************
@@ -76,23 +123,32 @@ list<Etat*> Etat::cible(char e)
 * Description   : retourne l’ensemble de tous les etats de destination pour
 *				  toutes les transitions qui partent de l’etat considere.
 * Paramètres    : aucun
-* Retour        : (vector<Etat*>) la liste des etats de destination pour
-*								  toutes les transitions
+* Retour        : (list<int>) la liste des numero desetats de destination pour
+*				  toutes les transitions partant de this
 ****************************************************************************/
-list<Etat*> Etat::cible()
+list<int> Etat::cible()
 {
-
+	list<int> etatCible;
+	list<Transition>::iterator it = listTransition.begin();
+	//Pour tout les transitions de la liste on ajoute l'etat dest 
+	while (it != listTransition.end())
+	{
+		//si etat de depart est this alors ajoute etat destination dans la liste
+		if (numEtat == it->getEtatDepart())
+			etatCible.push_back(it->getEtatDestination());
+	}
+	return etatCible;
 }
 
 /****************************************************************************
 * Fonction		: Etat::ajouterTransition
 * Description   : permet d’ajouter une transition qui part de l’etat courant
 *				  pour l’etat de destination e et portant un ensemble ou liste de symboles c
-* Paramètres    : (vector<char>) c : liste de symboles c
+* Paramètres    : (list<Transition>) c : liste de symboles c
 *				  (Etat) destination : etat de destination
 * Retour        : aucun
 ****************************************************************************/
-void Etat::ajouterTransition(list<char> c, Etat destination)
+void Etat::ajouterTransition(list<Transition> c, Etat destination)
 {
 
 }

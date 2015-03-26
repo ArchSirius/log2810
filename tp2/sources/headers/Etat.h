@@ -17,26 +17,26 @@ class Etat {
 
 public:
 	Etat();
-	Etat(bool etatInitial, bool etatFinal, unsigned int numEtat);//À ajouter? : Parametre pour le type de machine (fini, moore, mealy)
+	Etat(int etat);//À ajouter? : Parametre pour le type de machine (fini, moore, mealy) et symbole en sortie si moore?
 	~Etat();
 
 	//Getter et setter
-	list<Etat*> getEtatCible();//???
-	list<char> getListeEtiquette();//???
+	void setInitiale(bool i);
+	void setFinal(bool f);
+	int getNumEtat() const;
 
-	bool existeTransition(char e);
-	list<Etat*> cible(char e);
-	list<Etat*> cible();
-	void ajouterTransition(list<char> c, Etat destination);
-	list<char> listerEtiquettes(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
+	bool existeTransition(string e);
+	list<int> cible(string e);
+	list<int> cible();
+	void ajouterTransition(list<Transition> c, Etat destination);
+	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
 
 	
 private:
-	bool etatInitial;
-	bool etatFinal;
-	unsigned int numEtat;
-	list<Etat*> etatCible;
-	list<Transition> listTransition; //Liste des transitions possibles
+	bool estEtatInitial;
+	bool estEtatFinal;
+	int numEtat;
+	list<Transition> listTransition; //Liste des transitions possibles, donc on a acces aux etiquettes
 
 };
 #endif
