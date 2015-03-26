@@ -21,6 +21,8 @@ public:
 	Transition(Type type, string entre, string sortie);
 	~Transition();
 
+	string getEtiquette();
+
 private:
 	Type _type;
 	string _entre;

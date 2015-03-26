@@ -51,3 +51,9 @@ Transition::~Transition()
 {
 
 }
+
+//Accesseur
+string Transition::getEtiquette()
+{
+	return _etiquette;
+}
