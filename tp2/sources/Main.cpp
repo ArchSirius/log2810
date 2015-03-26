@@ -34,15 +34,25 @@ int main()
 
 	//RF3
 	Automate autoMinMoore(autoMealy.minimiserMoore());
+	autoMinMoore.genererFichierAutomate("minimisation_Moore");
 
 	//RF4
-	Automate autoMooreAddMod10(/*paremetre ici*/);
+	Automate autoMooreAddMod10(/*fichier ici : voir enonce*/);
 	cout << autoMooreAddMod10.calculerSortie("1000") << endl;
 
 	//RF5
 	Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
+	autoMooreToMealy.genererFichierAutomate("MooreToMealy");
 
 	//RF6
 	Automate autoMealyToMoore(autoMealy.convertisseurMealy2Moore());
+	autoMealyToMoore.genererFichierAutomate("MealyToMoore");
+	
+	//RF7
+	Automate autoMooreRF7(/*fichier ici : voir enonce*/);
+	cout << autoMooreRF7.calculerSortie("001") << endl;
+	cout << autoMooreRF7.calculerSortie("1010") << endl;
+	cout << autoMooreRF7.calculerSortie("1110") << endl;
+
 	system("PAUSE");
 }

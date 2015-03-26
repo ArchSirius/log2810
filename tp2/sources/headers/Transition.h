@@ -19,10 +19,11 @@ public:
 	enum Type { FINI, MOORE, MEALY };
 
 	Transition();
-	Transition(Type type, string entre, Etat* etatPointe, string sortie);
+	Transition(Type type, string entre, Etat* etatDepart, Etat* etatPointe, string sortie = "");
 	~Transition();
 
 	string getEtiquette();
+	Etat* getEtatDepart();
 	Etat* getEtatDestination();
 
 private:
@@ -30,6 +31,8 @@ private:
 	string _entre;
 	string _sortie;
 	string _etiquette;
+
+	Etat* _etatDepart;
 	Etat* _etatDestination;
 };
 

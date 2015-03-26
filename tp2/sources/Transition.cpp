@@ -20,8 +20,8 @@ Transition::Transition()
 	_entre = "";
 	_sortie = "";
 	_etiquette = "";
+	_etatDepart = 0;
 	_etatDestination = 0;
-
 }
 
 /****************************************************************************
@@ -32,14 +32,16 @@ Transition::Transition()
 				  (string) sortie : la sortie de la transition initilament vide si machine de moore
 * Retour		: aucun
 ****************************************************************************/
-Transition::Transition(Type type, string entre, Etat* etatPointe, string sortie = "")
+Transition::Transition(Type type, string entre, Etat* etatDepart, Etat* etatPointe, string sortie = "")
 {
 	_type = type;
 	_entre = entre;
 	_sortie = sortie;
-
 	_etiquette = (type == MEALY) ? _entre + ", " + _sortie : _entre;
+
+	_etatDepart = etatDepart;
 	_etatDestination = etatPointe;
+	
 }
 
 /****************************************************************************
@@ -50,13 +52,18 @@ Transition::Transition(Type type, string entre, Etat* etatPointe, string sortie 
 ****************************************************************************/
 Transition::~Transition()
 {
-
 }
 
 //Accesseur
 string Transition::getEtiquette()
 {
 	return _etiquette;
+}
+
+//Accesseur
+Etat* Transition::getEtatDepart()
+{
+	return _etatDepart;
 }
 
 //Accesseur
