@@ -8,6 +8,7 @@
 
 #include "headers/Automate.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 /****************************************************************************
@@ -28,7 +29,57 @@ Automate::Automate() {
 * Retour		: aucun
 ****************************************************************************/
 Automate::Automate(string fichier) {
+	ifstream lecture(fichier);
+	if(lecture) {
+		string input;
+		getline(lecture, input);
+		if(input.substr(0, input.find(" ") - 1) == "Fini") {
+			type = Automate::FINI;
+		}
+		else if(input.substr(0, input.find(" ") - 1) == "Moore") {
+			type = Automate::MOORE;
+		}
+		else if(input.substr(0, input.find(" ") - 1) == "Mealy") {
+			type = Automate::MEALY;
+		}
+		else {
+			cerr << "Fichier non conforme" << endl;
+			lecture.close();
+			return;
+		}
 
+		// try catch numberformatexception
+		nbEtats = atoi(input.substr(input.find(" ") + 1).c_str());
+
+		// Creation des etats et leurs attributs et transitions
+		switch(type) {
+			case Automate::FINI:
+				while (!lecture.eof()) {
+					// Si I, creer Etat et mettre initial
+					// Sinon, si T, creer Etat et mettre terminal
+					// Sinon,
+						// Si Etat A n'existe pas, creer Etat A
+						// Si Etat B n'existe pas, creer Etat B
+						// Appliquer la transition
+				}
+				break;
+			case Automate::MOORE:
+				while (!lecture.eof()) {
+			
+				}
+				break;
+			case Automate::MEALY:
+				while (!lecture.eof()) {
+			
+				}
+				break;
+		}
+
+		lecture.close();
+	}
+	else {
+		cerr << "Fichier introuvable" << endl;
+	}
 }
 
 /****************************************************************************
