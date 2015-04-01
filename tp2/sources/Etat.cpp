@@ -143,12 +143,23 @@ list<int> Etat::cible()
 /****************************************************************************
 * Fonction		: Etat::ajouterTransition
 * Description   : permet d’ajouter une transition qui part de l’etat courant
-*				  pour l’etat de destination e et portant un ensemble ou liste de symboles c
+*				  pour l’etat de destination et portant un ensemble ou liste de symboles c
 * Paramètres    : (list<Transition>) c : liste de symboles c
 *				  (Etat) destination : etat de destination
 * Retour        : aucun
 ****************************************************************************/
 void Etat::ajouterTransition(list<Transition> c, Etat destination)
+{
+
+}
+
+/****************************************************************************
+* Fonction		: Etat::listerEtiquettesTransitions
+* Description   : 
+* Paramètres    : aucun
+* Retour        : (list<string>) :Liste des étiquettes de transitions
+****************************************************************************/
+list<string> Etat::listerEtiquettesTransitions()
 {
 
 }
