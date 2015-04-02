@@ -35,6 +35,11 @@ public:
 	void convertisseurMealy2Moore();
 
 private:
+	void buildBase(string input);
+	void buildFini(string input);
+	void buildMoore(string input);
+	void buildMealy(string input);
+
 	unsigned int nbEtats;
 	Type type;
 	list<Etat> ListeEtats;
