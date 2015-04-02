@@ -123,16 +123,16 @@ void Automate::buildFini(string input) {
 		// DEBUG
 		cout << "Transition detected" << endl;
 		// Si Etat B n'existe pas, creer Etat B
-		Etat b;
+		Etat* b;
 		Etat tampon = Etat((int)input.at(0));
 		list<Etat>::iterator it = ListeEtats.begin();
 		while(it != ListeEtats.end())
 			it++;
 		if(it != ListeEtats.end())
-			b = *it;
+			b = &(*it);
 		else {
-			b = tampon;
-			ListeEtats.push_back(b);
+			b = &tampon;
+			ListeEtats.push_back(*b);
 		}
 
 		// Si Etat A n'existe pas, creer Etat A
@@ -141,21 +141,35 @@ void Automate::buildFini(string input) {
 		while(it != ListeEtats.end())
 			it++;
 		if(it != ListeEtats.end()) {
-			*it.ajouterTransition(/*params*/);
+			(*it).ajouterTransition(Transition::FINI, input.at(2) + "", b, "");
 		}
 		else {
-			tampon.ajouterTransition(/*params*/);
+			tampon.ajouterTransition(Transition::FINI, input.at(2) + "", b, "");
 			ListeEtats.push_back(tampon);
 		}
 	}
 }
 
 void Automate::buildMoore(string input) {
+	// Si I ou T, cas spéciaux communs
+	if(input.at(0) == 'I' || input.at(0) == 'T') {
+		buildBase(input);
+	}
+	// Sinon, transition
+	else {
 
+	}
 }
 
 void Automate::buildMealy(string input) {
-
+	// Si I ou T, cas spéciaux communs
+	if(input.at(0) == 'I' || input.at(0) == 'T') {
+		buildBase(input);
+	}
+	// Sinon, transition
+	else {
+		
+	}
 }
 
 /****************************************************************************
