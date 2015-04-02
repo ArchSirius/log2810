@@ -28,7 +28,7 @@ public:
 	bool existeTransition(string e);
 	list<int> cible(string e);
 	list<int> cible();
-	void ajouterTransition(list<Transition> c, Etat destination);
+	void ajouterTransition(Transition::Type type, string c, Etat* destination, string sortie);
 	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
 
 	

@@ -144,22 +144,48 @@ list<int> Etat::cible()
 * Fonction		: Etat::ajouterTransition
 * Description   : permet d’ajouter une transition qui part de l’etat courant
 *				  pour l’etat de destination et portant un ensemble ou liste de symboles c
-* Paramètres    : (list<Transition>) c : liste de symboles c
-*				  (Etat) destination : etat de destination
+* Paramètres    : (string) c : symbole c de transition
+*				  (Etat*) destination : etat de destination
 * Retour        : aucun
 ****************************************************************************/
-void Etat::ajouterTransition(list<Transition> c, Etat destination)
+void Etat::ajouterTransition(Transition::Type type, string c, Etat* destination, string sortie)
 {
-
+	//si mealy -> sortie associé a la transition
+	if (type == Transition::MEALY)
+	{
+		//creation de la transition avec sortie (mealy)
+		Transition transition(type, c, getNumEtat(), destination->getNumEtat(), sortie);
+		//ajout de la transition a la liste de transitions
+		listTransition.push_back(transition);
+	}
+	else
+	{
+		//creation de la transition sans sortie
+		Transition transition(type, c, getNumEtat(), destination->getNumEtat());
+		//ajout de la transition a la liste de transitions
+		listTransition.push_back(transition);
+	}
+		
+	
 }
+
+
 
 /****************************************************************************
 * Fonction		: Etat::listerEtiquettesTransitions
-* Description   : 
+* Description   : retourne l’ensemble des symboles etiquetant toutes les 
+*				  transitions qui partent de l’etat courant.
 * Paramètres    : aucun
 * Retour        : (list<string>) :Liste des étiquettes de transitions
 ****************************************************************************/
 list<string> Etat::listerEtiquettesTransitions()
 {
-
+	list<string> listEtiquettes;
+	list<Transition>::iterator it = listTransition.begin();
+	while (it != listTransition.end())
+	{
+		if (numEtat == it->getEtatDepart())
+			listEtiquettes.push_back(it->getEtiquette());
+	}
+	return listEtiquettes;
 }
