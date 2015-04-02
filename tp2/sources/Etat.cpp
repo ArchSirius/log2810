@@ -180,6 +180,7 @@ void Etat::ajouterTransition(Transition::Type type, string c, Etat* destination,
 ****************************************************************************/
 list<string> Etat::listerEtiquettesTransitions()
 {
+<<<<<<< HEAD
 	list<string> listEtiquettes;
 	list<Transition>::iterator it = listTransition.begin();
 	while (it != listTransition.end())
@@ -188,4 +189,9 @@ list<string> Etat::listerEtiquettesTransitions()
 			listEtiquettes.push_back(it->getEtiquette());
 	}
 	return listEtiquettes;
+=======
+	// DEBUG
+	list<string> DELETE;
+	return DELETE;
+>>>>>>> cecd30f24413c7150e82eec94084bd463630ad80
 }

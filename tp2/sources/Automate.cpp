@@ -9,6 +9,7 @@
 #include "headers/Automate.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 /****************************************************************************
@@ -53,15 +54,69 @@ Automate::Automate(string fichier) {
 		nbEtats = atoi(input.substr(input.find(" ") + 1).c_str());
 
 		// Creation des etats et leurs attributs et transitions
+		Etat tampon;
 		switch(type) {
 			case Automate::FINI:
 				while (!lecture.eof()) {
 					// Si I, creer Etat et mettre initial
+					if(input.at(0) == 'I') {
+						// DEBUG
+						cout << "Initial state detected" << endl;
+						nbEtats++;
+						// Si aussi T, mettre aussi terminal
+						if(input.at(2) == 'T') {
+							// DEBUG
+							cout << "Terminal state detected" << endl;
+							tampon = Etat((int)input.at(4));
+							tampon.setInitiale(true);
+							tampon.setFinal(true);
+							ListeEtats.push_back(tampon);
+						}
+						// Etat initial
+						else {
+							tampon = Etat((int)input.at(2));
+							tampon.setInitiale(true);
+							ListeEtats.push_back(tampon);
+						}
+					}
 					// Sinon, si T, creer Etat et mettre terminal
+					else if(input.at(0) == 'T') {
+						// DEBUG
+						cout << "Terminal state detected" << endl;
+						tampon = Etat((int)input.at(2));
+						tampon.setFinal(true);
+						ListeEtats.push_back(tampon);
+					}
 					// Sinon,
-						// Si Etat A n'existe pas, creer Etat A
+					else {
+						// DEBUG
+						cout << "Transition detected" << endl;
 						// Si Etat B n'existe pas, creer Etat B
+						Etat b;
+						tampon = Etat((int)input.at(0));
+						list<Etat>::iterator it = ListeEtats.begin();
+						while(it != ListeEtats.end())
+							it++;
+						if(it != ListeEtats.end())
+							b = *it;
+						else
+							b = tampon;
+
+						// Si Etat A n'existe pas, creer Etat A
+						Etat a;
+						tampon = Etat((int)input.at(0));
+						it = ListeEtats.begin();
+						while(it != ListeEtats.end())
+							it++;
+						if(it != ListeEtats.end())
+							a = *it;
+						else
+							a = tampon;
+
 						// Appliquer la transition
+						Transition transition(Transition::FINI, input.at(2) + "", input.at(0), input.at(4));
+						// ajouter la transition à A
+					}
 				}
 				break;
 			case Automate::MOORE:
