@@ -161,5 +161,7 @@ void Etat::ajouterTransition(list<Transition> c, Etat destination)
 ****************************************************************************/
 list<string> Etat::listerEtiquettesTransitions()
 {
-
+	// DEBUG
+	list<string> DELETE;
+	return DELETE;
 }
