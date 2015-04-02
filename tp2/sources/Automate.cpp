@@ -192,7 +192,23 @@ void Automate::genererFichierAutomate(string fichier) {
 * Retour		: (bool) true = deterministe / false = non deterministe
 ****************************************************************************/
 bool Automate::estDeterministe() {
-	return false; // compilation
+	list<Etat>::iterator itEtat = ListeEtats.begin();
+	
+	//parcours chaque etat
+	for (; itEtat != ListeEtats.end(); itEtat++)
+	{
+		//liste des symboles
+		list<string> listSymb = itEtat->listerEtiquettesTransitions();
+
+		//trouver si unique
+		list<string> listTemp = listSymb;
+		listTemp.unique();
+
+		//si non unique
+		if (listTemp.size() != listSymb.size())
+			return false;
+	}
+	return true;
 }
 
 /****************************************************************************
