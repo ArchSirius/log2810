@@ -111,7 +111,6 @@ void Reseau::afficher() const{
 }
 
 /****************************************************************************
-* Requis fonctionnel 2
 * Fonction		: Reseau::afficher
 * Description   : permet d'afficher un noeud par id
 * Paramètres    : (unsigned int) id : le id du noeud qu'on veut afficher
