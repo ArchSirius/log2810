@@ -437,7 +437,37 @@ Automate Automate::minimiserMealy() {
 * Retour		: (string) chaine de sortie
 ****************************************************************************/
 string Automate::calculerSortie(string mot) {
-	return ""; // compilation
+	//trouver l'etat initial
+	Etat etat = etatInitial(); //Implémenter operator= de la classe Etat??
+	string sortie = "";
+
+	//Pour chaque caractere du string d'entree (mot)
+	for(int i = 0; i < mot.length(); ++i)
+	{
+		char entree = mot[i];
+		//pour pouvoir recuperer les transitions d'un etat
+		list<Transition> listTransitionsEtat = etat.getListTransition();
+		list<Transition>::iterator itTransitions = listTransitionsEtat.begin();
+		//appliquer le caractere du mot à l'etat
+		for(;itTransitions != listTransitionsEtat.end(); itTransitions++)
+		{
+			//prendre le string en entree et le convertir en char pour pouvoir comparer
+			char c = itTransitions->getEntre()[0];										//A VERIFIER CONVERSION EN CHAR
+			//faire la bonne transition selon si c'est 1 ou 0
+			if(c == entree)
+			{
+				//Prendre la sortie de cette transition, la mettre dans le string de sortie
+				sortie += itTransitions->getSortie();
+				//aller chercher le ID de l'etat dest 
+				int IDetat = itTransitions->getEtatDestination();
+				//trouver cet etat et mettre a jour la variable etat
+				auto EtatDest = ListeEtats.begin();
+				advance(EtatDest, IDetat);
+				etat = *EtatDest;
+			}
+		}
+	}
+	return sortie;
 }
 
 /****************************************************************************
