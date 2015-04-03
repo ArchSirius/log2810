@@ -24,6 +24,8 @@ public:
 	string getEtiquette() const;
 	int getEtatDepart() const;
 	int getEtatDestination() const;
+	string getEntre() const;
+	string getSortie() const;
 
 private:
 	Type _type;

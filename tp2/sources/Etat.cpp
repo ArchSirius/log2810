@@ -19,6 +19,7 @@ Etat::Etat()
 	estEtatInitial = false;
 	estEtatFinal = false;
 	numEtat = 0;
+	sortie = "";
 }
 
 /****************************************************************************
@@ -27,11 +28,12 @@ Etat::Etat()
 * Paramètres	: (int) etat : le numero de l'etat
 * Retour		: aucun
 ****************************************************************************/
-Etat::Etat(int etat)
+Etat::Etat(int etat, string s)
 {
 	estEtatInitial = false;
 	estEtatFinal = false;
 	numEtat = etat;
+	sortie = s;
 }
 
 /****************************************************************************
@@ -76,6 +78,28 @@ void Etat::setFinal(bool f)
 int Etat::getNumEtat() const
 {
 	return numEtat;
+}
+
+/****************************************************************************
+* Fonction		: Etat::getSortie
+* Description   : retourne la sortie de l'etat
+* Paramètres    : aucun
+* Retour        : (string) : la sortie de l'etat (Si c'est Moore sinon string vide par défaut)
+****************************************************************************/
+string Etat::getSortie() const
+{
+	return sortie;
+}
+
+/****************************************************************************
+* Fonction		: Etat::getListTransition
+* Description   : retourne la liste de transitions de l'etat courant
+* Paramètres    : aucun
+* Retour        : (list<Transition>) : la liste des Transitions
+****************************************************************************/
+list<Transition> Etat::getListTransition() const
+{
+	return listTransition;
 }
 
 /****************************************************************************

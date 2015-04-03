@@ -73,3 +73,15 @@ int Transition::getEtatDestination() const
 {
 	return _etatDestination;
 }
+
+//Accesseur
+string Transition::getEntre() const
+{
+	return _entre;
+}
+
+//Accesseur
+string Transition::getSortie() const
+{
+	return _sortie;
+}
