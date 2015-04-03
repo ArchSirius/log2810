@@ -23,9 +23,9 @@ int main()
 
 
 	////TEST prof
-	//Automate autoDet(/*paremetre ici*/);
-	//Automate autoMoore(/*paremetre ici*/);
-	//Automate autoMealy(/*paremetre ici*/);
+	//Automate autoDet("Fini.txt");
+	//Automate autoMoore("Moore.txt");
+	//Automate autoMealy("Mealy.txt");
 
 	////RF1
 	//cout << "l'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;

@@ -47,13 +47,13 @@ Automate::Automate(string fichier) {
 	if(lecture) {
 		string input;
 		getline(lecture, input);
-		if(input.substr(0, input.find(" ") - 1) == "Fini") {
+		if(input.substr(0, input.find(" ") ) == "Fini") {
 			type = Automate::FINI;
 		}
-		else if(input.substr(0, input.find(" ") - 1) == "Moore") {
+		else if(input.substr(0, input.find(" ") ) == "Moore") {
 			type = Automate::MOORE;
 		}
-		else if(input.substr(0, input.find(" ") - 1) == "Mealy") {
+		else if(input.substr(0, input.find(" ") ) == "Mealy") {
 			type = Automate::MEALY;
 		}
 		else {
@@ -214,7 +214,7 @@ Etat Automate::etatInitial() {
 			cerr << "Il n'y a pas d'etat initial. Machine à Etats invalide";
 		itEtats++;
 	}
-
+	return 0;
 }
 
 /****************************************************************************
@@ -403,7 +403,7 @@ Automate Automate::minimiserMealy() {
 		//On crer l'automate minimise
 		//list avec le nombre d'état minimal
 		list<Etat> etatMinimise;
-		for (int i = 0; i < nbEtats - etatEq.size(); i++)
+		for (unsigned int i = 0; i < nbEtats - etatEq.size(); i++)
 		{
 			etatMinimise.push_back(Etat());
 		}
@@ -441,7 +441,7 @@ string Automate::calculerSortie(string mot) {
 	string sortie = "";
 
 	//Pour chaque caractere du string d'entree (mot)
-	for(int i = 0; i < mot.length(); ++i)
+	for(unsigned int i = 0; i < mot.length(); ++i)
 	{
 		char entree = mot[i];
 		//pour pouvoir recuperer les transitions d'un etat
