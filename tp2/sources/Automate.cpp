@@ -153,10 +153,13 @@ void Automate::buildFini(string input) {
 		while(it != ListeEtats.end())
 			it++;
 		if(it != ListeEtats.end()) {
-			(*it).ajouterTransition(Transition::FINI, input.at(2) + "", b, "");
+			string s = & input.at(2);
+			(*it).ajouterTransition(Transition::FINI, s, b, "");
 		}
 		else {
-			tampon.ajouterTransition(Transition::FINI, input.at(2) + "", b, "");
+			string s = & input.at(2);
+			s = s.substr(0,1);
+			tampon.ajouterTransition(Transition::FINI, s, b, "");
 			ListeEtats.push_back(tampon);
 		}
 	}

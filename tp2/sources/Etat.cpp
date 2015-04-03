@@ -197,7 +197,7 @@ list<int> Etat::cible()
 void Etat::ajouterTransition(Transition::Type type, string c, Etat* destination, string sortie)
 {
 	//si mealy -> sortie associé a la transition
-	if (type == Transition::MEALY)
+	if (type == Transition::MOORE)
 	{
 		//creation de la transition avec sortie (mealy)
 		Transition transition(type, c, getNumEtat(), destination->getNumEtat(), sortie);
