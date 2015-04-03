@@ -70,6 +70,28 @@ void Etat::setFinal(bool f)
 }
 
 /****************************************************************************
+* Fonction		: Etat::getEstEtatInitial
+* Description   : verifie si l'etat est initial
+* Paramètres    : aucun
+* Retour        : (bool) : true si l'etat est initial, false sinon
+****************************************************************************/
+bool Etat::getEstEtatInitial() const
+{
+	return estEtatInitial;
+}
+
+/****************************************************************************
+* Fonction		: Etat::getEstEtatFinal
+* Description   : verifie si l'etat est final
+* Paramètres    : aucun
+* Retour        : (bool) : true si l'etat est final, false sinon
+****************************************************************************/
+bool Etat::getEstEtatFinal() const
+{
+	return estEtatFinal;
+}
+
+/****************************************************************************
 * Fonction		: Etat::getNumEtat
 * Description   : numero de l'etat
 * Paramètres    : aucun
