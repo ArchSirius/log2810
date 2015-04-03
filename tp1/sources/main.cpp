@@ -1,11 +1,11 @@
-/**
+/****************************************************************************
 * INF2810 - TP1 - Hiver 2015
-* Remise: 9 mars 2015
-*
-* @description: Modélisation d'un réseau informatique à l'aide de graphes et matrices
-* @author: Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
-* @created: 2015-02-19
-*/
+* Fichier       : main.cpp
+* Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
+* Date          : 26 février 2015
+* Mise à jour   : 09 mars 2015
+* Description   : Modélisation d'un réseau informatique à l'aide de graphes et matrices
+****************************************************************************/
 #include <string> 
 #include <iostream> 
 #include <fstream> 
@@ -37,9 +37,9 @@ void lectureFichierType();
 int main()
 {
 	//Création du réseau
-	//Création du réseau avec la configuration 1 des couts
+	//Création du réseau avec la configuration 2 des couts
 	unsigned int filaires, sansFil;
-	string nomFichier = "couts-" + to_string(4) + ".txt";
+	string nomFichier = "couts-" + to_string(2) + ".txt"; // possibilite de change le 2 pour 1/2/3/4
 	ifstream fichier(nomFichier);
 	if (fichier)
 	{
@@ -56,7 +56,6 @@ int main()
 
 			filaires = atoi(couts[0].c_str());
 			sansFil = atoi(couts[1].c_str());
-
 		}
 	}
 	else
@@ -65,7 +64,7 @@ int main()
 	//Construction du reseau selon la configuration des couts
 	Reseau reseau(filaires,sansFil);
 
-	//Création tout d'abord des noeuds en parcourant les fichiers nécessaires
+	//Création, tout d'abord, des noeuds en parcourant les fichiers nécessaires
 	//Les noeuds routeur
 	lectureFichierRouteur(reseau);
 	//Les noeuds commutateur
@@ -80,25 +79,38 @@ int main()
 	lectureFichierTablette(reseau);
 	//Les noeuds imprimante
 	lectureFichierImprimante(reseau);
-	//Mise en place du réseau
+	
+	//Mise en place du réseau	RF1
 	reseau.implanter();
+	//Afficher topologie du reseau	RF2
+	reseau.afficher(); // attention la console est trop petite pour consulter tous les noeuds!
 
-	reseau.afficher();
+/*	//Calculer le chemin entre deux noeud	RF7
+	reseau.distance(211, 312);
+	reseau.distance(123, 312);
+	reseau.distance(124, 611);
+*/	
+	//cas de test
+/*	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
+	Routeur* rout = new Routeur(10, "Rout test", 64, true);
 
-	cout << reseau.distance(217,417);
-	//lectureFichierType();
-	Ordinateur* ordi = new Ordinateur(54, "Ordi test", 1, 1);
-	Routeur* rout = new Routeur(54, "rout test", 24, true);
-	//reseau.ajouterConnecter(ordi, 112);
-	//	cout << *ordi << endl;
+	//Ajouter Noeud au reseau a partir d'un noeud existant	RF4
+	reseau.ajouterConnecter(ordi, 111);
+	reseau.afficher(ordi->getId());
+	reseau.afficher(111);
 
-	reseau.retirer(719);
-	//reseau.remplacer(214, rout);
-	//reseau.afficher(54);
+	//Retirer un noeud du reseau	RF5
+	reseau.retirer(ordi->getId());
+	reseau.afficher(111);
 
-	//map<unsigned int, Noeud*>::iterator it1 = reseau.noeuds.find(214);
-	//it1->second->afficherNbPortDispo();
-	//cout << *it1->second;
+	//Remplacer un noeud	RF6
+	reseau.remplacer(124, rout);
+	reseau.afficher(rout->getId());
+
+	//Afficher nb Ports disponible commutateur ou routeur	RF3
+	rout->afficherNbPortDispo();
+*/	
+
 	system("PAUSE");
 
 }
@@ -137,35 +149,7 @@ void lectureFichierCommutateur(Reseau& reseau)
 	else
 		cout << "Impossible d'ouvrir le fichier" << endl;
 }
-/*
-void lectureFichierCouts(int i)
-{
-	string nomFichier = "couts-" + to_string(i) + ".txt";
-	ifstream fichier(nomFichier);
-	if (fichier)
-	{
-		string input, token;
-		vector<string> couts;
-		unsigned int filaires, sansFil;
 
-		while (!fichier.eof())
-		{
-			couts.clear();
-			getline(fichier, input);
-			istringstream ss(input);
-			while (getline(ss, token, ';'))
-				couts.push_back(token);
-
-			filaires = atoi(couts[0].c_str());
-			sansFil = atoi(couts[1].c_str());
-
-			//Construction du reseau selon la configuration des couts
-			Reseau reseau(filaires,sansFil);
-		}
-	}
-	else
-		cout << "Impossible d'ouvrir le fichier" << endl;
-}*/
 
 void lectureFichierImprimante(Reseau& reseau)
 {
@@ -231,8 +215,6 @@ void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi)
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
 			Ordinateur* ordi = new Ordinateur(idOrdi, nom, lienFilaire, pTypeOrdi);
-
-			//cout << idOrdi << endl << nom << endl << lienFilaire << endl;
 
 			//Ajout de chaque ordi dans le map de noeuds
 			reseau.ajouter(ordi);

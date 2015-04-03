@@ -2,16 +2,21 @@
 * Fichier       : Ordinateur.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 19 février 2015
-* Mise à jour   : 19 février 2015
+* Mise à jour   : 09 mars 2015
 * Description   : Implementation de la classe Ordinateur
 ****************************************************************************/
 
 #include <string.h>
 #include "headers/Ordinateur.h"
 
+/****************************************************************************
+* Fonction		: Ordinateur::Ordinateur
+* Description	: Constructeur par defaut
+* Paramètres	: aucun
+* Retour		: aucun
+****************************************************************************/
 Ordinateur::Ordinateur() : Noeud(){
 	numType = Noeud::ORDINATEUR;
-	//lienFilaire = false;
 }
 
 /****************************************************************************
@@ -32,9 +37,17 @@ Ordinateur::Ordinateur(int pId, char* pNom, bool pLienFilaire, bool pTypeOrdi)
 
 }
 
+//Destructeur
 Ordinateur::~Ordinateur(){}
 
+/****************************************************************************
+* Fonction		: Ordinateur::connexionCompatible
+* Description	: methode qui verifie si la connexion entre deux appareils est compatible
+* Paramètres	: (Noeud*) noeud : le pointeur du noeud sur lequel on veut se connecter
+* Retour		: (bool) true = compatible / false = non-compatible
+****************************************************************************/
 bool Ordinateur::connexionCompatible(Noeud* noeud){
+	//peut seulement ce connecter avec un commutateur ou un routeur
 	if (noeud->getNumType() == COMMUTATEUR || noeud->getNumType() == ROUTEUR)
 		return true;
 	else
