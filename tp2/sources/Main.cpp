@@ -23,7 +23,7 @@ int main()
 
 
 	////TEST prof
-	//Automate autoDet("Fini.txt");
+	Automate autoDet("Fini.txt");
 	//Automate autoMoore("Moore.txt");
 	//Automate autoMealy("Mealy.txt");
 
