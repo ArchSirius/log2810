@@ -209,7 +209,7 @@ void Etat::ajouterTransition(Transition::Type type, string c, Etat* destination,
 		//creation de la transition sans sortie
 		Transition transition(type, c, getNumEtat(), destination->getNumEtat());
 		//ajout de la transition a la liste de transitions
-		listTransition.push_back(transition);
+		listTransition.emplace_back(transition);
 	}
 		
 	
@@ -232,6 +232,15 @@ list<string> Etat::listerEtiquettesTransitions()
 	{
 		if (numEtat == it->getEtatDepart())
 			listEtiquettes.push_back(it->getEtiquette());
+		it++;
 	}
 	return listEtiquettes;
+}
+
+bool Etat::operator==(const Etat& e)
+{
+	if(getNumEtat() == e.getNumEtat())
+		return true;
+	else
+		return false;
 }
