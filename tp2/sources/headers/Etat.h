@@ -17,13 +17,15 @@ class Etat {
 
 public:
 	Etat();
-	Etat(int etat);//À ajouter? : Parametre pour le type de machine (fini, moore, mealy) et symbole en sortie si moore?
+	Etat(int etat, string sortie = "");//À ajouter? : Parametre pour le type de machine (fini, moore, mealy) et symbole en sortie si moore?
 	~Etat();
 
 	//Getter et setter
 	void setInitiale(bool i);
 	void setFinal(bool f);
 	int getNumEtat() const;
+	string getSortie() const;
+	list<Transition> getListTransition() const;
 
 	bool existeTransition(string e);
 	list<int> cible(string e);
@@ -36,6 +38,7 @@ private:
 	bool estEtatInitial;
 	bool estEtatFinal;
 	int numEtat;
+	string sortie;
 	list<Transition> listTransition; //Liste des transitions possibles, donc on a acces aux etiquettes
 
 };

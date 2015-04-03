@@ -267,7 +267,59 @@ bool Automate::estDeterministe() {
 * Retour		: (bool) true = reactif / false = non reactif
 ****************************************************************************/
 bool Automate::estReactif() {
-	return false; // compilation
+	
+	//boolean pour savoir si est reactif
+	bool estReactif = false;
+	//Pour chaque etat
+	list<Etat>::iterator itEtats = ListeEtats.begin();
+	//la liste des transitions et un iterator sur celle-ci
+	list<Transition> ListeTransition = itEtats->getListTransition();
+	list<Transition>::iterator itTransition = ListeTransition.begin();
+
+	while(itEtats != ListeEtats.end())
+	{	
+		if(Automate::type == MEALY)
+		{
+			//sortie de la premiere transition de l'etat
+			string sortie = itTransition->getSortie();
+			//pour chaque transition il y a exactement une sortie associe
+			for(; itTransition != ListeTransition.end(); itTransition++)
+			{
+				//si la sortie est pas la meme alors on retourne false
+				if(itTransition->getSortie() != sortie)
+					return false;
+			}
+		}
+		else if(Automate::type == MOORE)
+		{
+			//ID du premier etat resultant (pour aller voir sa sortie)
+			int IDetat = itTransition->getEtatDestination();
+			//aller chercher la sortie de l'etat a l'indice du int etat dans la liste d'etat
+			auto EtatResultant = ListeEtats.begin();
+			advance(EtatResultant, IDetat);
+			//sortie de la premiere transition de l'etat
+			string sortie = EtatResultant->getSortie();
+
+			for(; itTransition != ListeTransition.end(); itTransition++)
+			{
+				//va chercher la sortie de chacun des etat pointe par l'etat courant
+				IDetat = itTransition->getEtatDestination();
+				EtatResultant = ListeEtats.begin();
+				advance(EtatResultant, IDetat);
+				//sortie pour chaque etat de destination
+				sortie = EtatResultant->getSortie();
+				//la sortie de chaque etat resultant est la meme?
+				if(EtatResultant->getSortie() != sortie)
+					return false;
+			}
+			
+		}
+		else if(Automate::type == FINI)
+			return false;
+
+		itEtats++;
+	}
+	return true;
 }
 
 /****************************************************************************
