@@ -23,6 +23,9 @@ public:
 	//Getter et setter
 	void setInitiale(bool i);
 	void setFinal(bool f);
+
+	bool getEstEtatInitial() const;
+	bool getEstEtatFinal() const;
 	int getNumEtat() const;
 	string getSortie() const;
 	list<Transition> getListTransition() const;

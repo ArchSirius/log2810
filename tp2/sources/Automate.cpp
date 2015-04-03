@@ -190,8 +190,19 @@ Automate::~Automate() {
 * Retour		: (Etat) etat initial
 ****************************************************************************/
 Etat Automate::etatInitial() {
-	Etat etat; // compilation
-	return etat;// compilation
+	Etat etat;
+	//parcours la liste d'états 
+	list<Etat>::iterator itEtats = ListeEtats.begin();
+	while(itEtats != ListeEtats.end())
+	{
+		//l'etat est initial?
+		if(itEtats->getEstEtatInitial() == true)
+			return etat;
+		else
+			cerr << "Il n'y a pas d'etat initial. Machine à Etats invalide";
+		itEtats++;
+	}
+
 }
 
 /****************************************************************************
