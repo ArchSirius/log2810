@@ -142,7 +142,7 @@ void Automate::buildFini(string input) {
 		cout << "Transition detected" << endl;
 		// Si Etat B n'existe pas, creer Etat B
 		Etat* b;
-		string s2 = & input.at(0);
+		string s2 = & input.at(4);
 		s2 = s2.substr(0,1);
 		Etat tampon = Etat(atoi(s2.c_str()));
 		list<Etat>::iterator it = ListeEtats.begin();
@@ -154,11 +154,11 @@ void Automate::buildFini(string input) {
 			b = &tampon;
 			ListeEtats.push_back(*b);
 		}
-
+		Etat tampon2;//MODIFICATION TEMPORAIRE POUR RÉGLER LE PROBLEM LORSQU'ON MODIFIE TAMPON
 		// Si Etat A n'existe pas, creer Etat A
 		string s3 = & input.at(0);
 		s3 = s3.substr(0,1);
-		tampon = Etat(atoi(s3.c_str()));
+		tampon2 = Etat(atoi(s3.c_str()));
 		it = ListeEtats.begin();
 		while(it != ListeEtats.end())
 			it++;
@@ -170,8 +170,8 @@ void Automate::buildFini(string input) {
 		else {
 			string s5 = & input.at(2);
 			s5 = s5.substr(0,1);
-			tampon.ajouterTransition(Transition::FINI, s5, b, "");
-			ListeEtats.push_back(tampon);
+			tampon2.ajouterTransition(Transition::FINI, s5, b, "");
+			ListeEtats.push_back(tampon2);
 		}
 	}
 }
