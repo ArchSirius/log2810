@@ -20,15 +20,13 @@ int main()
 	//TEST personelle
 
 
-
-
 	////TEST prof
-	//Automate autoDet("Fini.txt");
+	Automate autoDet("Fini.txt");
 	//Automate autoMoore("Moore.txt");
 	//Automate autoMealy("Mealy.txt");
 
 	////RF1
-	//cout << "l'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
+	cout << "l'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
 
 	////RF2
 	//cout << "l'automate est " << (autoMoore.estReactif() ? "reactif" : "non reactif") << endl;
