@@ -30,7 +30,6 @@ Automate::Automate() {
 *				  (list<Etat>) listEtat : liste des états
 * Retour		: aucun
 ****************************************************************************/
-
 Automate::Automate(Type type, list<Etat> listEtat)
 {
 	//besoin pour minimiser Mealy
@@ -397,11 +396,11 @@ Automate Automate::minimiserMealy() {
 			}
 		}
 	}
+	etatEq.unique();//enleve doublons
 
 
 
-		//On MINIMISE
-		etatEq.unique();//enleve doublons
+		//On crer l'automate minimise
 		//list avec le nombre d'état minimal
 		list<Etat> etatMinimise;
 		for (int i = 0; i < nbEtats - etatEq.size(); i++)
