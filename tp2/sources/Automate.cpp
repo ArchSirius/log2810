@@ -395,6 +395,7 @@ Automate Automate::minimiserMealy() {
 				}
 			}
 		}
+	}
 
 
 
