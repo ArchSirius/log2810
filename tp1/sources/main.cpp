@@ -64,7 +64,7 @@ int main()
 	//Construction du reseau selon la configuration des couts
 	Reseau reseau(filaires,sansFil);
 
-	//Création tout d'abord des noeuds en parcourant les fichiers nécessaires
+	//Création, tout d'abord, des noeuds en parcourant les fichiers nécessaires
 	//Les noeuds routeur
 	lectureFichierRouteur(reseau);
 	//Les noeuds commutateur
@@ -83,11 +83,15 @@ int main()
 	//Mise en place du réseau	RF1
 	reseau.implanter();
 	//Afficher topologie du reseau	RF2
-	reseau.afficher();
+	reseau.afficher(); // attention la console est trop petite pour consulter tous les noeuds!
 
-	
+/*	//Calculer le chemin entre deux noeud	RF7
+	reseau.distance(211, 312);
+	reseau.distance(123, 312);
+	reseau.distance(124, 611);
+*/	
 	//cas de test
-	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
+/*	Ordinateur* ordi = new Ordinateur(40, "Ordi test", 1, 1);
 	Routeur* rout = new Routeur(10, "Rout test", 64, true);
 
 	//Ajouter Noeud au reseau a partir d'un noeud existant	RF4
@@ -100,16 +104,12 @@ int main()
 	reseau.afficher(111);
 
 	//Remplacer un noeud	RF6
-	reseau.remplacer(113, rout);
+	reseau.remplacer(124, rout);
 	reseau.afficher(rout->getId());
 
 	//Afficher nb Ports disponible commutateur ou routeur	RF3
 	rout->afficherNbPortDispo();
-	
-	//Calculer le chemin entre deux noeud	RF7
-	reseau.distance(211, 312);
-	reseau.distance(123, 211);
-	reseau.distance(116, 219);
+*/	
 
 	system("PAUSE");
 
@@ -215,8 +215,6 @@ void lectureFichierOrdinateur(Reseau& reseau, string typeOrdi)
 			ordi[2] == "0" ? lienFilaire = false : lienFilaire = true;
 			//Construction de l'objet ordinateur
 			Ordinateur* ordi = new Ordinateur(idOrdi, nom, lienFilaire, pTypeOrdi);
-
-			//cout << idOrdi << endl << nom << endl << lienFilaire << endl;
 
 			//Ajout de chaque ordi dans le map de noeuds
 			reseau.ajouter(ordi);
