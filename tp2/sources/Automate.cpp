@@ -330,9 +330,9 @@ bool Automate::estReactif() {
 * Retour		: (Automate) automate de Mealy minimise equivalent
 ****************************************************************************/
 Automate Automate::minimiserMealy() {
-	//bool matriceChemin1[dim][dim];
+
+	//Matrice d'équivalence des chemins comme vue en cours
 	vector< vector<bool> > matriceSnPlus1;
-	
 	matriceSnPlus1.reserve(nbEtats);
 
 	//Initialisation : on met toutes les cases a true
@@ -364,8 +364,11 @@ Automate Automate::minimiserMealy() {
 		}
 	} while (matriceSnPlus1 != matriceSn);
 
-	list<Etat> etatMinimise;
-	list<Etat>::iterator it = ListeEtats.begin();
+
+
+
+	//déterminer les etats qui sont equivalent
+	list<string> etatEq;
 	for (unsigned int i = 0; i < nbEtats; i++){
 		for (unsigned int j = 0; j < nbEtats; j++){
 			if (i == j)/// on regarde ou pas????????????
@@ -375,17 +378,39 @@ Automate Automate::minimiserMealy() {
 				//on minimise
 				if (matriceSnPlus1[i][j] == true)
 				{
-
-				}
-				else
-				{
-
+					// p-e a repenser----------------------------
+					string egalite = (i < j) ? i + "=" + j : j + "=" + i;
+					etatEq.push_back(egalite);//on identifie les etats equivalentes
 				}
 			}
-			matriceSnPlus1[i][j]
 		}
 
-	return Automate(Automate::MEALY, list<Etat>); // compilation
+
+
+		//On MINIMISE
+		etatEq.unique();//enleve doublons
+		//list avec le nombre d'état minimal
+		list<Etat> etatMinimise;
+		for (int i = 0; i < nbEtats - etatEq.size(); i++)
+		{
+			etatMinimise.push_back(Etat());
+		}
+
+		list<Etat>::iterator it = ListeEtats.begin();
+		list<Etat>::iterator itMin = etatMinimise.begin();
+		for (; it != ListeEtats.end(); it++)
+		{
+			//On doit établir les transitions pr chaque état
+
+			//il faut gerer etat init et final
+			
+			//si une transition demande une des états qui a été enlevé 
+			//on doit lui dire d'allez voir l'état équivalent restant
+			//on ajoute une par une les transition
+			//(*itMin).ajouterTransition(Transition::MEALY, string c, Etat* destination, string sortie)
+		}
+
+		return Automate(Automate::MEALY, etatMinimise); // compilation
 }
 
 
