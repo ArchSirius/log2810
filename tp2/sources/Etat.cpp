@@ -123,7 +123,7 @@ list<int> Etat::cible(string e)
 * Description   : retourne l’ensemble de tous les etats de destination pour
 *				  toutes les transitions qui partent de l’etat considere.
 * Paramètres    : aucun
-* Retour        : (list<int>) la liste des numero desetats de destination pour
+* Retour        : (list<int>) la liste des numero des etats de destination pour
 *				  toutes les transitions partant de this
 ****************************************************************************/
 list<int> Etat::cible()

@@ -21,6 +21,7 @@ public:
 	enum Type {FINI, MOORE, MEALY};
 
 	Automate();
+	Automate(Type type, list<Etat> listEtat);
 	Automate(string fichier);
 	~Automate();
 

@@ -24,6 +24,19 @@ Automate::Automate() {
 }
 
 /****************************************************************************
+* Fonction		: Automate::Automate
+* Description	: Constructeur par parametre
+* Parametre	    : (Type) type : le type de l'automate Fini, Mealy ou Moore
+*				  (list<Etat>) listEtat : liste des états
+* Retour		: aucun
+****************************************************************************/
+
+Automate::Automate(Type type, list<Etat> listEtat)
+{
+	//besoin pour minimiser Mealy
+}
+
+/****************************************************************************
 * Tache #3
 * Fonction		: Automate::Automate
 * Description	: Constructeur par parametre
@@ -265,8 +278,65 @@ bool Automate::estReactif() {
 * Retour		: (Automate) automate de Mealy minimise equivalent
 ****************************************************************************/
 Automate Automate::minimiserMealy() {
-	return *this; // compilation
+	//bool matriceChemin1[dim][dim];
+	vector< vector<bool> > matriceSnPlus1;
+	
+	matriceSnPlus1.reserve(nbEtats);
+
+	//Initialisation : on met toutes les cases a true
+	for (unsigned int i = 0; i < nbEtats; i++){
+		vector<bool> temp;
+		temp.reserve(nbEtats);
+		for (unsigned int j = 0; j < nbEtats; j++){
+			temp.push_back(true);
+		}
+		matriceSnPlus1.push_back(temp);
+	}
+
+	vector< vector<bool> > matriceSn;
+	do
+	{
+		matriceSn = matriceSnPlus1;
+
+		//pour chaque ligne de Sn+1
+		for (Etat etat : ListeEtats)
+		{
+			list<int> etatCible = etat.cible();
+			//pour chaque colonne
+			for (int e : etatCible)
+			{
+				//on met les états de destination a false
+				//est-ce qu'il faut vérifier si les étiquettes sont identique???????????????????
+				matriceSnPlus1[etat.getNumEtat()][e] = false;
+			}
+		}
+	} while (matriceSnPlus1 != matriceSn);
+
+	list<Etat> etatMinimise;
+	list<Etat>::iterator it = ListeEtats.begin();
+	for (unsigned int i = 0; i < nbEtats; i++){
+		for (unsigned int j = 0; j < nbEtats; j++){
+			if (i == j)/// on regarde ou pas????????????
+			{}
+			else
+			{
+				//on minimise
+				if (matriceSnPlus1[i][j] == true)
+				{
+
+				}
+				else
+				{
+
+				}
+			}
+			matriceSnPlus1[i][j]
+		}
+
+	return Automate(Automate::MEALY, list<Etat>); // compilation
 }
+
+
 
 /****************************************************************************
 * Requis #4
