@@ -29,7 +29,7 @@ public:
 	void genererFichierAutomate(string fichier);
 	bool estDeterministe();
 	bool estReactif();
-	Automate minimiserMoore();
+	Automate minimiserMealy();
 	string calculerSortie(string mot);
 	void convertisseurMoore2Mealy();
 	void convertisseurMealy2Moore();

@@ -259,12 +259,12 @@ bool Automate::estReactif() {
 
 /****************************************************************************
 * Requis #3
-* Fonction		: Automate::minimiserMoore
-* Description	: Minimise l'automate de Moore associe
+* Fonction		: Automate::minimiserMealy
+* Description	: Minimise l'automate de Mealy associe
 * Parametre	    : aucun
-* Retour		: (Automate) automate de Moore minimise equivalent
+* Retour		: (Automate) automate de Mealy minimise equivalent
 ****************************************************************************/
-Automate Automate::minimiserMoore() {
+Automate Automate::minimiserMealy() {
 	return *this; // compilation
 }
 
