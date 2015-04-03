@@ -383,7 +383,8 @@ Automate Automate::minimiserMealy() {
 	for (unsigned int i = 0; i < nbEtats; i++){
 		for (unsigned int j = 0; j < nbEtats; j++){
 			if (i == j)/// on regarde ou pas????????????
-			{}
+			{
+			}
 			else
 			{
 				//on minimise
@@ -395,6 +396,7 @@ Automate Automate::minimiserMealy() {
 				}
 			}
 		}
+	}
 
 
 
