@@ -91,29 +91,36 @@ void Automate::buildBase(string input) {
 		if(input.at(2) == 'T') {
 			// DEBUG
 			cout << "Terminal state detected" << endl;
-			tampon = Etat((int)input.at(4));
+			string s = & input.at(4);
+			s = s.substr(0,1);
+			tampon = Etat(atoi(s.c_str()));
 			tampon.setInitiale(true);
 			tampon.setFinal(true);
-			ListeEtats.push_back(tampon);
+			//ListeEtats.push_back(tampon);
 		}
 		// Etat initial
 		else {
-			tampon = Etat((int)input.at(2));
+			string s0 = & input.at(2);
+			s0 = s0.substr(0,1);
+			tampon = Etat(atoi(s0.c_str()));
 			tampon.setInitiale(true);
-			ListeEtats.push_back(tampon);
+			//ListeEtats.push_back(tampon);
 		}
 	}
 	// Sinon, si T, creer Etat et mettre terminal
 	else if(input.at(0) == 'T') {
 		// DEBUG
 		cout << "Terminal state detected" << endl;
-		tampon = Etat((int)input.at(2));
+		string s1 = & input.at(2);
+		s1 = s1.substr(0,1);
+		tampon = Etat(atoi(s1.c_str()));
 		tampon.setFinal(true);
-		ListeEtats.push_back(tampon);
+		//ListeEtats.push_back(tampon);
 	}
 }
 
 void Automate::buildFini(string input) {
+	Etat tampon2;//MODIFICATION TEMPORAIRE POUR RÉGLER LE PROBLEM LORSQU'ON MODIFIE TAMPON
 	// Si I ou T, cas spéciaux communs
 	if(input.at(0) == 'I' || input.at(0) == 'T') {
 		buildBase(input);
@@ -124,31 +131,40 @@ void Automate::buildFini(string input) {
 		cout << "Transition detected" << endl;
 		// Si Etat B n'existe pas, creer Etat B
 		Etat* b;
-		Etat tampon = Etat((int)input.at(0));
-		list<Etat>::iterator it = ListeEtats.begin();
-		while(it != ListeEtats.end())
-			it++;
-		if(it != ListeEtats.end())
-			b = &(*it);
+		string s2 = & input.at(4);
+		s2 = s2.substr(0,1);
+		Etat tampon = Etat(atoi(s2.c_str()));
+		//list<Etat>::iterator it = ListeEtats.begin();
+		list<Etat>::iterator it1 = find(ListeEtats.begin(), ListeEtats.end(), tampon2);
+		//while(it != ListeEtats.end())
+		//	it++;
+		if(it1 != ListeEtats.end())
+			b = &(*it1);
 		else {
 			b = &tampon;
+			//b->ajouterTransition(Transition::FINI, s2, b, "");
 			ListeEtats.push_back(*b);
 		}
 
 		// Si Etat A n'existe pas, creer Etat A
-		tampon = Etat((int)input.at(0));
-		it = ListeEtats.begin();
-		while(it != ListeEtats.end())
-			it++;
+		string s3 = & input.at(0);
+		s3 = s3.substr(0,1);
+		tampon2 = Etat(atoi(s3.c_str()));
+		//it = ListeEtats.begin();
+		list<Etat>::iterator it = find(ListeEtats.begin(), ListeEtats.end(), tampon2);
+		//while(it != ListeEtats.end())//Si l'état existe deja le find ne fonctionne pas et on creer un etat qui est deja la
+		//	it++;
 		if(it != ListeEtats.end()) {
-			string s = & input.at(2);
-			(*it).ajouterTransition(Transition::FINI, s, b, "");
+
+			string s4 = & input.at(2);
+			s4 = s4.substr(0,1);
+			(*it).ajouterTransition(Transition::FINI, s4, b, "");
 		}
 		else {
-			string s = & input.at(2);
-			s = s.substr(0,1);
-			tampon.ajouterTransition(Transition::FINI, s, b, "");
-			ListeEtats.push_back(tampon);
+			string s5 = & input.at(2);
+			s5 = s5.substr(0,1);
+			tampon2.ajouterTransition(Transition::FINI, s5, b, "");
+			ListeEtats.push_back(tampon2);
 		}
 	}
 }
@@ -245,6 +261,7 @@ bool Automate::estDeterministe() {
 	//parcours chaque etat
 	for (; itEtat != ListeEtats.end(); itEtat++)
 	{
+		//cout << itEtat->getNumEtat();
 		//liste des symboles
 		list<string> listSymb = itEtat->listerEtiquettesTransitions();
 

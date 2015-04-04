@@ -36,7 +36,8 @@ public:
 	void ajouterTransition(Transition::Type type, string c, Etat* destination, string sortie);
 	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
 
-	
+	bool operator==(const Etat& e);
+
 private:
 	bool estEtatInitial;
 	bool estEtatFinal;
