@@ -24,18 +24,6 @@ Automate::Automate() {
 }
 
 /****************************************************************************
-* Fonction		: Automate::Automate
-* Description	: Constructeur par parametre
-* Parametre	    : (Type) type : le type de l'automate Fini, Mealy ou Moore
-*				  (list<Etat>) listEtat : liste des états
-* Retour		: aucun
-****************************************************************************/
-Automate::Automate(Type type, list<Etat> listEtat)
-{
-	//besoin pour minimiser Mealy
-}
-
-/****************************************************************************
 * Tache #3
 * Fonction		: Automate::Automate
 * Description	: Constructeur par parametre
@@ -389,11 +377,10 @@ Automate Automate::minimiserMealy() {
 	for (unsigned int i = 0; i < nbEtats; i++){
 		for (unsigned int j = 0; j < nbEtats; j++){
 			if (i == j)/// on regarde ou pas????????????
-			{
-			}
+			{}
 			else
 			{
-				//on minimise
+				//on determine les etats équivalents
 				if (matriceSnPlus1[i][j] == true)
 				{
 					// p-e a repenser----------------------------
@@ -406,7 +393,96 @@ Automate Automate::minimiserMealy() {
 	etatEq.unique();//enleve doublons
 
 
+	//trouve l'etat initial
+	char init = etatInitial().getNumEtat();
 
+	//trouver les etat a enlever
+	list<char> etat2Remove;
+	char num = ' ';
+	for (Etat e : ListeEtats)
+	{
+		num = e.getNumEtat();
+		if (num != init)
+		{
+			//on parcourt les état equivalente
+			for (string eq : etatEq)
+			{
+				if (num == eq.front() || num == eq.back())
+				{
+					etat2Remove.push_back(num);
+				}
+			}
+		}
+	}
+
+
+
+	//petit test avec les fichiers
+	//on genere le fichier et on récupere les données
+	this->genererFichierAutomate("minimiser.txt");
+	vector<string> lignesFichier;
+	ifstream lecture("minimiser.txt");
+	if (lecture) {
+		string input;
+		while (!lecture.eof()) {
+			getline(lecture, input);
+			lignesFichier.push_back(input);
+		}
+	}
+	else {
+		cerr << "Fichier non conforme" << endl;
+		lecture.close();
+	}
+
+	//on réecrit le fichier minimise
+	int nbEtMin = 0;
+	ofstream fichier("minimiser.txt", ios::out | ios::trunc);
+	if (fichier)
+	{
+		for (unsigned int i = 0; i < lignesFichier.size(); i++)
+		{
+			if (i == 0)
+			{
+				nbEtMin = nbEtats - etatEq.size();
+			}
+			else if (lignesFichier[i].at(0) == 'I')
+			{ }
+			else
+			{
+				//pour toute les etat d'equivalence
+				//for (string eq : etatEq)
+				//{
+					char eDepart = lignesFichier[i].front();
+					char eArrive = lignesFichier[i].back();
+					//pour toutes les etats a enlever
+					for (char e2r : etat2Remove)
+					{
+						if (eDepart == e2r)
+						{
+							lignesFichier[i].erase();///////////////iterator
+						}
+							
+						if (eArrive == e2r)
+						{
+							//faire le remplacament dans le dernier terme de la transition------------
+						}	
+					}	
+				//}
+			}
+		}
+
+		fichier << "Mealy " << nbEtMin << endl;
+		fichier << "I " << init << endl;
+		for (unsigned int i = 2; i < lignesFichier.size(); i++)
+		{
+			fichier << lignesFichier[i] << endl;
+		}
+		fichier.close();
+	}
+	else
+		cerr << "Impossible d'ouvrir le fichier !" << endl;
+
+	/*
 		//On crer l'automate minimise
 		//list avec le nombre d'état minimal
 		list<Etat> etatMinimise;
@@ -428,8 +504,8 @@ Automate Automate::minimiserMealy() {
 			//on ajoute une par une les transition
 			//(*itMin).ajouterTransition(Transition::MEALY, string c, Etat* destination, string sortie)
 		}
-
-		return Automate(Automate::MEALY, etatMinimise); // compilation
+		*/
+		return Automate("minimiser.txt");
 }
 
 
