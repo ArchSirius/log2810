@@ -265,10 +265,6 @@ bool Automate::estDeterministe() {
 		//liste des symboles
 		list<string> listSymb = itEtat->listerEtiquettesTransitions();
 
-
-		/*for (string e : itEtat->listerEtiquettesTransitions())
-			listSymb.push_back(e);*/
-
 		//trouver si unique
 		list<string> listTemp = listSymb;
 		listTemp.unique();

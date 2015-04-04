@@ -32,8 +32,10 @@ int main()
 	//cout << "l'automate est " << (autoMoore.estReactif() ? "reactif" : "non reactif") << endl;
 
 	////RF3
-	//Automate autoMinMoore(autoMealy.minimiserMoore());
-	//autoMinMoore.genererFichierAutomate("minimisation_Moore");
+	//Est-ce qu'on doit faire moore minimiser en mealy??????
+	//Automate autoMealyAMinimiser("MealyAMinimiser.txt");
+	//Automate autoMinMealy(autoMealyAMinimiser.minimiserMealy());
+	//autoMinMealy.genererFichierAutomate("minimiser.txt");
 
 	////RF4
 	//Automate autoMooreAddMod10(/*fichier ici : voir enonce*/);
