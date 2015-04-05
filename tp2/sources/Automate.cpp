@@ -84,6 +84,91 @@ Automate::Automate(string fichier) {
 void Automate::buildBase(string input) {
 	Etat tampon;
 	// Si I, creer Etat et mettre initial
+	if (input.at(0) == 'I') {
+		// DEBUG
+		cout << "Initial state detected" << endl;
+		// Si aussi T, mettre aussi terminal
+		if (input.at(2) == 'T') {
+			// DEBUG
+			cout << "Terminal state detected" << endl;
+			string s = &input.at(4);
+			s = s.substr(0, 1);
+			tampon = Etat(atoi(s.c_str()));
+			tampon.setInitiale(true);
+			tampon.setFinal(true);
+			ListeEtats.push_back(tampon);
+		}
+		// Etat initial
+		else {
+			string s0 = &input.at(2);
+			s0 = s0.substr(0, 1);
+			tampon = Etat(atoi(s0.c_str()));
+			tampon.setInitiale(true);
+			ListeEtats.push_back(tampon);
+		}
+	}
+	// Sinon, si T, creer Etat et mettre terminal
+	else if (input.at(0) == 'T') {
+		// DEBUG
+		cout << "Terminal state detected" << endl;
+		string s1 = &input.at(2);
+		s1 = s1.substr(0, 1);
+		tampon = Etat(atoi(s1.c_str()));
+		tampon.setFinal(true);
+		ListeEtats.push_back(tampon);
+	}
+}
+
+void Automate::buildFini(string input) {
+	// Si I ou T, cas spéciaux communs
+	if (input.at(0) == 'I' || input.at(0) == 'T') {
+		buildBase(input);
+	}
+	// Sinon, transition
+	else {
+		// DEBUG
+		cout << "Transition detected" << endl;
+
+		// Si Etat A n'existe pas, creer Etat A
+		string valA = &input.at(0);
+		valA = valA.substr(0, 1);
+		//trouvons si l'etat A existe
+		Etat tamponA = Etat(atoi(valA.c_str()));
+		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
+		Etat* a;
+		if (itEtatA != ListeEtats.end())
+			a = &(*itEtatA);
+		//on ajoute l'etat A
+		else
+		{
+			a = &tamponA;
+			ListeEtats.push_back(*a);
+		}
+
+		// Si Etat B n'existe pas, creer Etat B
+		string valB = &input.at(4);
+		valB = valB.substr(0, 1);
+		//trouvons si l'etat B existe
+		Etat tamponB = Etat(atoi(valB.c_str()));
+		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
+		Etat* b;
+		if (itEtatB != ListeEtats.end())
+			b = &(*itEtatB);
+		//on ajoute l'etat B
+		else {
+			b = &tamponB;
+			ListeEtats.push_back(*b);
+		}		
+
+		//Etablir la transition
+		string etiquette = &input.at(2);
+		etiquette = etiquette.substr(0, 1);
+		a->ajouterTransition(Transition::FINI, etiquette, b, "");
+	}
+}
+/*void Automate::buildBase(string input) {
+	Etat tampon;
+	// Si I, creer Etat et mettre initial
 	if(input.at(0) == 'I') {
 		// DEBUG
 		cout << "Initial state detected" << endl;
@@ -167,7 +252,7 @@ void Automate::buildFini(string input) {
 			ListeEtats.push_back(tampon2);
 		}
 	}
-}
+}*/
 
 void Automate::buildMoore(string input) {
 	// Si I ou T, cas spéciaux communs
@@ -202,30 +287,63 @@ Automate::~Automate() {
 }
 
 /****************************************************************************
-* Tache #9
+* Fonction		: Automate::etatInitial
+* Description	: Retourne l'etat initial de l'automate
+* Parametre	    : aucun
+* Retour		: (Etat) etat initial
+****************************************************************************/
+string Automate::getType() {
+	if (type == 0)
+		return "Fini";
+	else if (type == 1)
+		return "Mealy";
+	else if (type == 2)
+		return "Moore";
+	else return "";
+}
+/****************************************************************************
+* Tache #6
 * Fonction		: Automate::etatInitial
 * Description	: Retourne l'etat initial de l'automate
 * Parametre	    : aucun
 * Retour		: (Etat) etat initial
 ****************************************************************************/
 Etat Automate::etatInitial() {
-	Etat etat;
 	//parcours la liste d'états 
 	list<Etat>::iterator itEtats = ListeEtats.begin();
 	while(itEtats != ListeEtats.end())
 	{
 		//l'etat est initial?
 		if(itEtats->getEstEtatInitial() == true)
-			return etat;
-		else
-			cerr << "Il n'y a pas d'etat initial. Machine à Etats invalide";
+			return *itEtats;
 		itEtats++;
 	}
+	cerr << "Il n'y a pas d'etat initial. Machine a Etats invalide" << endl;
 	return 0;
 }
 
 /****************************************************************************
-* Tache #10
+* Fonction		: Automate::etatFinal
+* Description	: Retourne l'etat final de l'automate
+* Parametre	    : aucun
+* Retour		: (int) id de l'etat final
+****************************************************************************/
+int Automate::getNumEtatFinal() {
+	//parcours la liste d'états 
+	list<Etat>::iterator itEtats = ListeEtats.begin();
+	while (itEtats != ListeEtats.end())
+	{
+		//l'etat est final?
+		if (itEtats->getEstEtatFinal() == true)
+			return itEtats->getNumEtat();
+		itEtats++;
+	}
+	cerr << "Il n'y a pas d'etat final." << endl;
+	return -1;
+}
+
+/****************************************************************************
+* Tache #7
 * Fonction		: Automate::ajouterEtat
 * Description	: Ajoute un nouvel etat a l'automate
 * Parametre	    : (Etat) e : etat a ajouter
@@ -236,7 +354,7 @@ void Automate::ajouterEtat(Etat e) {
 }
 
 /****************************************************************************
-* Tache #12
+* Tache #9
 * Fonction		: Automate::genererFichierAutomate
 * Description	: Genere un fichier descriptif de l'automate utilisable dans
                   son constructeur par parametre
@@ -244,7 +362,41 @@ void Automate::ajouterEtat(Etat e) {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::genererFichierAutomate(string fichier) {
+	string init = "-1";
+	string fin = "-1";
+	ofstream ecriture(fichier, ios::out | ios::trunc);
+	if (ecriture)
+	{
+		init = to_string(etatInitial().getNumEtat());
+		fin = to_string(getNumEtatFinal());
 
+		//ligne 0
+		ecriture << getType() << " " << nbEtats << endl;
+
+		//ligne 1 ou 1-2
+		if (fin == "-1")
+			ecriture << "I " << init << endl;
+		else if (init == fin)
+			ecriture << "I T " << init << endl;
+		else
+		{
+			ecriture << "I " << init << endl;
+			ecriture << "T " << fin << endl;
+		}
+
+		//lignes des transitions
+		list<Etat>::iterator itEtats = ListeEtats.begin();
+		list<Transition>::iterator itTrans;
+		for (; itEtats != ListeEtats.end(); itEtats++)
+		{
+			list<Transition> listTransTemp = itEtats->getListTransition();
+			for (itTrans = listTransTemp.begin(); itTrans != listTransTemp.end(); itTrans++)
+				ecriture << itTrans->getEtatDepart() << " " << itTrans->getEtiquette() << " " << itTrans->getEtatDestination() << endl;
+		}
+		ecriture.close();
+	}
+	else
+		cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
 
 /****************************************************************************

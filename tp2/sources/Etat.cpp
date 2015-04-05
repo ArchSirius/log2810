@@ -237,6 +237,7 @@ list<string> Etat::listerEtiquettesTransitions()
 	return listEtiquettes;
 }
 
+//surcharge operator ==
 bool Etat::operator==(const Etat& e)
 {
 	if(getNumEtat() == e.getNumEtat())

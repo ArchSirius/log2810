@@ -18,7 +18,8 @@ using namespace std;
 int main()
 {
 	//TEST personelle
-
+	Automate autoTest("Fini.txt");
+	autoTest.genererFichierAutomate("test.txt");
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
@@ -26,7 +27,7 @@ int main()
 	//Automate autoMealy("Mealy.txt");
 
 	////RF1
-	cout << "l'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
+	cout << "L'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
 
 	////RF2
 	//cout << "l'automate est " << (autoMoore.estReactif() ? "reactif" : "non reactif") << endl;
@@ -39,7 +40,7 @@ int main()
 
 	////RF4
 	//Automate autoMooreAddMod10(/*fichier ici : voir enonce*/);
-	//cout << autoMooreAddMod10.calculerSortie("1000") << endl;
+	//cout << La sortie est : << autoMooreAddMod10.calculerSortie("1000") << endl;
 
 	////RF5
 	//Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
@@ -51,9 +52,9 @@ int main()
 	//
 	////RF7
 	//Automate autoMooreRF7(/*fichier ici : voir enonce*/);
-	//cout << autoMooreRF7.calculerSortie("001") << endl;
-	//cout << autoMooreRF7.calculerSortie("1010") << endl;
-	//cout << autoMooreRF7.calculerSortie("1110") << endl;
+	//cout << La sortie est : << autoMooreRF7.calculerSortie("001") << endl;
+	//cout << La sortie est : << autoMooreRF7.calculerSortie("1010") << endl;
+	//cout << La sortie est : << autoMooreRF7.calculerSortie("1110") << endl;
 
 	system("PAUSE");
 }

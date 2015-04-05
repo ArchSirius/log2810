@@ -24,7 +24,9 @@ public:
 	Automate(string fichier);
 	~Automate();
 
+	string getType();
 	Etat etatInitial();
+	int getNumEtatFinal();
 	void ajouterEtat(Etat e);
 	void genererFichierAutomate(string fichier);
 	bool estDeterministe();
