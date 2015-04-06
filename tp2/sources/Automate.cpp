@@ -617,6 +617,7 @@ string Automate::calculerSortie(string mot) {
 			}
 		}
 	}
+	sortie.erase(remove_if(sortie.begin(), sortie.end(), isspace), sortie.end());
 	return sortie;
 }
 

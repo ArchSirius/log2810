@@ -56,10 +56,10 @@ int main()
 	//autoMealyToMoore.genererFichierAutomate("MealyToMoore");
 	//
 	////RF7
-	//Automate autoMooreRF7(/*fichier ici : voir enonce*/);
-	//cout << La sortie est : << autoMooreRF7.calculerSortie("001") << endl;
-	//cout << La sortie est : << autoMooreRF7.calculerSortie("1010") << endl;
-	//cout << La sortie est : << autoMooreRF7.calculerSortie("1110") << endl;
+	Automate autoMooreRF7("MooreRF7.txt");
+	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1111") << endl;
+	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1010") << endl;
+	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1110") << endl;
 
 	system("PAUSE");
 }
