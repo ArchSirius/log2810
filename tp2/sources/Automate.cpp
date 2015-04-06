@@ -698,7 +698,7 @@ void Automate::convertisseurMoore2Mealy() {
 		cerr << "Type de conversion invalide" << endl;
 		return;
 	}
-	
+
 	for(Etat etat : ListeEtats)
 	{
 		etat.convertisseurMoore2Mealy();
@@ -714,5 +714,30 @@ void Automate::convertisseurMoore2Mealy() {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::convertisseurMealy2Moore() {
+	if(type != Automate::MEALY)
+	{
+		cerr << "Type de conversion invalide" << endl;
+		return;
+	}
 
+	// Pour chaque état cible
+	for(Etat cible : ListeEtats)
+	{
+		// Enregistrer toutes les transitions entrantes
+		list<pair<Etat, Transition>> ListeTransitions;
+		// Pour chaque état source
+		for(Etat source : ListeEtats)
+		{
+			// Si une transition pointe vers la cible, enregistrer (avec la source)
+			for(Transition transition : source.getListTransition())
+			{
+				if(transition.getEtatDestination() == cible.getNumEtat())
+					ListeTransitions.push_back(make_pair(source, transition));
+			}
+		}
+
+		// Vérifier si toutes les transitions entrantes sont de même sortie
+		// Si oui, transférer les sorties
+		// Sinon, créer autant d'états que de différentes sorties, puis modifier les transitions
+	}
 }
