@@ -352,12 +352,12 @@ bool Automate::estReactif() {
 		else if(Automate::type == MOORE)
 		{
 			//ID du premier etat resultant (pour aller voir sa sortie)
-			int IDetat = itTransition->getEtatDestination();
+			int IDetat = 0;//itTransition->getEtatDestination();
 			//aller chercher la sortie de l'etat a l'indice du int etat dans la liste d'etat
 			auto EtatResultant = ListeEtats.begin();
-			advance(EtatResultant, IDetat);
+			//advance(EtatResultant, IDetat);
 			//sortie de la premiere transition de l'etat
-			string sortie = EtatResultant->getSortie();
+			string sortie = "";//EtatResultant->getSortie();
 
 			for(; itTransition != ListeTransition.end(); itTransition++)
 			{
@@ -574,7 +574,7 @@ Automate Automate::minimiserMealy() {
 ****************************************************************************/
 string Automate::calculerSortie(string mot) {
 	//trouver l'etat initial
-	Etat etat = etatInitial(); //Implémenter operator= de la classe Etat??
+	Etat etat = etatInitial();
 	string sortie = "";
 
 	//Pour chaque caractere du string d'entree (mot)
@@ -584,22 +584,36 @@ string Automate::calculerSortie(string mot) {
 		//pour pouvoir recuperer les transitions d'un etat
 		list<Transition> listTransitionsEtat = etat.getListTransition();
 		list<Transition>::iterator itTransitions = listTransitionsEtat.begin();
+
+		int IDetat = 0;
+		auto EtatDest = ListeEtats.begin();
+
 		//appliquer le caractere du mot à l'etat
 		for(;itTransitions != listTransitionsEtat.end(); itTransitions++)
 		{
 			//prendre le string en entree et le convertir en char pour pouvoir comparer
-			char c = itTransitions->getEntre()[0];										//A VERIFIER CONVERSION EN CHAR
+			char c = itTransitions->getEntre()[0];
 			//faire la bonne transition selon si c'est 1 ou 0
 			if(c == entree)
 			{
+				//aller chercher le ID de l'etat dest 
+				IDetat = itTransitions->getEtatDestination();
+				EtatDest = ListeEtats.begin();
+				//trouver cet etat et mettre a jour la variable etat
+				advance(EtatDest, IDetat);
+
+				if(Automate::type == MOORE)
+				{
+					//EtatDest = ListeEtats.begin();
+					//advance(EtatDest, IDetat);
+					//sortie pour etat de destination
+					sortie += EtatDest->getSortie();
+				}
+				//aller chercher le ID de l'etat dest 
+				//IDetat = itTransitions->getEtatDestination();
+				etat = *EtatDest;
 				//Prendre la sortie de cette transition, la mettre dans le string de sortie
 				sortie += itTransitions->getSortie();
-				//aller chercher le ID de l'etat dest 
-				int IDetat = itTransitions->getEtatDestination();
-				//trouver cet etat et mettre a jour la variable etat
-				auto EtatDest = ListeEtats.begin();
-				advance(EtatDest, IDetat);
-				etat = *EtatDest;
 			}
 		}
 	}

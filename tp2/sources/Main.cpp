@@ -35,7 +35,7 @@ int main()
 	cout << "L'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
 
 	////RF2
-	//cout << "l'automate est " << (autoMoore.estReactif() ? "reactif" : "non reactif") << endl;
+	//cout << "l'automate est " << (autoMealy.estReactif() ? "reactif" : "non reactif") << endl;
 
 	////RF3
 	//Est-ce qu'on doit faire moore minimiser en mealy??????
