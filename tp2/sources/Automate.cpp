@@ -693,7 +693,17 @@ string Automate::calculerSortie(string mot) {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::convertisseurMoore2Mealy() {
-
+	if(type != Automate::MOORE)
+	{
+		cerr << "Type de conversion invalide" << endl;
+		return;
+	}
+	
+	for(Etat etat : ListeEtats)
+	{
+		etat.convertisseurMoore2Mealy();
+		type = Automate::MEALY;
+	}
 }
 
 /****************************************************************************
