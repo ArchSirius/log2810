@@ -38,9 +38,7 @@ public:
 
 private:
 	void buildBase(string input);
-	void buildFini(string input);
-	void buildMoore(string input);
-	void buildMealy(string input);
+	void buildAutomate(string input);
 
 	unsigned int nbEtats;
 	Type type;

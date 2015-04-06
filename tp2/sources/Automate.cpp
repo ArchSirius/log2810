@@ -35,15 +35,12 @@ Automate::Automate(string fichier) {
 	if(lecture) {
 		string input;
 		getline(lecture, input);
-		if(input.substr(0, input.find(" ") ) == "Fini") {
+		if(input.substr(0, input.find(" ") ) == "Fini")
 			type = Automate::FINI;
-		}
-		else if(input.substr(0, input.find(" ") ) == "Moore") {
+		else if(input.substr(0, input.find(" ") ) == "Moore")
 			type = Automate::MOORE;
-		}
-		else if(input.substr(0, input.find(" ") ) == "Mealy") {
+		else if(input.substr(0, input.find(" ") ) == "Mealy")
 			type = Automate::MEALY;
-		}
 		else {
 			cerr << "Fichier non conforme" << endl;
 			lecture.close();
@@ -54,28 +51,10 @@ Automate::Automate(string fichier) {
 		nbEtats = atoi(input.substr(input.find(" ") + 1).c_str());
 
 		// Creation des etats et leurs attributs et transitions
-		
-		switch(type) {
-			case Automate::FINI:
-				while (!lecture.eof()) {
-					getline(lecture, input);
-					buildFini(input);
-				}
-				break;
-			case Automate::MOORE:
-				while (!lecture.eof()) {
-					getline(lecture, input);
-					buildMoore(input);
-				}
-				break;
-			case Automate::MEALY:
-				while (!lecture.eof()) {
-					getline(lecture, input);
-					buildMealy(input);
-				}
-				break;
+		while (!lecture.eof()) {
+			getline(lecture, input);
+			buildAutomate(input);
 		}
-
 		lecture.close();
 	}
 	else {
@@ -121,7 +100,7 @@ void Automate::buildBase(string input) {
 	}
 }
 
-void Automate::buildFini(string input) {
+void Automate::buildAutomate(string input) {
 	// Si I ou T, cas spéciaux communs
 	if (input.at(0) == 'I' || input.at(0) == 'T') {
 		buildBase(input);
@@ -132,8 +111,7 @@ void Automate::buildFini(string input) {
 		cout << "Transition detected" << endl;
 
 		// Si Etat A n'existe pas, creer Etat A
-		string valA = &input.at(0);
-		valA = valA.substr(0, 1);
+		string valA = input.substr(0, 1);
 		//trouvons si l'etat A existe
 		Etat tamponA = Etat(atoi(valA.c_str()));
 		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
@@ -148,8 +126,7 @@ void Automate::buildFini(string input) {
 		}
 
 		// Si Etat B n'existe pas, creer Etat B
-		string valB = &input.at(4);
-		valB = valB.substr(0, 1);
+		string valB = input.substr(input.length() - 1);
 		//trouvons si l'etat B existe
 		Etat tamponB = Etat(atoi(valB.c_str()));
 		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
@@ -157,198 +134,25 @@ void Automate::buildFini(string input) {
 		if (itEtatB != ListeEtats.end())
 			b = &(*itEtatB);
 		//on ajoute l'etat B
-		else {
+		else 
+		{
 			b = &tamponB;
 			ListeEtats.push_back(*b);
 		}		
 
-		//Etablir la transition
-		string entre = &input.at(2);
-		entre = entre.substr(0, 1);
-		a->ajouterTransition(Transition::FINI, entre, b, "");
-	}
-}
-/*void Automate::buildBase(string input) {
-	Etat tampon;
-	// Si I, creer Etat et mettre initial
-	if(input.at(0) == 'I') {
-		// DEBUG
-		cout << "Initial state detected" << endl;
-		// Si aussi T, mettre aussi terminal
-		if(input.at(2) == 'T') {
-			// DEBUG
-			cout << "Terminal state detected" << endl;
-			string s = & input.at(4);
-			s = s.substr(0,1);
-			tampon = Etat(atoi(s.c_str()));
-			tampon.setInitiale(true);
-			tampon.setFinal(true);
-			//ListeEtats.push_back(tampon);
-		}
-		// Etat initial
-		else {
-			string s0 = & input.at(2);
-			s0 = s0.substr(0,1);
-			tampon = Etat(atoi(s0.c_str()));
-			tampon.setInitiale(true);
-			//ListeEtats.push_back(tampon);
-		}
-	}
-	// Sinon, si T, creer Etat et mettre terminal
-	else if(input.at(0) == 'T') {
-		// DEBUG
-		cout << "Terminal state detected" << endl;
-		string s1 = & input.at(2);
-		s1 = s1.substr(0,1);
-		tampon = Etat(atoi(s1.c_str()));
-		tampon.setFinal(true);
-		//ListeEtats.push_back(tampon);
-	}
-}
-
-void Automate::buildFini(string input) {
-	Etat tampon2;//MODIFICATION TEMPORAIRE POUR RÉGLER LE PROBLEM LORSQU'ON MODIFIE TAMPON
-	// Si I ou T, cas spéciaux communs
-	if(input.at(0) == 'I' || input.at(0) == 'T') {
-		buildBase(input);
-	}
-	// Sinon, transition
-	else {
-		// DEBUG
-		cout << "Transition detected" << endl;
-		// Si Etat B n'existe pas, creer Etat B
-		Etat* b;
-		string s2 = & input.at(4);
-		s2 = s2.substr(0,1);
-		Etat tampon = Etat(atoi(s2.c_str()));
-		//list<Etat>::iterator it = ListeEtats.begin();
-		list<Etat>::iterator it1 = find(ListeEtats.begin(), ListeEtats.end(), tampon2);
-		//while(it != ListeEtats.end())
-		//	it++;
-		if(it1 != ListeEtats.end())
-			b = &(*it1);
-		else {
-			b = &tampon;
-			//b->ajouterTransition(Transition::FINI, s2, b, "");
-			ListeEtats.push_back(*b);
-		}
-
-		// Si Etat A n'existe pas, creer Etat A
-		string s3 = & input.at(0);
-		s3 = s3.substr(0,1);
-		tampon2 = Etat(atoi(s3.c_str()));
-		//it = ListeEtats.begin();
-		list<Etat>::iterator it = find(ListeEtats.begin(), ListeEtats.end(), tampon2);
-		//while(it != ListeEtats.end())//Si l'état existe deja le find ne fonctionne pas et on creer un etat qui est deja la
-		//	it++;
-		if(it != ListeEtats.end()) {
-
-			string s4 = & input.at(2);
-			s4 = s4.substr(0,1);
-			(*it).ajouterTransition(Transition::FINI, s4, b, "");
-		}
-		else {
-			string s5 = & input.at(2);
-			s5 = s5.substr(0,1);
-			tampon2.ajouterTransition(Transition::FINI, s5, b, "");
-			ListeEtats.push_back(tampon2);
-		}
-	}
-}*/
-
-void Automate::buildMoore(string input) {
-	// Si I ou T, cas spéciaux communs
-	if(input.at(0) == 'I') {
-		buildBase(input);
-	}
-	// Sinon, transition
-	else {
-		// DEBUG
-		cout << "Transition detected" << endl;
-
-		// Si Etat A n'existe pas, creer Etat A
-		string valA = &input.at(0);
-		valA = valA.substr(0, 1);
-		//trouvons si l'etat A existe
-		Etat tamponA = Etat(atoi(valA.c_str()));
-		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
-		Etat* a;
-		if (itEtatA != ListeEtats.end())
-			a = &(*itEtatA);
-		//on ajoute l'etat A
-		else
-		{
-			a = &tamponA;
-			ListeEtats.push_back(*a);
-		}
-
-		// Si Etat B n'existe pas, creer Etat B
-		string valB = input.substr(input.length() - 1);
-		//trouvons si l'etat B existe
-		Etat tamponB = Etat(atoi(valB.c_str()));
-		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
-		Etat* b;
-		if (itEtatB != ListeEtats.end())
-			b = &(*itEtatB);
-		//on ajoute l'etat B
-		else {
-			b = &tamponB;
-			ListeEtats.push_back(*b);
-		}
-
-		//Etablir la transition
+		//Etablir la transition selon le type d'automate
 		string etiquette = input.substr(2, input.length() - 4);
 		string entre = etiquette.substr(0, 1);
-		if (etiquette.length() > 1)
-			a->setSortie(etiquette.substr(2));//la sortie
-		a->ajouterTransition(Transition::MOORE, entre, b, "");
-	}
-}
-
-void Automate::buildMealy(string input) {
-	// Si I ou T, cas spéciaux communs
-	if(input.at(0) == 'I') {
-		buildBase(input);
-	}
-	// Sinon, transition
-	else {
-		// DEBUG
-		cout << "Transition detected" << endl;
-
-		// Si Etat A n'existe pas, creer Etat A
-		string valA = &input.at(0);
-		valA = valA.substr(0, 1);
-		//trouvons si l'etat A existe
-		Etat tamponA = Etat(atoi(valA.c_str()));
-		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
-		Etat* a;
-		if (itEtatA != ListeEtats.end())
-			a = &(*itEtatA);
-		//on ajoute l'etat A
-		else
+		if (type == FINI)
+			a->ajouterTransition(Transition::FINI, entre, b, "");
+		else if (type == MOORE) // sortie sur l'etat
 		{
-			a = &tamponA;
-			ListeEtats.push_back(*a);
+			if (etiquette.length() > 1)
+				a->setSortie(etiquette.substr(2));//la sortie sur l'etat
+			a->ajouterTransition(Transition::MOORE, entre, b, "");
 		}
-
-		// Si Etat B n'existe pas, creer Etat B
-		string valB = input.substr(input.length() - 1);
-		//trouvons si l'etat B existe
-		Etat tamponB = Etat(atoi(valB.c_str()));
-		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
-		Etat* b;
-		if (itEtatB != ListeEtats.end())
-			b = &(*itEtatB);
-		//on ajoute l'etat B
-		else {
-			b = &tamponB;
-			ListeEtats.push_back(*b);
-		}
-
-		//Etablir la transition
-		string etiquette = input.substr(2, input.length() - 4);
-		string entre = etiquette.substr(0, 1);
-		a->ajouterTransition(Transition::MEALY, entre, b, etiquette.substr(2));
+		else if (type == MEALY) // la sortie sur la transition
+			a->ajouterTransition(Transition::MEALY, entre, b, etiquette.substr(2));
 	}
 }
 
