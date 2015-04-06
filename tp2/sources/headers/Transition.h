@@ -27,6 +27,7 @@ public:
 	string getEntre() const;
 	string getSortie() const;
 	void setSortie(string sortie);
+	void setType(Type type);
 
 private:
 	Type _type;

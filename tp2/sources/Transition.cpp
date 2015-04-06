@@ -91,3 +91,9 @@ void Transition::setSortie(string sortie)
 {
 	_sortie = sortie;
 }
+
+//Modificateur
+void Transition::setType(Type type)
+{
+	type = type;
+}
