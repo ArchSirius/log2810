@@ -28,14 +28,14 @@ int main()
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
-	//Automate autoMoore("Moore.txt");
+	Automate autoMoore("Moore.txt");
 	//Automate autoMealy("Mealy.txt");
 
 	////RF1
-	cout << "L'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
+	cout << "L'automate est " << (autoMoore.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
 
 	////RF2
-	//cout << "l'automate est " << (autoMealy.estReactif() ? "reactif" : "non reactif") << endl;
+	cout << "l'automate est " << (autoMoore.estReactif() ? "reactif" : "non reactif") << endl;
 
 	////RF3
 	//Est-ce qu'on doit faire moore minimiser en mealy??????

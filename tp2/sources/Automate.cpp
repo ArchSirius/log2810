@@ -331,47 +331,113 @@ bool Automate::estReactif() {
 	bool estReactif = false;
 	//Pour chaque etat
 	list<Etat>::iterator itEtats = ListeEtats.begin();
-	//la liste des transitions et un iterator sur celle-ci
-	list<Transition> ListeTransition = itEtats->getListTransition();
-	list<Transition>::iterator itTransition = ListeTransition.begin();
 
 	while(itEtats != ListeEtats.end())
 	{	
+		//la liste des transitions et un iterator sur celle-ci
+		list<Transition> ListeTransition = itEtats->getListTransition();
+		list<Transition>::iterator itTransition = ListeTransition.begin();
+	
+		//initialisations necessaires
+		string sortie0 = "", sortie1 = "", entree = "";
+		bool premiereSortiePour0 = true;
+		bool premiereSortiePour1 = true;
+		int IDetat = 0;
+		auto EtatResultant = ListeEtats.begin();
+
 		if(Automate::type == MEALY)
 		{
-			//sortie de la premiere transition de l'etat
-			string sortie = itTransition->getSortie();
+			premiereSortiePour0 = true;
+			premiereSortiePour1 = true;
 			//pour chaque transition il y a exactement une sortie associe
 			for(; itTransition != ListeTransition.end(); itTransition++)
 			{
-				//si la sortie est pas la meme alors on retourne false
-				if(itTransition->getSortie() != sortie)
-					return false;
+				entree = itTransition->getEntre();
+				if(entree == "0")
+				{
+					//sortie de la premiere transition de l'etat compare avec l'autre sortie pour la meme entree
+					if(premiereSortiePour0 == true)
+					{
+						sortie0 = itTransition->getSortie();
+						premiereSortiePour0 = false;
+					}
+					else
+					{
+						//si la sortie est pas la meme alors on retourne false
+						if(itTransition->getSortie() != sortie0)
+							return false;
+					}
+				}
+
+				if(entree == "1")
+				{
+				//sortie de la premiere transition de l'etat compare avec l'autre sortie pour la meme entree
+					if(premiereSortiePour1 == true)
+					{
+						sortie1 = itTransition->getSortie();
+						premiereSortiePour1 = false;
+					}
+					else
+					{
+						//si la sortie est pas la meme alors on retourne false
+						if(itTransition->getSortie() != sortie1)
+							return false;
+					}
+				}
 			}
 		}
+		
 		else if(Automate::type == MOORE)
 		{
-			//ID du premier etat resultant (pour aller voir sa sortie)
-			int IDetat = 0;//itTransition->getEtatDestination();
-			//aller chercher la sortie de l'etat a l'indice du int etat dans la liste d'etat
-			auto EtatResultant = ListeEtats.begin();
-			//advance(EtatResultant, IDetat);
-			//sortie de la premiere transition de l'etat
-			string sortie = "";//EtatResultant->getSortie();
+			premiereSortiePour0 = true;
+			premiereSortiePour1 = true;
 
+			//pour chaque transition il y a exactement une sortie associe
 			for(; itTransition != ListeTransition.end(); itTransition++)
 			{
-				//va chercher la sortie de chacun des etat pointe par l'etat courant
-				IDetat = itTransition->getEtatDestination();
-				EtatResultant = ListeEtats.begin();
-				advance(EtatResultant, IDetat);
-				//sortie pour chaque etat de destination
-				sortie = EtatResultant->getSortie();
-				//la sortie de chaque etat resultant est la meme?
-				if(EtatResultant->getSortie() != sortie)
-					return false;
+				entree = itTransition->getEntre();
+				if(entree == "0")
+				{
+					//va chercher la sortie de chacun des etat pointer par l'etat courant
+					IDetat = itTransition->getEtatDestination();
+					EtatResultant = ListeEtats.begin();
+					advance(EtatResultant, IDetat);
+					//sortie de la premiere transition de l'etat compare avec l'autre sortie pour la meme entree
+					if(premiereSortiePour0 == true)
+					{
+						//sortie pour chaque etat de destination
+						sortie0 = EtatResultant->getSortie();
+						premiereSortiePour0 = false;
+					}
+					else
+					{
+						//si la sortie est pas la meme alors on retourne false
+						if(EtatResultant->getSortie() != sortie0)
+							return false;
+					}
+				}
+
+				if(entree == "1")
+				{
+					//va chercher la sortie de chacun des etat pointer par l'etat courant
+					IDetat = itTransition->getEtatDestination();
+					EtatResultant = ListeEtats.begin();
+					advance(EtatResultant, IDetat);
+					//sortie de la premiere transition de l'etat compare avec l'autre sortie pour la meme entree
+					if(premiereSortiePour1 == true)
+					{
+						//sortie pour chaque etat de destination
+						sortie1 = EtatResultant->getSortie();
+						premiereSortiePour1 = false;
+					}
+					else
+					{
+						//si la sortie est pas la meme alors on retourne false
+						if(EtatResultant->getSortie() != sortie1)
+							return false;
+					}
+				}
 			}
-			
 		}
 		else if(Automate::type == FINI)
 			return false;
@@ -604,19 +670,17 @@ string Automate::calculerSortie(string mot) {
 
 				if(Automate::type == MOORE)
 				{
-					//EtatDest = ListeEtats.begin();
-					//advance(EtatDest, IDetat);
 					//sortie pour etat de destination
 					sortie += EtatDest->getSortie();
 				}
 				//aller chercher le ID de l'etat dest 
-				//IDetat = itTransitions->getEtatDestination();
 				etat = *EtatDest;
 				//Prendre la sortie de cette transition, la mettre dans le string de sortie
 				sortie += itTransitions->getSortie();
 			}
 		}
 	}
+	//enlever les espaces 
 	sortie.erase(remove_if(sortie.begin(), sortie.end(), isspace), sortie.end());
 	return sortie;
 }
