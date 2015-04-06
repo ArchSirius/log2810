@@ -36,6 +36,7 @@ public:
 	list<int> cible();
 	void ajouterTransition(Transition::Type type, string entre, Etat* destination, string sortie);
 	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
+	void convertisseurMoore2Mealy();
 
 	bool operator==(const Etat& e);
 

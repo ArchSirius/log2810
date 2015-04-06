@@ -26,6 +26,7 @@ public:
 	int getEtatDestination() const;
 	string getEntre() const;
 	string getSortie() const;
+	void setSortie(string sortie);
 
 private:
 	Type _type;

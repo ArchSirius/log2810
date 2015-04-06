@@ -629,7 +629,10 @@ string Automate::calculerSortie(string mot) {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::convertisseurMoore2Mealy() {
-
+	for(Etat etat : ListeEtats)
+	{
+		etat.convertisseurMoore2Mealy();
+	}
 }
 
 /****************************************************************************

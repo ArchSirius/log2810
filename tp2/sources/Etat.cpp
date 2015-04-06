@@ -236,6 +236,19 @@ list<string> Etat::listerEtiquettesTransitions()
 }
 
 /****************************************************************************
+* Requis #5
+* Fonction		: Etat::convertisseurMoore2Mealy
+* Description	: Convertit un état d'un automate de Moore en état d'un
+                  automate de Mealy
+* Parametre	    : aucun
+* Retour		: aucun
+****************************************************************************/
+void Etat::convertisseurMoore2Mealy()
+{
+
+}
+
+/****************************************************************************
 * Fonction		: Etat::operator==
 * Description   : verifie si les etats ont le meme numero d'etat
 * Paramètres    : (Etat) e : l'etat de comparaison

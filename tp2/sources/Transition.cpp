@@ -85,3 +85,9 @@ string Transition::getSortie() const
 {
 	return _sortie;
 }
+
+//Modificateur
+void Transition::setSortie(string sortie)
+{
+	_sortie = sortie;
+}
