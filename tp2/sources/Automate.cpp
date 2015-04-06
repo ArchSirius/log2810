@@ -64,12 +64,14 @@ Automate::Automate(string fichier) {
 				break;
 			case Automate::MOORE:
 				while (!lecture.eof()) {
-			
+					getline(lecture, input);
+					buildMoore(input);
 				}
 				break;
 			case Automate::MEALY:
 				while (!lecture.eof()) {
-			
+					getline(lecture, input);
+					buildMealy(input);
 				}
 				break;
 		}
@@ -161,9 +163,9 @@ void Automate::buildFini(string input) {
 		}		
 
 		//Etablir la transition
-		string etiquette = &input.at(2);
-		etiquette = etiquette.substr(0, 1);
-		a->ajouterTransition(Transition::FINI, etiquette, b, "");
+		string entre = &input.at(2);
+		entre = entre.substr(0, 1);
+		a->ajouterTransition(Transition::FINI, entre, b, "");
 	}
 }
 /*void Automate::buildBase(string input) {
@@ -256,18 +258,56 @@ void Automate::buildFini(string input) {
 
 void Automate::buildMoore(string input) {
 	// Si I ou T, cas spéciaux communs
-	if(input.at(0) == 'I' || input.at(0) == 'T') {
+	if(input.at(0) == 'I') {
 		buildBase(input);
 	}
 	// Sinon, transition
 	else {
+		// DEBUG
+		cout << "Transition detected" << endl;
 
+		// Si Etat A n'existe pas, creer Etat A
+		string valA = &input.at(0);
+		valA = valA.substr(0, 1);
+		//trouvons si l'etat A existe
+		Etat tamponA = Etat(atoi(valA.c_str()));
+		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
+		Etat* a;
+		if (itEtatA != ListeEtats.end())
+			a = &(*itEtatA);
+		//on ajoute l'etat A
+		else
+		{
+			a = &tamponA;
+			ListeEtats.push_back(*a);
+		}
+
+		// Si Etat B n'existe pas, creer Etat B
+		string valB = input.substr(input.length() - 1);
+		//trouvons si l'etat B existe
+		Etat tamponB = Etat(atoi(valB.c_str()));
+		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
+		Etat* b;
+		if (itEtatB != ListeEtats.end())
+			b = &(*itEtatB);
+		//on ajoute l'etat B
+		else {
+			b = &tamponB;
+			ListeEtats.push_back(*b);
+		}
+
+		//Etablir la transition
+		string etiquette = input.substr(2, input.length() - 4);
+		string entre = etiquette.substr(0, 1);
+		if (etiquette.length() > 1)
+			a->setSortie(etiquette.substr(2));//la sortie
+		a->ajouterTransition(Transition::MOORE, entre, b, "");
 	}
 }
 
 void Automate::buildMealy(string input) {
 	// Si I ou T, cas spéciaux communs
-	if(input.at(0) == 'I' || input.at(0) == 'T') {
+	if(input.at(0) == 'I') {
 		buildBase(input);
 	}
 	// Sinon, transition
@@ -296,9 +336,9 @@ string Automate::getType() {
 	if (type == 0)
 		return "Fini";
 	else if (type == 1)
-		return "Mealy";
-	else if (type == 2)
 		return "Moore";
+	else if (type == 2)
+		return "Mealy";
 	else return "";
 }
 /****************************************************************************
@@ -391,7 +431,16 @@ void Automate::genererFichierAutomate(string fichier) {
 		{
 			list<Transition> listTransTemp = itEtats->getListTransition();
 			for (itTrans = listTransTemp.begin(); itTrans != listTransTemp.end(); itTrans++)
-				ecriture << itTrans->getEtatDepart() << " " << itTrans->getEtiquette() << " " << itTrans->getEtatDestination() << endl;
+			{
+				if (type == FINI)
+					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itTrans->getEtatDestination() << endl;
+				else if (type == MOORE) // sortie sur l'etat
+				{
+					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itEtats->getSortie() << " " << itTrans->getEtatDestination() << endl;
+				}
+				else if (type == MEALY) // sortie sur la transition
+					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itTrans->getSortie() << " " << itTrans->getEtatDestination() << endl;
+			}
 		}
 		ecriture.close();
 	}

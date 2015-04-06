@@ -70,6 +70,17 @@ void Etat::setFinal(bool f)
 }
 
 /****************************************************************************
+* Fonction		: Etat::setSortie
+* Description   : set etat final
+* Paramètres    : (string) nouvSortie: la nouvelle sortie de l'etat
+* Retour        : aucun
+****************************************************************************/
+void Etat::setSortie(string nouvSortie)
+{
+	sortie = nouvSortie;
+}
+
+/****************************************************************************
 * Fonction		: Etat::getEstEtatInitial
 * Description   : verifie si l'etat est initial
 * Paramètres    : aucun
@@ -190,32 +201,19 @@ list<int> Etat::cible()
 * Fonction		: Etat::ajouterTransition
 * Description   : permet d’ajouter une transition qui part de l’etat courant
 *				  pour l’etat de destination et portant un ensemble ou liste de symboles c
-* Paramètres    : (string) c : symbole c de transition
+* Paramètres    : (Type) type : le type de l'automate
+*				  (string) entre : l'entre
 *				  (Etat*) destination : etat de destination
+*				  (string) sortie : la sortie si aucune on met une chaine vide
 * Retour        : aucun
 ****************************************************************************/
-void Etat::ajouterTransition(Transition::Type type, string c, Etat* destination, string sortie)
+void Etat::ajouterTransition(Transition::Type type, string entre, Etat* destination, string sortie)
 {
-	//si mealy -> sortie associé a la transition
-	if (type == Transition::MOORE)
-	{
-		//creation de la transition avec sortie (mealy)
-		Transition transition(type, c, getNumEtat(), destination->getNumEtat(), sortie);
+	//si Moore ou Fini, la sortie sera un string vide
+		Transition transition(type, entre, getNumEtat(), destination->getNumEtat(), sortie);
 		//ajout de la transition a la liste de transitions
 		listTransition.push_back(transition);
-	}
-	else
-	{
-		//creation de la transition sans sortie
-		Transition transition(type, c, getNumEtat(), destination->getNumEtat());
-		//ajout de la transition a la liste de transitions
-		listTransition.emplace_back(transition);
-	}
-		
-	
 }
-
-
 
 /****************************************************************************
 * Fonction		: Etat::listerEtiquettesTransitions
@@ -237,7 +235,13 @@ list<string> Etat::listerEtiquettesTransitions()
 	return listEtiquettes;
 }
 
-//surcharge operator ==
+/****************************************************************************
+* Fonction		: Etat::operator==
+* Description   : verifie si les etats ont le meme numero d'etat
+* Paramètres    : (Etat) e : l'etat de comparaison
+* Retour        : (bool) true : etat avec le meme Id
+				  (bool) false : etat n'a pas le meme Id
+****************************************************************************/
 bool Etat::operator==(const Etat& e)
 {
 	if(getNumEtat() == e.getNumEtat())

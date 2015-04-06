@@ -18,8 +18,10 @@ using namespace std;
 int main()
 {
 	//TEST personelle
-	Automate autoTest("Fini.txt");
-	autoTest.genererFichierAutomate("test.txt");
+	//Automate autoTest("Fini.txt");
+	//autoTest.genererFichierAutomate("test.txt");
+	Automate autoMooreTest("Moore.txt");
+	autoMooreTest.genererFichierAutomate("testMoore.txt");
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
