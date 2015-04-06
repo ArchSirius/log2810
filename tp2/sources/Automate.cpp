@@ -312,7 +312,43 @@ void Automate::buildMealy(string input) {
 	}
 	// Sinon, transition
 	else {
-		
+		// DEBUG
+		cout << "Transition detected" << endl;
+
+		// Si Etat A n'existe pas, creer Etat A
+		string valA = &input.at(0);
+		valA = valA.substr(0, 1);
+		//trouvons si l'etat A existe
+		Etat tamponA = Etat(atoi(valA.c_str()));
+		list<Etat>::iterator itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
+		Etat* a;
+		if (itEtatA != ListeEtats.end())
+			a = &(*itEtatA);
+		//on ajoute l'etat A
+		else
+		{
+			a = &tamponA;
+			ListeEtats.push_back(*a);
+		}
+
+		// Si Etat B n'existe pas, creer Etat B
+		string valB = input.substr(input.length() - 1);
+		//trouvons si l'etat B existe
+		Etat tamponB = Etat(atoi(valB.c_str()));
+		list<Etat>::iterator itEtatB = find(ListeEtats.begin(), ListeEtats.end(), tamponB);
+		Etat* b;
+		if (itEtatB != ListeEtats.end())
+			b = &(*itEtatB);
+		//on ajoute l'etat B
+		else {
+			b = &tamponB;
+			ListeEtats.push_back(*b);
+		}
+
+		//Etablir la transition
+		string etiquette = input.substr(2, input.length() - 4);
+		string entre = etiquette.substr(0, 1);
+		a->ajouterTransition(Transition::MEALY, entre, b, etiquette.substr(2));
 	}
 }
 
