@@ -267,16 +267,23 @@ void Automate::genererFichierAutomate(string fichier) {
 		//lignes des transitions
 		list<Etat>::iterator itEtats = ListeEtats.begin();
 		list<Transition>::iterator itTrans;
+		int numTrans;
+		//pour chaques etats
 		for (; itEtats != ListeEtats.end(); itEtats++)
 		{
+			numTrans = 0;
 			list<Transition> listTransTemp = itEtats->getListTransition();
+			//pour toutes les transitions partant de l'etat pointé par l'iterator
 			for (itTrans = listTransTemp.begin(); itTrans != listTransTemp.end(); itTrans++)
 			{
 				if (type == FINI)
 					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itTrans->getEtatDestination() << endl;
 				else if (type == MOORE) // sortie sur l'etat
 				{
-					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itEtats->getSortie() << " " << itTrans->getEtatDestination() << endl;
+					if (numTrans++ == 0)	//premiere transition : on met la sortie de l'etat
+						ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itEtats->getSortie() << " " << itTrans->getEtatDestination() << endl;
+					else
+						ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itTrans->getEtatDestination() << endl;
 				}
 				else if (type == MEALY) // sortie sur la transition
 					ecriture << itTrans->getEtatDepart() << " " << itTrans->getEntre() << " " << itTrans->getSortie() << " " << itTrans->getEtatDestination() << endl;
@@ -492,7 +499,7 @@ Automate Automate::minimiserMealy() {
 
 
 
-	//déterminer les etats qui sont equivalent
+	//déterminer les etats qui sont equivalents
 	list<string> etatEq;
 	for (unsigned int i = 0; i < nbEtats; i++){
 		for (unsigned int j = 0; j < nbEtats; j++){
@@ -516,21 +523,17 @@ Automate Automate::minimiserMealy() {
 	//trouve l'etat initial
 	char init = etatInitial().getNumEtat();
 
-	//trouver les etat a enlever
-	list<char> etat2Remove;
+	//positionner etatEq de sorte que chaque ligne soit : "EtatAEnlever=EtatARemplacer", mais on veux conserver l'etat initial
 	char num = ' ';
 	for (Etat e : ListeEtats)
 	{
 		num = e.getNumEtat();
-		if (num != init)
+		if (num == init)
 		{
-			//on parcourt les état equivalente
+			// on positionne l'etat a enlever à gauche
 			for (string eq : etatEq)
 			{
-				if (num == eq.front() || num == eq.back())
-				{
-					etat2Remove.push_back(num);
-				}
+				eq = eq.back() + "=" + eq.front();
 			}
 		}
 	}
@@ -569,25 +572,22 @@ Automate Automate::minimiserMealy() {
 			{ }
 			else
 			{
-				//pour toute les etat d'equivalence
-				//for (string eq : etatEq)
-				//{
-					char eDepart = lignesFichier[i].front();
-					char eArrive = lignesFichier[i].back();
-					//pour toutes les etats a enlever
-					for (char e2r : etat2Remove)
+				char eDepart = lignesFichier[i].front();
+				char eArrive = lignesFichier[i].back();
+				//pour toutes les etats a enlever
+				for (string e2remove : etatEq)
+				{
+					if (eDepart == e2remove.front())
 					{
-						if (eDepart == e2r)
-						{
-							lignesFichier[i].erase();///////////////iterator
-						}
-							
-						if (eArrive == e2r)
-						{
-							//faire le remplacament dans le dernier terme de la transition------------
-						}	
-					}	
-				//}
+						lignesFichier[i].erase();///////////////iterator
+					}
+
+					if (eArrive == e2remove.front())
+					{
+						//faire le remplacament dans le dernier terme de la transition par l'etat equivalent
+						lignesFichier[i] = lignesFichier[i].substr(0, lignesFichier[i].length() - 1) + e2remove.back();
+					}
+				}	
 			}
 		}
 
