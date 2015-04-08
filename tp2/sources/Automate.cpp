@@ -523,16 +523,14 @@ Automate Automate::minimiserMealy() {
 					else
 						egalite = to_string(j) + "=" + to_string(i);
 					
+					//enleve doublons
 					itEq = etatEq.begin();
-					if (find(etatEq.begin(), etatEq.end()))
-					etatEq.push_back(egalite);//on identifie les etats equivalentes
+					if (find(etatEq.begin(), etatEq.end(), egalite) == etatEq.end())
+						etatEq.push_back(egalite);//on identifie les etats equivalentes
 				}
 			}
 		}
 	}
-	etatEq.unique();//enleve doublons
-	etatEq.unique();//enleve doublons
-
 
 	//trouve l'etat initial
 	char init = etatInitial().getNumEtat();
@@ -596,11 +594,14 @@ Automate Automate::minimiserMealy() {
 				list<string>::iterator it = etatEq.begin();
 				for (; it != etatEq.end(); it++)
 				{
+					char eol = it->front();
 					if (eDepart == it->front())
 					{
 						itLigne = lignesFichier.erase(itLigne);
-						if (*itLigne == "")
-							itLigne = lignesFichier.end();
+						eDepart = itLigne->front();///////////////////////////////////////////////////////////^^////////////////////
+						
+						//if (*itLigne == "")
+							//itLigne = lignesFichier.end();
 					}
 
 					else if (eArrive == it->front())
@@ -608,29 +609,16 @@ Automate Automate::minimiserMealy() {
 						//faire le remplacament dans le dernier terme de la transition par l'etat equivalent
 						*itLigne = itLigne->substr(0, itLigne->length() - 1) + it->back();
 					}
-				}
-				//for (string e2remove : etatEq)
-				//{
-				//	if (eDepart == e2remove.front())
-				//	{
-				//		lignesFichier[i].erase();///////////////iterator
-				//	}
-
-				//	if (eArrive == e2remove.front())
-				//	{
-				//		//faire le remplacament dans le dernier terme de la transition par l'etat equivalent
-				//		lignesFichier[i] = lignesFichier[i].substr(0, lignesFichier[i].length() - 1) + e2remove.back();
-				//	}
-				//}	
+				}	
 			}
 		}
 
 		fichier << "Mealy " << nbEtMin << endl;
-		fichier << "I " << init << endl;
-		for (unsigned int i = 2; i < lignesFichier.size(); i++)
+		for (unsigned int i = 1; i < lignesFichier.size() - 1 ; i++)
 		{
 			fichier << lignesFichier[i] << endl;
 		}
+		fichier << lignesFichier[lignesFichier.size() - 1];//on ne veut pas de fin de ligne
 		fichier.close();
 	}
 	else
@@ -659,7 +647,8 @@ Automate Automate::minimiserMealy() {
 			//(*itMin).ajouterTransition(Transition::MEALY, string c, Etat* destination, string sortie)
 		}
 		*/
-		return Automate("minimiser.txt");
+	Automate temp("minimiser.txt");
+	return temp;
 }
 
 

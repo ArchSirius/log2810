@@ -27,7 +27,7 @@ int main()
 
 	Automate autoMealyAMin("MealyAMinimiser.txt");
 	autoMealyAMin.genererFichierAutomate("testMealyMin.txt");
-	//autoMealyAMin.minimiserMealy();
+	autoMealyAMin.minimiserMealy();
 
 
 	////TEST prof
@@ -56,8 +56,8 @@ int main()
 	//autoMooreToMealy.genererFichierAutomate("MooreToMealy");
 
 	////RF6
-	//Automate autoMealyToMoore(autoMealy.convertisseurMealy2Moore());
-	//autoMealyToMoore.genererFichierAutomate("MealyToMoore");
+	autoMealy.convertisseurMealy2Moore();
+	autoMealy.genererFichierAutomate("MealyToMoore");
 	//
 	////RF7
 
