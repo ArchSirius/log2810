@@ -32,10 +32,10 @@ int main()
 	Automate autoMealy("Mealy.txt");
 
 	////RF1
-	cout << "L'automate est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
+	cout << "L'automate FINI est " << (autoDet.estDeterministe() ? "deterministe" : "non-deterministe") << endl;
 
 	////RF2
-	cout << "l'automate est " << (autoMealy.estReactif() ? "reactif" : "non reactif") << endl;
+	cout << "l'automate MEALY est " << (autoMealy.estReactif() ? "reactif" : "non reactif") << endl;
 
 	////RF3
 	//Est-ce qu'on doit faire moore minimiser en mealy??????
@@ -44,8 +44,8 @@ int main()
 	//autoMinMealy.genererFichierAutomate("minimiser.txt");
 
 	////RF4
-	//Automate autoMooreAddMod10(/*fichier ici : voir enonce*/);
-	//cout << La sortie est : << autoMooreAddMod10.calculerSortie("1000") << endl;
+	Automate autoMooreAddMod10("MooreAddMod10.txt");
+	cout << "La sortie pour l'addition modulo 10 avec MOORE est: " << autoMooreAddMod10.calculerSortie("9821") << endl;
 
 	////RF5
 	//Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
@@ -56,10 +56,10 @@ int main()
 	//autoMealyToMoore.genererFichierAutomate("MealyToMoore");
 	//
 	////RF7
-	Automate autoMooreRF7("MooreRF7.txt");
-	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1111") << endl;
-	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1010") << endl;
-	cout << "La sortie est: " << autoMooreRF7.calculerSortie("1110") << endl;
+	//Automate autoMooreRF7("MooreRF7.txt");
+	//cout << "La sortie est: " << autoMooreRF7.calculerSortie("1111") << endl;
+	//cout << "La sortie est: " << autoMooreRF7.calculerSortie("1010") << endl;
+	//cout << "La sortie est: " << autoMooreRF7.calculerSortie("1110") << endl;
 
 	system("PAUSE");
 }

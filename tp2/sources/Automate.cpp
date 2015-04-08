@@ -67,11 +67,11 @@ void Automate::buildBase(string input) {
 	// Si I, creer Etat et mettre initial
 	if (input.at(0) == 'I') {
 		// DEBUG
-		cout << "Initial state detected" << endl;
+		//cout << "Initial state detected" << endl;
 		// Si aussi T, mettre aussi terminal
 		if (input.at(2) == 'T') {
 			// DEBUG
-			cout << "Terminal state detected" << endl;
+			//cout << "Terminal state detected" << endl;
 			string s = &input.at(4);
 			s = s.substr(0, 1);
 			tampon = Etat(atoi(s.c_str()));
@@ -91,7 +91,7 @@ void Automate::buildBase(string input) {
 	// Sinon, si T, creer Etat et mettre terminal
 	else if (input.at(0) == 'T') {
 		// DEBUG
-		cout << "Terminal state detected" << endl;
+		//cout << "Terminal state detected" << endl;
 		string s1 = &input.at(2);
 		s1 = s1.substr(0, 1);
 		tampon = Etat(atoi(s1.c_str()));
@@ -108,7 +108,7 @@ void Automate::buildAutomate(string input) {
 	// Sinon, transition
 	else {
 		// DEBUG
-		cout << "Transition detected" << endl;
+		//cout << "Transition detected" << endl;
 
 		// Si Etat A n'existe pas, creer Etat A
 		string valA = input.substr(0, 1);
@@ -218,7 +218,7 @@ int Automate::getNumEtatFinal() {
 			return itEtats->getNumEtat();
 		itEtats++;
 	}
-	cerr << "Il n'y a pas d'etat final." << endl;
+	//cerr << "Il n'y a pas d'etat final." << endl;
 	return -1;
 }
 
