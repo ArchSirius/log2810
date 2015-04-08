@@ -501,6 +501,7 @@ Automate Automate::minimiserMealy() {
 
 	//déterminer les etats qui sont equivalents
 	list<string> etatEq;
+	list<string>::iterator itEq;
 	for (unsigned int i = 0; i < nbEtats; i++){
 		for (unsigned int j = 0; j < nbEtats; j++){
 			if (i == j)/// on regarde ou pas????????????
@@ -511,12 +512,20 @@ Automate Automate::minimiserMealy() {
 				if (matriceSnPlus1[i][j] == true)
 				{
 					// p-e a repenser----------------------------
-					string egalite = (i < j) ? i + "=" + j : j + "=" + i;
+					string egalite;
+					if (i < j)
+						egalite = to_string(i) + "=" + to_string(j);
+					else
+						egalite = to_string(j) + "=" + to_string(i);
+					
+					itEq = etatEq.begin();
+					if (find(etatEq.begin(), etatEq.end()))
 					etatEq.push_back(egalite);//on identifie les etats equivalentes
 				}
 			}
 		}
 	}
+	etatEq.unique();//enleve doublons
 	etatEq.unique();//enleve doublons
 
 
@@ -531,9 +540,11 @@ Automate Automate::minimiserMealy() {
 		if (num == init)
 		{
 			// on positionne l'etat a enlever à gauche
-			for (string eq : etatEq)
+			list<string>::iterator it = etatEq.begin();
+			for (; it != etatEq.end(); it++)
 			{
-				eq = eq.back() + "=" + eq.front();
+				string s = it->substr(2, 3) + "=" + it->substr(0, 1);
+				*it = s;
 			}
 		}
 	}
@@ -549,7 +560,8 @@ Automate Automate::minimiserMealy() {
 		string input;
 		while (!lecture.eof()) {
 			getline(lecture, input);
-			lignesFichier.push_back(input);
+			if (input != "")
+				lignesFichier.push_back(input);
 		}
 	}
 	else {
@@ -562,32 +574,49 @@ Automate Automate::minimiserMealy() {
 	ofstream fichier("minimiser.txt", ios::out | ios::trunc);
 	if (fichier)
 	{
-		for (unsigned int i = 0; i < lignesFichier.size(); i++)
+		vector<string>::iterator itLigne = lignesFichier.begin();
+		for (; itLigne != lignesFichier.end(); itLigne++)
 		{
-			if (i == 0)
+			if (itLigne == lignesFichier.begin())
 			{
 				nbEtMin = nbEtats - etatEq.size();
 			}
-			else if (lignesFichier[i].at(0) == 'I')
+			else if (itLigne->at(0) == 'I')
 			{ }
 			else
 			{
-				char eDepart = lignesFichier[i].front();
-				char eArrive = lignesFichier[i].back();
+				char eDepart = itLigne->front();
+				char eArrive = itLigne->back();
 				//pour toutes les etats a enlever
-				for (string e2remove : etatEq)
+				list<string>::iterator it = etatEq.begin();
+				for (; it != etatEq.end(); it++)
 				{
-					if (eDepart == e2remove.front())
+					if (eDepart == it->front())
 					{
-						lignesFichier[i].erase();///////////////iterator
+						itLigne = lignesFichier.erase(itLigne);
+						if (*itLigne == "")
+							itLigne = lignesFichier.end();
 					}
 
-					if (eArrive == e2remove.front())
+					else if (eArrive == it->front())
 					{
 						//faire le remplacament dans le dernier terme de la transition par l'etat equivalent
-						lignesFichier[i] = lignesFichier[i].substr(0, lignesFichier[i].length() - 1) + e2remove.back();
+						*itLigne = itLigne->substr(0, itLigne->length() - 1) + it->back();
 					}
-				}	
+				}
+				//for (string e2remove : etatEq)
+				//{
+				//	if (eDepart == e2remove.front())
+				//	{
+				//		lignesFichier[i].erase();///////////////iterator
+				//	}
+
+				//	if (eArrive == e2remove.front())
+				//	{
+				//		//faire le remplacament dans le dernier terme de la transition par l'etat equivalent
+				//		lignesFichier[i] = lignesFichier[i].substr(0, lignesFichier[i].length() - 1) + e2remove.back();
+				//	}
+				//}	
 			}
 		}
 

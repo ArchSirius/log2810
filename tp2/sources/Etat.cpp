@@ -193,6 +193,7 @@ list<int> Etat::cible()
 		//si etat de depart est this alors ajoute etat destination dans la liste
 		if (numEtat == it->getEtatDepart())
 			etatCible.push_back(it->getEtatDestination());
+		it++;
 	}
 	return etatCible;
 }
