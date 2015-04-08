@@ -23,6 +23,7 @@ public:
 	//Getter et setter
 	void setInitiale(bool i);
 	void setFinal(bool f);
+	void setNumEtat(int ID);
 	void setSortie(string nouvSortie);
 
 	bool getEstEtatInitial() const;
@@ -37,6 +38,7 @@ public:
 	void ajouterTransition(Transition::Type type, string entre, Etat* destination, string sortie);
 	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
 	void convertisseurMoore2Mealy();
+	void majNum();
 
 	bool operator==(const Etat& e);
 

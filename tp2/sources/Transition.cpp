@@ -97,3 +97,15 @@ void Transition::setType(Type type)
 {
 	type = type;
 }
+
+//Modificateur
+void Transition::setEtatDepart(int etat)
+{
+	_etatDepart = etat;
+}
+
+//Modificateur
+void Transition::setEtatDestination(int etat)
+{
+	_etatDestination = etat;
+}

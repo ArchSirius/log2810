@@ -28,6 +28,8 @@ public:
 	string getSortie() const;
 	void setSortie(string sortie);
 	void setType(Type type);
+	void setEtatDepart(int etat);
+	void setEtatDestination(int etat);
 
 private:
 	Type _type;

@@ -67,11 +67,11 @@ void Automate::buildBase(string input) {
 	// Si I, creer Etat et mettre initial
 	if (input.at(0) == 'I') {
 		// DEBUG
-		cout << "Initial state detected" << endl;
+		//cout << "Initial state detected" << endl;
 		// Si aussi T, mettre aussi terminal
 		if (input.at(2) == 'T') {
 			// DEBUG
-			cout << "Terminal state detected" << endl;
+			//cout << "Terminal state detected" << endl;
 			string s = &input.at(4);
 			s = s.substr(0, 1);
 			tampon = Etat(atoi(s.c_str()));
@@ -91,7 +91,7 @@ void Automate::buildBase(string input) {
 	// Sinon, si T, creer Etat et mettre terminal
 	else if (input.at(0) == 'T') {
 		// DEBUG
-		cout << "Terminal state detected" << endl;
+		//cout << "Terminal state detected" << endl;
 		string s1 = &input.at(2);
 		s1 = s1.substr(0, 1);
 		tampon = Etat(atoi(s1.c_str()));
@@ -108,7 +108,7 @@ void Automate::buildAutomate(string input) {
 	// Sinon, transition
 	else {
 		// DEBUG
-		cout << "Transition detected" << endl;
+		//cout << "Transition detected" << endl;
 
 		// Si Etat A n'existe pas, creer Etat A
 		string valA = input.substr(0, 1);
@@ -218,7 +218,7 @@ int Automate::getNumEtatFinal() {
 			return itEtats->getNumEtat();
 		itEtats++;
 	}
-	cerr << "Il n'y a pas d'etat final." << endl;
+	//cerr << "Il n'y a pas d'etat final." << endl;
 	return -1;
 }
 
@@ -230,7 +230,12 @@ int Automate::getNumEtatFinal() {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::ajouterEtat(Etat e) {
-
+	//list<Etat>::iterator itEtat = find(ListeEtats.begin(), ListeEtats.end(), e);
+	//if (itEtat != ListeEtats.end())
+	e.setNumEtat(ListeEtats.size());
+	ListeEtats.push_back(e);
+	//else
+	//	cerr << "Impossible d'ajouter l'état";
 }
 
 /****************************************************************************
@@ -753,7 +758,7 @@ void Automate::convertisseurMealy2Moore() {
 	for(Etat cible : ListeEtats)
 	{
 		// Enregistrer toutes les transitions entrantes
-		list<pair<Etat, Transition>> ListeTransitions;
+		list<pair<Etat*, Transition*>> listeTransitions;
 		// Pour chaque état source
 		for(Etat source : ListeEtats)
 		{
@@ -761,12 +766,63 @@ void Automate::convertisseurMealy2Moore() {
 			for(Transition transition : source.getListTransition())
 			{
 				if(transition.getEtatDestination() == cible.getNumEtat())
-					ListeTransitions.push_back(make_pair(source, transition));
+					listeTransitions.push_back(make_pair(&source, &transition));
 			}
 		}
 
 		// Vérifier si toutes les transitions entrantes sont de même sortie
+		string premiereSortie = (*listeTransitions.begin()).second->getSortie();
+		cible.setSortie(premiereSortie);
+		bool unique = true;
+		for(pair<Etat*, Transition*> paire : listeTransitions)
+		{
+			if(paire.second->getSortie() != premiereSortie)
+				unique = false;
+		}
+
 		// Si oui, transférer les sorties
+		if(unique)
+		{
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+				paire.second->setSortie("");
+		}
 		// Sinon, créer autant d'états que de différentes sorties, puis modifier les transitions
+		else
+		{
+			vector<string> sorties;
+			sorties.push_back(premiereSortie);
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+			{
+				unique = true;
+				for(string sortie : sorties)
+				{
+					if(sortie != paire.second->getSortie())
+						unique = false;
+				}
+				if(unique)
+					sorties.push_back(paire.second->getSortie());
+			}
+
+			for(string sortie : sorties)
+			{
+				if(sortie != premiereSortie)
+				{
+					Etat nouvelEtat = cible;
+					nouvelEtat.setNumEtat(nbEtats);
+					nbEtats++;
+					nouvelEtat.majNum();
+					nouvelEtat.setSortie(sortie);
+					for(pair<Etat*, Transition*> paire : listeTransitions)
+					{
+						if(paire.second->getSortie() == sortie)
+							paire.second->setEtatDestination(nouvelEtat.getNumEtat());
+					}
+					ListeEtats.push_back(nouvelEtat);
+				}
+			}
+
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+				paire.second->setSortie("");
+		}
 	}
 }
