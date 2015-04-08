@@ -23,6 +23,7 @@ public:
 	//Getter et setter
 	void setInitiale(bool i);
 	void setFinal(bool f);
+	void setNumEtat(int ID);
 	void setSortie(string nouvSortie);
 
 	bool getEstEtatInitial() const;

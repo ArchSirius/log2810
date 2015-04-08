@@ -230,7 +230,12 @@ int Automate::getNumEtatFinal() {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::ajouterEtat(Etat e) {
-
+	//list<Etat>::iterator itEtat = find(ListeEtats.begin(), ListeEtats.end(), e);
+	//if (itEtat != ListeEtats.end())
+	e.setNumEtat(ListeEtats.size());
+	ListeEtats.push_back(e);
+	//else
+	//	cerr << "Impossible d'ajouter l'état";
 }
 
 /****************************************************************************

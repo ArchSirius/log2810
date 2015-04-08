@@ -59,7 +59,7 @@ void Etat::setInitiale(bool i)
 }
 
 /****************************************************************************
-* Fonction		: Etat::estFinal
+* Fonction		: Etat::setFinal
 * Description   : set etat final
 * Paramètres    : (bool) : si l'etat est final ou non
 * Retour        : aucun
@@ -67,6 +67,17 @@ void Etat::setInitiale(bool i)
 void Etat::setFinal(bool f)
 {
 	estEtatFinal = f;
+}
+
+/****************************************************************************
+* Fonction		: Etat::setNumEtat
+* Description   : set numero de l'etat
+* Paramètres    : (int) : le numero de l'etat (ID)
+* Retour        : aucun
+****************************************************************************/
+void Etat::setNumEtat(int ID)
+{
+	numEtat = ID;
 }
 
 /****************************************************************************
