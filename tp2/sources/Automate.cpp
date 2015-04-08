@@ -729,7 +729,7 @@ void Automate::convertisseurMealy2Moore() {
 	for(Etat cible : ListeEtats)
 	{
 		// Enregistrer toutes les transitions entrantes
-		list<pair<Etat, Transition>> ListeTransitions;
+		list<pair<Etat*, Transition*>> listeTransitions;
 		// Pour chaque état source
 		for(Etat source : ListeEtats)
 		{
@@ -737,12 +737,63 @@ void Automate::convertisseurMealy2Moore() {
 			for(Transition transition : source.getListTransition())
 			{
 				if(transition.getEtatDestination() == cible.getNumEtat())
-					ListeTransitions.push_back(make_pair(source, transition));
+					listeTransitions.push_back(make_pair(&source, &transition));
 			}
 		}
 
 		// Vérifier si toutes les transitions entrantes sont de même sortie
+		string premiereSortie = (*listeTransitions.begin()).second->getSortie();
+		cible.setSortie(premiereSortie);
+		bool unique = true;
+		for(pair<Etat*, Transition*> paire : listeTransitions)
+		{
+			if(paire.second->getSortie() != premiereSortie)
+				unique = false;
+		}
+
 		// Si oui, transférer les sorties
+		if(unique)
+		{
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+				paire.second->setSortie("");
+		}
 		// Sinon, créer autant d'états que de différentes sorties, puis modifier les transitions
+		else
+		{
+			vector<string> sorties;
+			sorties.push_back(premiereSortie);
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+			{
+				unique = true;
+				for(string sortie : sorties)
+				{
+					if(sortie != paire.second->getSortie())
+						unique = false;
+				}
+				if(unique)
+					sorties.push_back(paire.second->getSortie());
+			}
+
+			for(string sortie : sorties)
+			{
+				if(sortie != premiereSortie)
+				{
+					Etat nouvelEtat = cible;
+					nouvelEtat.setNumEtat(nbEtats);
+					nbEtats++;
+					nouvelEtat.majNum();
+					nouvelEtat.setSortie(sortie);
+					for(pair<Etat*, Transition*> paire : listeTransitions)
+					{
+						if(paire.second->getSortie() == sortie)
+							paire.second->setEtatDestination(nouvelEtat.getNumEtat());
+					}
+					ListeEtats.push_back(nouvelEtat);
+				}
+			}
+
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+				paire.second->setSortie("");
+		}
 	}
 }

@@ -265,6 +265,18 @@ void Etat::convertisseurMoore2Mealy()
 }
 
 /****************************************************************************
+* Fonction		: Etat::majNum
+* Description	: Met à jour le numéro d'état des transitions sortantes
+* Parametre	    : aucun
+* Retour		: aucun
+****************************************************************************/
+void Etat::majNum()
+{
+	for(Transition transition : listTransition)
+		transition.setEtatDepart(numEtat);
+}
+
+/****************************************************************************
 * Fonction		: Etat::operator==
 * Description   : verifie si les etats ont le meme numero d'etat
 * Paramètres    : (Etat) e : l'etat de comparaison
