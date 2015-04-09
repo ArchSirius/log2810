@@ -25,8 +25,8 @@ int main()
 	Automate autoMealyTest("Mealy.txt");
 	autoMealyTest.genererFichierAutomate("testMealy.txt");
 
-//	Automate autoMealytestMin("testMealyMin.txt");
-//	autoMealytestMin.minimiserMealy();
+	Automate autoMealytestMin("testMealyMin.txt");
+	autoMealytestMin.minimiserMealy();
 
 	////TEST prof
 	Automate autoDet("Fini.txt");

@@ -308,7 +308,7 @@ bool Etat::estEquivalent(Etat e)
 	//si les deux listes on pas la meme taille alors elle ne sont pas equivalente
 	if (listTransition.size() != e.listTransition.size())
 		return false;
-	while (it != listTransition.end() && itDest != listTransition.end())
+	while (it != listTransition.end() && itDest != e.listTransition.end())
 	{
 		//verifier si l'étiquette et l'etat dest est le même
 		if (it->getEtiquette() != itDest->getEtiquette() || it->getEtatDestination() != itDest->getEtatDestination())
