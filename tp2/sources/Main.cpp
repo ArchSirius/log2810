@@ -25,10 +25,8 @@ int main()
 	Automate autoMealyTest("Mealy.txt");
 	autoMealyTest.genererFichierAutomate("testMealy.txt");
 
-	Automate autoMealyAMin("MealyAMinimiser.txt");
-	autoMealyAMin.genererFichierAutomate("testMealyMin.txt");
-	autoMealyAMin.minimiserMealy();
-
+//	Automate autoMealytestMin("testMealyMin.txt");
+//	autoMealytestMin.minimiserMealy();
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
@@ -42,10 +40,9 @@ int main()
 	cout << "l'automate MEALY est " << (autoMealy.estReactif() ? "reactif" : "non reactif") << endl;
 
 	////RF3
-	//Est-ce qu'on doit faire moore minimiser en mealy??????
-	//Automate autoMealyAMinimiser("MealyAMinimiser.txt");
-	//Automate autoMinMealy(autoMealyAMinimiser.minimiserMealy());
-	//autoMinMealy.genererFichierAutomate("minimiser.txt");
+	Automate autoMealyAMinimiser("MealyAMinimiser.txt");
+	Automate autoMealyMin(autoMealyAMinimiser.minimiserMealy());
+	autoMealyMin.genererFichierAutomate("autoMealyMinimise.txt");
 
 	////RF4
 	Automate autoMooreAddMod10("MooreAddMod10.txt");
