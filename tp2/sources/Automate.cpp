@@ -666,6 +666,11 @@ string Automate::calculerSortie(string mot) {
 	Etat etat = etatInitial();
 	string sortie = "";
 
+	if (Automate::type == FINI)
+	{
+		cerr << "Les machines a etats de type fini n'ont pas de sorties" << endl;
+		return "";
+	}
 	//Pour chaque caractere du string d'entree (mot)
 	for(unsigned int i = 0; i < mot.length(); ++i)
 	{
