@@ -95,7 +95,7 @@ void Transition::setSortie(string sortie)
 //Modificateur
 void Transition::setType(Type type)
 {
-	type = type;
+	_type = type;
 }
 
 //Modificateur
@@ -108,4 +108,10 @@ void Transition::setEtatDepart(int etat)
 void Transition::setEtatDestination(int etat)
 {
 	_etatDestination = etat;
+}
+
+//Modificateur
+void Transition::setEtiquette(string e)
+{
+	_etiquette = e;
 }

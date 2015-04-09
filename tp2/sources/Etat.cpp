@@ -257,10 +257,15 @@ list<string> Etat::listerEtiquettesTransitions()
 ****************************************************************************/
 void Etat::convertisseurMoore2Mealy()
 {
-	for(Transition transition : listTransition)
+	list<Transition>::iterator it = listTransition.begin();
+	string etiquette = "";
+	for (; it != listTransition.end(); it++)
 	{
-		transition.setSortie(sortie);
-		transition.setType(Transition::MEALY);
+		it->setSortie(sortie);
+		it->setType(Transition::MEALY);
+		etiquette = it->getEtiquette();
+		etiquette += ", " + sortie;
+		it->setEtiquette(etiquette);
 	}
 	sortie = "";
 }
