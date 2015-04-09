@@ -30,6 +30,7 @@ public:
 	void setType(Type type);
 	void setEtatDepart(int etat);
 	void setEtatDestination(int etat);
+	void setEtiquette(string etiquette);
 
 private:
 	Type _type;
