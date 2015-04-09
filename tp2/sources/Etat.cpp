@@ -291,27 +291,3 @@ bool Etat::operator==(const Etat& e)
 	else
 		return false;
 }
-
-/****************************************************************************
-* Fonction		: Transition::estEquivalent
-* Description	: Vérifie si deux états on un comportement identiques
-* Paramètres	: (Etat) e : l'etat de comparaison
-* Retour		: (bool) true : etat avec les mêmes transitions
-				  (bool) false : etat n'a pas les mêmes transitions
-****************************************************************************/
-bool Etat::estEquivalent(Etat e)
-{
-	//parcourir la liste des transition de l'etat
-	list<Transition>::iterator it = listTransition.begin();
-	list<Transition>::iterator itDest = e.getListTransition().begin();
-
-	while (it != listTransition.end())
-	{
-		//verifier si l'étiquette et l'etat dest est le même
-		if ((it->getEtiquette() == itDest->getEtiquette()) && (it->getEtatDestination() == itDest->getEtatDestination()))
-			return true;
-		it++;
-		itDest++;
-	}
-	return false;
-}

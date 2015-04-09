@@ -541,14 +541,20 @@ Automate Automate::minimiserMealy() {
 	/*
 	* déterminer les etats qui sont equivalents
 	*/
+	int i = 0;
+	int j = 0;
 	list<string> etatEq;
 	list<string>::iterator itEq;
 	for (Etat etat : ListeEtats)
 	{
 		//pour chaque colonne
+		i = etat.getNumEtat();
 		for (Etat etat2 : ListeEtats)
 		{
-			if (etat.estEquivalent(etat2))
+			j = etat2.getNumEtat();
+			if (i == j)
+			{}
+			else if (etat.estEquivalent(etat2))
 			{
 				int i = etat.getNumEtat();
 				int j = etat2.getNumEtat();
