@@ -25,8 +25,8 @@ int main()
 	Automate autoMealyTest("Mealy.txt");
 	autoMealyTest.genererFichierAutomate("testMealy.txt");
 
-	Automate autoMealytestMin("testMealyMin.txt");
-	autoMealytestMin.minimiserMealy();
+//	Automate autoMealytestMin("testMealyMin.txt");
+//	autoMealytestMin.minimiserMealy();
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
@@ -49,12 +49,12 @@ int main()
 	cout << "La sortie pour l'entree 11011100111111 avec l'addition modulo 10 avec MOORE est: " << autoMooreAddMod10.calculerSortie("11011100111111") << endl;
 
 	////RF5
-	//Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
-	//autoMooreToMealy.genererFichierAutomate("MooreToMealy");
+	autoMoore.convertisseurMoore2Mealy();
+	autoMoore.genererFichierAutomate("MooreToMealy.txt");
 
 	////RF6
-	autoMealy.convertisseurMealy2Moore();
-	autoMealy.genererFichierAutomate("MealyToMoore");
+	//autoMealy.convertisseurMealy2Moore();
+	//autoMealy.genererFichierAutomate("MealyToMoore.txt");
 	//
 	////RF7
 

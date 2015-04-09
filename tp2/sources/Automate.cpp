@@ -761,9 +761,10 @@ void Automate::convertisseurMoore2Mealy() {
 		return;
 	}
 
-	for(Etat etat : ListeEtats)
+	list<Etat>::iterator itEtats = ListeEtats.begin();
+	for (; itEtats != ListeEtats.end(); itEtats++)
 	{
-		etat.convertisseurMoore2Mealy();
+		itEtats->convertisseurMoore2Mealy();
 		type = Automate::MEALY;
 	}
 }
