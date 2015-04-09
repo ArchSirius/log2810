@@ -19,14 +19,14 @@ int main()
 {
 	//TEST personelle
 	Automate autoTest("Fini.txt");
-	autoTest.genererFichierAutomate("test.txt");
+	autoTest.genererFichierAutomate("genererFichierFini.txt");
 	Automate autoMooreTest("Moore.txt");
-	autoMooreTest.genererFichierAutomate("testMoore.txt"); 
+	autoMooreTest.genererFichierAutomate("genererFichierMoore.txt"); 
 	Automate autoMealyTest("Mealy.txt");
-	autoMealyTest.genererFichierAutomate("testMealy.txt");
+	autoMealyTest.genererFichierAutomate("genererFichierMealy.txt");
 
-	Automate autoMealytestMin("testMealyMin.txt");
-	autoMealytestMin.minimiserMealy();
+//	Automate autoMealytestMin("Mealy.txt");
+//	autoMealytestMin.minimiserMealy();
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
@@ -42,7 +42,7 @@ int main()
 	////RF3
 	Automate autoMealyAMinimiser("MealyAMinimiser.txt");
 	Automate autoMealyMin(autoMealyAMinimiser.minimiserMealy());
-	autoMealyMin.genererFichierAutomate("autoMealyMinimise.txt");
+	autoMealyMin.genererFichierAutomate("genererFichierMealyMinimise.txt");
 
 	////RF4
 	Automate autoMooreAddMod10("MooreAddMod10.txt");
@@ -50,12 +50,11 @@ int main()
 
 	////RF5
 	//Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
-	//autoMooreToMealy.genererFichierAutomate("MooreToMealy");
+	//autoMooreToMealy.genererFichierAutomate("MooreToMealy.txt");
 
 	////RF6
 	autoMealy.convertisseurMealy2Moore();
-	autoMealy.genererFichierAutomate("MealyToMoore");
-	//
+	autoMealy.genererFichierAutomate("MealyToMoore.txt");
 	////RF7
 
 	Automate autoMooreRF7("MooreMod3.txt");

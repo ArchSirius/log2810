@@ -467,82 +467,12 @@ bool Automate::estReactif() {
 * Retour		: (Automate) automate de Mealy minimise equivalent
 ****************************************************************************/
 Automate Automate::minimiserMealy() {
-
-	/*
-	* Matrice d'équivalence des chemins comme vue en cours
-	*/
-/*	vector< vector<bool> > matriceSnPlus1;
-	matriceSnPlus1.reserve(nbEtats);
-
-	//Initialisation : on met toutes les cases a true
-	for (unsigned int i = 0; i < nbEtats; i++){
-		vector<bool> temp;
-		temp.reserve(nbEtats);
-		for (unsigned int j = 0; j < nbEtats; j++){
-			temp.push_back(true);
-		}
-		matriceSnPlus1.push_back(temp);
-	}
-
-	vector< vector<bool> > matriceSn;
-	do
-	{
-		matriceSn = matriceSnPlus1;
-
-		//pour chaque ligne de Sn+1
-		for (Etat etat : ListeEtats)
-		{
-
-			list<int> etatCible = etat.cible();
-			//pour chaque colonne
-			for (int e : etatCible)
-			{
-				
-				//on met les états de destination a false
-				//est-ce qu'il faut vérifier si les étiquettes sont identique???????????????????
-				matriceSnPlus1[etat.getNumEtat()][e] = false;
-			}
-		}
-	} while (matriceSnPlus1 != matriceSn);
-
-	*/
-
-
 	/*
 	* déterminer les etats qui sont equivalents
 	*/
-/*	list<string> etatEq;
-	list<string>::iterator itEq;
-	for (unsigned int i = 0; i < nbEtats; i++){
-		for (unsigned int j = 0; j < nbEtats; j++){
-			if (i == j)/// on regarde ou pas????????????
-			{}
-			else
-			{
-				//on determine les etats équivalents
-				if (matriceSnPlus1[i][j] == true)
-				{
-					string egalite;
-					if (i < j)
-						egalite = to_string(i) + "=" + to_string(j);
-					else
-						egalite = to_string(j) + "=" + to_string(i);
-					
-					//ne pas mettre les doublons
-					itEq = etatEq.begin();
-					if (find(etatEq.begin(), etatEq.end(), egalite) == etatEq.end())
-						etatEq.push_back(egalite);//on identifie les etats equivalentes
-				}
-			}
-		}
-	}
-	*/
-
-	/*
-	* déterminer les etats qui sont equivalents
-	*/
-	int i = 0;
-	int j = 0;
+	string init = to_string(etatInitial().getNumEtat()); // num de l'etat initial
+	int i = 0; //num de l'etat courant
+	int j = 0; //num de l'etat des autres etats
 	list<string> etatEq;
 	list<string>::iterator itEq;
 	for (Etat etat : ListeEtats)
@@ -564,6 +494,10 @@ Automate Automate::minimiserMealy() {
 				else
 					egalite = to_string(j) + "=" + to_string(i);
 
+				//positionner etatEq de sorte que chaque ligne soit : "EtatAEnlever=EtatARemplacer", mais on veux conserver l'etat initial
+				if (egalite.substr(0, 1) == init)
+					egalite = egalite.substr(2, 3) + "=" + egalite.substr(0, 1);
+					
 				//ne pas mettre les doublons
 				itEq = etatEq.begin();
 				if (find(etatEq.begin(), etatEq.end(), egalite) == etatEq.end())
@@ -571,28 +505,6 @@ Automate Automate::minimiserMealy() {
 			}
 		}
 	}
-
-
-	/*
-	* positionner etatEq de sorte que chaque ligne soit : "EtatAEnlever=EtatARemplacer", mais on veux conserver l'etat initial
-	*/
-	char init = etatInitial().getNumEtat();
-	char num = ' ';
-	for (Etat e : ListeEtats)
-	{
-		num = e.getNumEtat();
-		if (num == init)
-		{
-			// on positionne l'etat a enlever à gauche
-			list<string>::iterator it = etatEq.begin();
-			for (; it != etatEq.end(); it++)
-			{
-				string s = it->substr(2, 3) + "=" + it->substr(0, 1);
-				*it = s;
-			}
-		}
-	}
-
 
 	/*
 	* on genere le fichier et on récupere les données
@@ -637,16 +549,16 @@ Automate Automate::minimiserMealy() {
 				char eArrive = itLigne->back();
 			
 				list<string>::iterator itEquivalence = etatEq.begin();
-				//on parcourt la list d'equivalence pour la ligne du fichier courante
+				//on parcourt la liste d'equivalence pour la ligne du fichier courante
 				while (itEquivalence != etatEq.end() && itLigne != lignesFichier.end())
 				{
-					//on supprime la l'etat, donc les lignes du fichier qui commence par l'etat
+					//on supprime les lignes du fichier qui commence par l'etat equivalent
 					if (eDepart == itEquivalence->front())
 					{
 						itLigne = lignesFichier.erase(itLigne);
 						if (itLigne != lignesFichier.end())
 						{
-							//on renitialise puisqu'on change de ligne
+							//on renitialise  les donnees puisqu'on change de ligne
 							eDepart = itLigne->front();
 							eArrive = itLigne->back();
 							itEquivalence = etatEq.begin();//on recommencer puisqu'on change de ligne
@@ -669,7 +581,7 @@ Automate Automate::minimiserMealy() {
 				itLigne++;
 		}
 
-		//le remplit le fichier
+		//on remplit le fichier minimise.txt
 		fichier << "Mealy " << nbEtMin << endl;
 		for (unsigned int i = 1; i < lignesFichier.size() - 1 ; i++)
 		{
@@ -684,8 +596,6 @@ Automate Automate::minimiserMealy() {
 	Automate temp("minimiser.txt");
 	return temp;
 }
-
-
 
 /****************************************************************************
 * Requis #4
