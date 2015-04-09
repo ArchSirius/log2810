@@ -49,7 +49,7 @@ int main()
 
 	////RF4
 	Automate autoMooreAddMod10("MooreAddMod10.txt");
-	cout << "La sortie pour l'addition modulo 10 avec MOORE est: " << autoMooreAddMod10.calculerSortie("9821") << endl;
+	cout << "La sortie pour l'entree 11011100111111 avec l'addition modulo 10 avec MOORE est: " << autoMooreAddMod10.calculerSortie("11011100111111") << endl;
 
 	////RF5
 	//Automate autoMooreToMealy(autoMoore.convertisseurMoore2Mealy());
