@@ -41,6 +41,7 @@ public:
 	void majNum();
 
 	bool operator==(const Etat& e);
+	bool estEquivalent(Etat e);
 
 private:
 	bool estEtatInitial;
