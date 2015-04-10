@@ -24,7 +24,6 @@ int main()
 	autoMooreTest.genererFichierAutomate("genererFichierMoore.txt"); 
 	Automate autoMealyTest("Mealy.txt");
 	autoMealyTest.genererFichierAutomate("genererFichierMealy.txt");
-
 //	Automate autoMealytestMin("testMealyMin.txt");
 //	autoMealytestMin.minimiserMealy();
 

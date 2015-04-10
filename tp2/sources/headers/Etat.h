@@ -25,21 +25,22 @@ public:
 	void setFinal(bool f);
 	void setNumEtat(int ID);
 	void setSortie(string nouvSortie);
-
 	bool getEstEtatInitial() const;
 	bool getEstEtatFinal() const;
 	int getNumEtat() const;
 	string getSortie() const;
 	list<Transition> getListTransition() const;
 
+	//Taches et RF
 	bool existeTransition(string e);
 	list<int> cible(string e);
 	list<int> cible();
 	void ajouterTransition(Transition::Type type, string entre, Etat* destination, string sortie);
-	list<string> listerEtiquettesTransitions(); //retourne l’ensembl des symboles etiquetant toutes les transitions qui partent de l’´etat courant
+	list<string> listerEtiquettesTransitions(); //retourne l’ensemble des symboles etiquetant toutes les transitions qui partent de l’etat courant
 	void convertisseurMoore2Mealy();
 	void majNum();
 
+	//surcharge d'operateur
 	bool operator==(const Etat& e);
 	bool estEquivalent(Etat e);
 

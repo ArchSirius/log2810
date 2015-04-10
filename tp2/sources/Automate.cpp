@@ -172,7 +172,7 @@ Automate::~Automate() {
 * Parametre	    : aucun
 * Retour		: (Etat) etat initial
 ****************************************************************************/
-string Automate::getType() {
+string Automate::getType() const{
 	if (type == 0)
 		return "Fini";
 	else if (type == 1)
@@ -188,9 +188,9 @@ string Automate::getType() {
 * Parametre	    : aucun
 * Retour		: (Etat) etat initial
 ****************************************************************************/
-Etat Automate::etatInitial() {
+Etat Automate::etatInitial() const{
 	//parcours la liste d'états 
-	list<Etat>::iterator itEtats = ListeEtats.begin();
+	list<Etat>::const_iterator itEtats = ListeEtats.begin();
 	while(itEtats != ListeEtats.end())
 	{
 		//l'etat est initial?
@@ -208,9 +208,9 @@ Etat Automate::etatInitial() {
 * Parametre	    : aucun
 * Retour		: (int) id de l'etat final
 ****************************************************************************/
-int Automate::getNumEtatFinal() {
+int Automate::getNumEtatFinal() const{
 	//parcours la liste d'états 
-	list<Etat>::iterator itEtats = ListeEtats.begin();
+	list<Etat>::const_iterator itEtats = ListeEtats.begin();
 	while (itEtats != ListeEtats.end())
 	{
 		//l'etat est final?
@@ -467,6 +467,12 @@ bool Automate::estReactif() {
 * Retour		: (Automate) automate de Mealy minimise equivalent
 ****************************************************************************/
 Automate Automate::minimiserMealy() {
+	if (type != MEALY)
+	{
+		cerr << "Veuillez convertir votre automate en machine de MEALY avant de la minimiser" << endl;
+		return *this;
+	}
+
 	/*
 	* déterminer les etats qui sont equivalents
 	*/
@@ -495,8 +501,8 @@ Automate Automate::minimiserMealy() {
 					egalite = to_string(j) + "=" + to_string(i);
 
 				//positionner etatEq de sorte que chaque ligne soit : "EtatAEnlever=EtatARemplacer", mais on veux conserver l'etat initial
-				if (egalite.substr(0, 1) == init)
-					egalite = egalite.substr(2, 3) + "=" + egalite.substr(0, 1);
+				if (egalite.substr(0, egalite.find("=")) == init)
+					egalite = egalite.substr(egalite.find("=") + 1, egalite.length()) + "=" + egalite.substr(0, egalite.find("="));
 					
 				//ne pas mettre les doublons
 				itEq = etatEq.begin();
@@ -527,7 +533,7 @@ Automate Automate::minimiserMealy() {
 
 
 	/*
-	* on réecrit le fichier minimise
+	* on réecrit le fichier minimiser.txt
 	*/
 	int nbEtMin = 0;
 	ofstream fichier("minimiser.txt", ios::out | ios::trunc);

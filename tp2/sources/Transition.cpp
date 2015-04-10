@@ -115,3 +115,21 @@ void Transition::setEtiquette(string e)
 {
 	_etiquette = e;
 }
+
+/****************************************************************************
+* Fonction		: Etat::operator<
+* Description   : verifie si les transition sont plus petites
+* Paramètres    : (Transition) t : la transition de comparaison
+* Retour        : (bool) true : transition plus petite
+*				  (bool) false : transition plus grande
+****************************************************************************/
+bool Transition::operator<(const Transition& t)
+{
+	if (_etatDepart < t._etatDepart)
+		return true;
+	else if (_etatDepart == t._etatDepart)
+		if(_entre < t._entre)
+			return true;
+	else
+		return false;
+}

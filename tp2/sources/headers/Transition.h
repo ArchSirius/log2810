@@ -21,6 +21,7 @@ public:
 	Transition(Type type, string entre, int etatDepart, int etatPointe, string sortie = "");
 	~Transition();
 
+	//getter/setter
 	string getEtiquette() const;
 	int getEtatDepart() const;
 	int getEtatDestination() const;
@@ -31,6 +32,9 @@ public:
 	void setEtatDepart(int etat);
 	void setEtatDestination(int etat);
 	void setEtiquette(string etiquette);
+
+	//surcharge d'operateur
+	bool operator<(const Transition& t);
 
 private:
 	Type _type;
