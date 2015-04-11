@@ -24,8 +24,16 @@ int main()
 	autoMooreTest.genererFichierAutomate("genererFichierMoore.txt"); 
 	Automate autoMealyTest("Mealy.txt");
 	autoMealyTest.genererFichierAutomate("genererFichierMealy.txt");
-//	Automate autoMealytestMin("testMealyMin.txt");
-//	autoMealytestMin.minimiserMealy();
+
+	//TD8 Ex3 MALADE CA MARCHE
+	Automate autoMealytestMin("ex3td8.txt");
+	Automate autoMealyMin(autoMealytestMin.minimiserMealy());
+	cout << "TD8 Ex3" << endl;
+	cout << "La sortie pour l'entree 110: " << autoMealyMin.calculerSortie("110") << endl;
+	cout << "La sortie pour l'entree 101: " << autoMealyMin.calculerSortie("101") << endl;
+	cout << "La sortie pour l'entree 1010110: " << autoMealyMin.calculerSortie("1010110") << endl;
+
+
 
 	////TEST prof
 	Automate autoDet("Fini.txt");
@@ -40,8 +48,8 @@ int main()
 
 	////RF3
 	Automate autoMealyAMinimiser("MealyAMinimiser.txt");
-	Automate autoMealyMin(autoMealyAMinimiser.minimiserMealy());
-	autoMealyMin.genererFichierAutomate("genererFichierMealyMinimise.txt");
+	//Automate autoMealyMin(autoMealyAMinimiser.minimiserMealy());
+	//autoMealyMin.genererFichierAutomate("genererFichierMealyMinimise.txt");
 
 	////RF4
 	Automate autoMooreAddMod10("MooreAddMod10.txt");

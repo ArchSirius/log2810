@@ -123,6 +123,9 @@ void Automate::buildAutomate(string input) {
 		{
 			a = &tamponA;
 			ListeEtats.push_back(*a);
+			//pour etre capable de modifier a dans la liste
+			itEtatA = find(ListeEtats.begin(), ListeEtats.end(), tamponA);
+			a = &(*itEtatA);
 		}
 
 		// Si Etat B n'existe pas, creer Etat B
@@ -642,9 +645,9 @@ string Automate::calculerSortie(string mot) {
 			{
 				//aller chercher le ID de l'etat dest 
 				IDetat = itTransitions->getEtatDestination();
-				EtatDest = ListeEtats.begin();
 				//trouver cet etat et mettre a jour la variable etat
-				advance(EtatDest, IDetat);
+				Etat tampon = Etat(IDetat);
+				EtatDest = find(ListeEtats.begin(), ListeEtats.end(), tampon);
 
 				if(Automate::type == MOORE)
 				{
