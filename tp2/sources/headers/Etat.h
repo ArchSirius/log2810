@@ -2,7 +2,7 @@
 * Fichier       : Etat.h
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 26 mars 2015
+* Mise à jour   : 12 avril 2015
 * Description   : Definition de la classe Etat
 ****************************************************************************/
 #ifndef ETAT_H
@@ -17,7 +17,7 @@ class Etat {
 
 public:
 	Etat();
-	Etat(int etat, string sortie = "");//À ajouter? : Parametre pour le type de machine (fini, moore, mealy) et symbole en sortie si moore?
+	Etat(int etat, string sortie = "");//sortie vide par defaut
 	~Etat();
 
 	//Getter et setter

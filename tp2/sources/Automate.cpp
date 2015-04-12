@@ -2,7 +2,7 @@
 * Fichier       : Automate.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 26 mars 2015
+* Mise à jour   : 12 avril 2015
 * Description   : Implementation de la classe Automate
 ****************************************************************************/
 
@@ -233,12 +233,8 @@ int Automate::getNumEtatFinal() const{
 * Retour		: aucun
 ****************************************************************************/
 void Automate::ajouterEtat(Etat e) {
-	//list<Etat>::iterator itEtat = find(ListeEtats.begin(), ListeEtats.end(), e);
-	//if (itEtat != ListeEtats.end())
 	e.setNumEtat(ListeEtats.size());
 	ListeEtats.push_back(e);
-	//else
-	//	cerr << "Impossible d'ajouter l'état";
 }
 
 /****************************************************************************
@@ -602,6 +598,7 @@ Automate Automate::minimiserMealy() {
 	else
 		cerr << "Impossible d'ouvrir le fichier !" << endl;
 
+	//on retourne l'automate construit a partir du fichier minimiser.txt
 	Automate temp("minimiser.txt");
 	return temp;
 }
