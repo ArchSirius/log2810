@@ -773,4 +773,5 @@ void Automate::convertisseurMealy2Moore() {
 				paire.second->setSortie("");
 		}
 	}
+	type = Automate::MOORE;
 }
