@@ -2,7 +2,7 @@
 * Fichier       : Automate.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 12 avril 2015
+* Mise à jour   : 26 mars 2015
 * Description   : Implementation de la classe Automate
 ****************************************************************************/
 
@@ -233,8 +233,12 @@ int Automate::getNumEtatFinal() const{
 * Retour		: aucun
 ****************************************************************************/
 void Automate::ajouterEtat(Etat e) {
+	//list<Etat>::iterator itEtat = find(ListeEtats.begin(), ListeEtats.end(), e);
+	//if (itEtat != ListeEtats.end())
 	e.setNumEtat(ListeEtats.size());
 	ListeEtats.push_back(e);
+	//else
+	//	cerr << "Impossible d'ajouter l'état";
 }
 
 /****************************************************************************
@@ -598,7 +602,6 @@ Automate Automate::minimiserMealy() {
 	else
 		cerr << "Impossible d'ouvrir le fichier !" << endl;
 
-	//on retourne l'automate construit a partir du fichier minimiser.txt
 	Automate temp("minimiser.txt");
 	return temp;
 }
@@ -693,89 +696,95 @@ void Automate::convertisseurMoore2Mealy() {
 * Retour		: aucun
 ****************************************************************************/
 void Automate::convertisseurMealy2Moore() {
-    if(type != Automate::MEALY)
-    {
-        cerr << "Type de conversion invalide" << endl;
-        return;
-    }
+	if(type != Automate::MEALY)
+	{
+		cerr << "Type de conversion invalide" << endl;
+		return;
+	}
 
-    // Pour chaque état cible
+	// Pour chaque état cible
 
-    list<Etat>::iterator itCible = ListeEtats.begin();
-    while(itCible != ListeEtats.end())
-    {
-        // Enregistrer toutes les transitions entrantes
-        list<pair<Etat*, Transition*>> listeTransitions;
-        // Pour chaque état source
-        list<Etat>::iterator itSource = ListeEtats.begin();
-        while(itSource != ListeEtats.end())
-        {
-            // Si une transition pointe vers la cible, enregistrer (avec la source)
-            list<Transition>::iterator itTransition = itSource->getListTransition().begin();
-            while (itTransition != itSource->getListTransition().end())
-            {
-                if(itTransition->getEtatDestination() == itCible->getNumEtat())
-                    listeTransitions.push_back(make_pair(&(*itSource), &(*itTransition)));
-                itTransition++;
-            }
-            itSource++;
-        }
+	list<Etat>::iterator itCible = ListeEtats.begin();
+	while(itCible != ListeEtats.end())
+	{
+		// Enregistrer toutes les transitions entrantes
+		list<pair<Etat*, Transition*>> listeTransitions;
+		// Pour chaque état source
+		list<Etat>::iterator itSource = ListeEtats.begin();
+		while(itSource != ListeEtats.end())
+		{
+			// Si une transition pointe vers la cible, enregistrer (avec la source)
+			for (Transition* ptrTransit : itSource->getListPtrTransition())
+			{
+				if (ptrTransit->getEtatDestination() == itCible->getNumEtat())
+				{
+					listeTransitions.push_back(make_pair(&(*itSource), ptrTransit));
+				}
+			}
+			itSource++;
+		}
 
-        // Vérifier si toutes les transitions entrantes sont de même sortie
-        string premiereSortie = (*listeTransitions.begin()).second->getSortie();
-        itCible->setSortie(premiereSortie);
-        bool unique = true;
-        for(pair<Etat*, Transition*> paire : listeTransitions)
-        {
-            if(paire.second->getSortie() != premiereSortie)
-                unique = false;
-        }
+		// Vérifier si toutes les transitions entrantes sont de même sortie
+		string premiereSortie = (*listeTransitions.begin()).second->getSortie();
+		itCible->setSortie(premiereSortie);
+		bool unique = true;
+		for(pair<Etat*, Transition*> paire : listeTransitions)
+		{
+			if(paire.second->getSortie() != premiereSortie)
+				unique = false;
+		}
 
-        // Si oui, transférer les sorties
-        if(unique)
-        {
-            for(pair<Etat*, Transition*> paire : listeTransitions)
-                paire.second->setSortie("");
-        }
-        // Sinon, créer autant d'états que de différentes sorties, puis modifier les transitions
-        else
-        {
-            vector<string> sorties;
-            sorties.push_back(premiereSortie);
-            for(pair<Etat*, Transition*> paire : listeTransitions)
-            {
-                unique = true;
-                for(string sortie : sorties)
-                {
-                    if(sortie != paire.second->getSortie())
-                        unique = false;
-                }
-                if(unique)
-                    sorties.push_back(paire.second->getSortie());
-            }
+		// Si oui, transférer les sorties
+		if(unique)
+		{
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+				paire.second->setSortie("");
+		}
+		// Sinon, créer autant d'états que de différentes sorties, puis modifier les transitions
+		else
+		{
+			vector<string> sorties;
+			sorties.push_back(premiereSortie);
+			// Pour chaque transition entrante
+			for(pair<Etat*, Transition*> paire : listeTransitions)
+			{
+				bool existeDeja = false;
+				// Pour chaque sortie des transitions entrantes
+				for(string sortie : sorties)
+				{
+					// Si la sorti
+					if(sortie == paire.second->getSortie())
+						existeDeja = true;
+				}
+				if (!existeDeja)
+					sorties.push_back(paire.second->getSortie());
+			}
 
-            for(string sortie : sorties)
-            {
-                if(sortie != premiereSortie)
-                {
-                    Etat nouvelEtat = *itCible;
-                    nouvelEtat.setNumEtat(nbEtats);
-                    nbEtats++;
-                    nouvelEtat.majNum();
-                    nouvelEtat.setSortie(sortie);
-                    for(pair<Etat*, Transition*> paire : listeTransitions)
-                    {
-                        if(paire.second->getSortie() == sortie)
-                            paire.second->setEtatDestination(nouvelEtat.getNumEtat());
-                    }
-                    ListeEtats.push_back(nouvelEtat);
-                }
-            }
+			for(string sortie : sorties)
+			{
+				if(sortie != premiereSortie)
+				{
+					Etat nouvelEtat = *itCible;
+					nouvelEtat.setNumEtat(nbEtats);
+					nbEtats++;
+					nouvelEtat.majNum();
+					nouvelEtat.setSortie(sortie);
+					for(pair<Etat*, Transition*> paire : listeTransitions)
+					{
+						if(paire.second->getSortie() == sortie)
+							paire.second->setEtatDestination(nouvelEtat.getNumEtat());
+					}
+					ListeEtats.push_back(nouvelEtat);
+				}
+			}
 
-            for(pair<Etat*, Transition*> paire : listeTransitions)
-                paire.second->setSortie("");
-        }
-        itCible++;
-    }
-    type = Automate::MOORE;
+			for (pair<Etat*, Transition*> paire : listeTransitions)
+			{
+				paire.second->setSortie("");
+				paire.second->setType(Transition::MOORE);
+			}
+		}
+		itCible++;
+	}
+	type = Automate::MOORE;
 }

@@ -2,7 +2,7 @@
 * Fichier       : Etat.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 12 avril 2015
+* Mise à jour   : 26 mars 2015
 * Description   : Implementation de la classe Etat
 ****************************************************************************/
 
@@ -144,6 +144,17 @@ string Etat::getSortie() const
 list<Transition> Etat::getListTransition() const
 {
 	return listTransition;
+}
+
+list<Transition*> Etat::getListPtrTransition()
+{
+	list<Transition*> liste;
+	list<Transition>::iterator it = listTransition.begin();
+	for (; it != listTransition.end(); it++)
+	{
+		liste.push_back(&(*it));
+	}
+	return liste;
 }
 
 /****************************************************************************
