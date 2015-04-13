@@ -2,7 +2,7 @@
 * Fichier       : Etat.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 26 mars 2015
+* Mise à jour   : 13 avril 2015
 * Description   : Implementation de la classe Etat
 ****************************************************************************/
 
@@ -34,6 +34,25 @@ Etat::Etat(int etat, string s)
 	estEtatFinal = false;
 	numEtat = etat;
 	sortie = s;
+}
+
+/****************************************************************************
+* Fonction		: Etat::Etat
+* Description   : constructeur par copie
+* Paramètres    : (Etat) e : l'etat de comparaison
+* Retour        : (Etat) e : etat copier
+****************************************************************************/
+Etat::Etat(const Etat& e)
+{
+	estEtatInitial = e.estEtatInitial;
+	estEtatFinal = e.estEtatFinal;
+	numEtat = e.numEtat;
+	sortie = e.sortie;
+	list<Transition>::const_iterator it = e.listTransition.begin();
+	for (; it != e.listTransition.end(); it++)
+	{
+		listTransition.push_back(*it);
+	}
 }
 
 /****************************************************************************

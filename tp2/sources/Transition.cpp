@@ -2,7 +2,7 @@
 * Fichier       : Transition.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 09 mars 2015
+* Mise à jour   : 13 avril 2015
 * Description   : Implementation de la classe Transition
 ****************************************************************************/
 
@@ -128,8 +128,9 @@ bool Transition::operator<(const Transition& t)
 	if (_etatDepart < t._etatDepart)
 		return true;
 	else if (_etatDepart == t._etatDepart)
-		if(_entre < t._entre)
+	{
+		if (_entre < t._entre)
 			return true;
-	else
-		return false;
+	}	
+	return false;
 }

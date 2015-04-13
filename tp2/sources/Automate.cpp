@@ -2,7 +2,7 @@
 * Fichier       : Automate.cpp
 * Auteur        : Jules Favreau-Pollender, Francis Rochon, Samuel Rondeau
 * Date          : 26 mars 2015
-* Mise à jour   : 26 mars 2015
+* Mise à jour   : 13 avril 2015
 * Description   : Implementation de la classe Automate
 ****************************************************************************/
 
@@ -233,12 +233,8 @@ int Automate::getNumEtatFinal() const{
 * Retour		: aucun
 ****************************************************************************/
 void Automate::ajouterEtat(Etat e) {
-	//list<Etat>::iterator itEtat = find(ListeEtats.begin(), ListeEtats.end(), e);
-	//if (itEtat != ListeEtats.end())
 	e.setNumEtat(ListeEtats.size());
 	ListeEtats.push_back(e);
-	//else
-	//	cerr << "Impossible d'ajouter l'état";
 }
 
 /****************************************************************************
@@ -703,9 +699,9 @@ void Automate::convertisseurMealy2Moore() {
 	}
 
 	// Pour chaque état cible
-
 	list<Etat>::iterator itCible = ListeEtats.begin();
-	while(itCible != ListeEtats.end())
+	unsigned int i = 0, max = nbEtats;
+	while(i < max)
 	{
 		// Enregistrer toutes les transitions entrantes
 		list<pair<Etat*, Transition*>> listeTransitions;
@@ -746,45 +742,50 @@ void Automate::convertisseurMealy2Moore() {
 			vector<string> sorties;
 			sorties.push_back(premiereSortie);
 			// Pour chaque transition entrante
-			for(pair<Etat*, Transition*> paire : listeTransitions)
+			list<pair<Etat*, Transition*>>::iterator itPaire = listeTransitions.begin();
+			for (; itPaire != listeTransitions.end(); itPaire++)
 			{
 				bool existeDeja = false;
 				// Pour chaque sortie des transitions entrantes
-				for(string sortie : sorties)
+				for (string sortie : sorties)
 				{
 					// Si la sorti
-					if(sortie == paire.second->getSortie())
+					if (sortie == itPaire->second->getSortie())
 						existeDeja = true;
 				}
 				if (!existeDeja)
-					sorties.push_back(paire.second->getSortie());
+					sorties.push_back(itPaire->second->getSortie());
 			}
 
-			for(string sortie : sorties)
+			vector<string>::iterator itSorties = sorties.begin();
+			for (; itSorties != sorties.end(); itSorties++)
 			{
-				if(sortie != premiereSortie)
+				if (*itSorties != premiereSortie)
 				{
-					Etat nouvelEtat = *itCible;
+					Etat nouvelEtat(*itCible);
 					nouvelEtat.setNumEtat(nbEtats);
 					nbEtats++;
 					nouvelEtat.majNum();
-					nouvelEtat.setSortie(sortie);
-					for(pair<Etat*, Transition*> paire : listeTransitions)
+					nouvelEtat.setSortie(*itSorties);
+					list<pair<Etat*, Transition*>>::iterator itPaire2 = listeTransitions.begin();
+					for (; itPaire2 != listeTransitions.end(); itPaire2++)
 					{
-						if(paire.second->getSortie() == sortie)
-							paire.second->setEtatDestination(nouvelEtat.getNumEtat());
+						if (itPaire2->second->getSortie() == *itSorties)
+							itPaire2->second->setEtatDestination(nouvelEtat.getNumEtat());
 					}
 					ListeEtats.push_back(nouvelEtat);
 				}
 			}
 
-			for (pair<Etat*, Transition*> paire : listeTransitions)
+			list<pair<Etat*, Transition*>>::iterator itPaire2 = listeTransitions.begin();
+			for (; itPaire2 != listeTransitions.end(); itPaire2++)
 			{
-				paire.second->setSortie("");
-				paire.second->setType(Transition::MOORE);
+				itPaire2->second->setSortie("");
+				itPaire2->second->setType(Transition::MOORE);
 			}
 		}
 		itCible++;
+		i++;
 	}
 	type = Automate::MOORE;
 }
