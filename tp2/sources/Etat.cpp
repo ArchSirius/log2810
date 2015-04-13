@@ -146,7 +146,13 @@ list<Transition> Etat::getListTransition() const
 	return listTransition;
 }
 
-list<Transition*> Etat::getListPtrTransition()
+/****************************************************************************
+* Fonction		: Etat::listPtrTransition
+* Description   : retourne la liste de transitions de l'etat courant (ptr)
+* Paramètres    : aucun
+* Retour        : (list<Transition*>) : la liste des Transitions
+****************************************************************************/
+list<Transition*> Etat::listPtrTransition()
 {
 	list<Transition*> liste;
 	list<Transition>::iterator it = listTransition.begin();
@@ -289,8 +295,12 @@ void Etat::convertisseurMoore2Mealy()
 ****************************************************************************/
 void Etat::majNum()
 {
-	for(Transition transition : listTransition)
-		transition.setEtatDepart(numEtat);
+	list<Transition>::iterator it = listTransition.begin();
+	while (it != listTransition.end())
+	{
+		it->setEtatDepart(numEtat);
+		it++;
+	}
 }
 
 /****************************************************************************

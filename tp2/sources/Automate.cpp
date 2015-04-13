@@ -714,7 +714,7 @@ void Automate::convertisseurMealy2Moore() {
 		while(itSource != ListeEtats.end())
 		{
 			// Si une transition pointe vers la cible, enregistrer (avec la source)
-			for (Transition* ptrTransit : itSource->getListPtrTransition())
+			for (Transition* ptrTransit : itSource->listPtrTransition())
 			{
 				if (ptrTransit->getEtatDestination() == itCible->getNumEtat())
 				{

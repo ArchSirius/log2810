@@ -30,7 +30,7 @@ public:
 	int getNumEtat() const;
 	string getSortie() const;
 	list<Transition> getListTransition() const;
-	list<Transition*> getListPtrTransition();
+	list<Transition*> listPtrTransition();
 
 	//Taches et RF
 	bool existeTransition(string e);
